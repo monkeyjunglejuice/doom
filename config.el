@@ -526,15 +526,10 @@ configuration or restarting applications."
   (map! :localleader :mode elixir-mode
         :n "s" #'inf-elixir-project))
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; LANGUAGE SERVER
-;; <https://github.com/joaotavora/eglot/blob/master/MANUAL.md>
 ;; <https://github.com/elixir-lsp/elixir-ls>
 ;; <https://gist.github.com/Nezteb/dc63f1d5ad9d88907dd103da2ca000b1>
-
 (after! eglot
   ;; A longer timeout seems required for the first run in a new project
-  (setq! eglot-connect-timeout 60)
   (add-to-list 'eglot-server-programs
                '(elixir-mode . ("elixir-ls"))))
 
