@@ -1,4 +1,4 @@
-* Doom Emacs Installation on MacOS
+* How to install Doom Emacs on MacOS
 
 1. Install Emacs Plus from Homebrew
 #+begin_src fish
