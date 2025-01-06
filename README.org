@@ -2,7 +2,7 @@
 * How to install Doom Emacs on MacOS
 
 *1.* Install Emacs Plus from Homebrew
-#+begin_src fish
+#+begin_src shell
 brew install d12frosted/emacs-plus/emacs-plus \
     --with-no-frame-refocus \
     --with-xwidgets \
@@ -17,7 +17,10 @@ osascript -e 'tell application "Finder" to make alias file to posix file "/usr/l
 #+end_src
 
 *3.* The Emacs app maybe blocked due to MacOS security mechanisms. Apply the following commands to the actual app file (not to the alias in the `/Applications` directory):
-#+begin_src fish
+#+begin_src shell
 xattr -c /usr/local/opt/emacs-plus@29/Emacs.app
+#+end_src
+
+#+begin_src shell
 sudo codesign --force --deep --sign - /usr/local/opt/emacs-plus@29/Emacs.app
 #+end_src
