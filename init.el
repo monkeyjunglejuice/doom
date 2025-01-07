@@ -57,7 +57,6 @@
        :term
        eshell
        ;; shell
-       ;; term
        vterm
 
        :checkers
@@ -131,10 +130,8 @@
 ;;  ____________________________________________________________________________
 ;;; DEFINITIONS
 
-(defvar doom-theme-light 'doom-bluloco-light
-  "Specifies the default light Doom Emacs theme.")
-(defvar doom-theme-dark 'doom-bluloco-dark
-  "Specifies the default dark Doom Emacs theme.")
+(defvar doom-theme-light "Specifies the default light theme.")
+(defvar doom-theme-dark "Specifies the default dark theme.")
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY

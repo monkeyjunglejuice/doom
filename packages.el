@@ -15,8 +15,7 @@
 (package! srfi)
 
 ;; (package! apprentice
-;;   :recipe (:host github
-;;            :repo "Sasanidas/Apprentice"
+;;   :recipe (:host github :repo "Sasanidas/Apprentice"
 ;;            :branch "master"))
 
 ;;  ____________________________________________________________________________

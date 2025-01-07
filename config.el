@@ -32,7 +32,8 @@
 ;; Add personal themes directory
 (load! "~/.emacs.themes/init-themes.el")
 
-(setq! doom-theme-light 'doom-nord-light)
+;; Set light/dark theme
+(setq! doom-theme-light 'doom-one-light)
 (setq! doom-theme-dark 'doom-nord-aurora)
 
 ;; Switch between dark/light theme based on the system appearance
@@ -52,16 +53,19 @@
 ;;; KEYBINDINGS
 
 (setq! doom-leader-key "SPC"
-       doom-localleader-key ",")
+       doom-leader-alt-key "M-SPC"
+       doom-localleader-key ","
+       doom-localleader-alt-key "M-SPC ,")
 
+;; doom-leader-map
 (map! :leader
       :desc "M-x"                   ":"   nil
       :desc "Switch buffer"         "<"   nil
       :desc "Org capture"           "X"   nil
-      :desc "M-x"                   "SPC" #'execute-extended-command
-      :desc "Ex"                    "m"   #'evil-ex
-      :desc "Switch buffer"         "."   #'switch-to-buffer
-      :desc "Lisp"                  "l"   #'+lisp/open-repl
+      :desc "Switch to last buffer" "`"   nil
+      :desc "M-x"                   "m"   #'execute-extended-command
+      :desc "Switch buffer"         ","   #'switch-to-buffer
+      :desc "Lisp"                  "l"   #'sly
       :desc "Eshell"                "e"   #'+eshell/here
       :desc "IEx"                   "r"   #'inf-elixir)
 
@@ -75,7 +79,7 @@
 (setq! mac-option-modifier 'meta)
 
 ;;  ____________________________________________________________________________
-;;; UI
+;;; MISC UI
 
 (after! which-key
   (setq! which-key-idle-delay 0.15))
@@ -89,7 +93,7 @@
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Minibuffer>
 
 ;; Modal editing in the minibuffer, too?
-(setq! evil-collection-setup-minibuffer nil)
+(setq! evil-collection-setup-minibuffer t)
 
 ;; Show the depth of recursive minibuffers?
 (minibuffer-depth-indicate-mode 1)
@@ -101,7 +105,7 @@
 (map! :leader
       :desc "Kill buffer and window" :n "b D" #'kill-buffer-and-window)
 
-;; TODO: `+popup/raise' and `+popup/buffer'
+;; TODO: Toggle between `+popup/raise' and `+popup/buffer'
 
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode)
@@ -171,55 +175,59 @@
   (setq! vterm-shell my-shell))
 
 ;; Eshell
-(set-eshell-alias!
- "q" "exit"
- "l" "ls"
- "ll" "ls -lh"
- "la" "ls -lhA"
- "lt" "eza -T"
- "llt" "eza -lT"
- "mkdir" "mkdir -p -v $*"
- "r" "trash $*"
- ;; Emacs commands
- "e" "find-file $1"
- "f" "find-file $1"
- "fo" "find-file-other-window $1"
- "d" "dired $*"
- "do" "dired-other-window $*"
- "g" "magit-status"
- ;; Tar archives
- "targ" "tar cfvz $*"
- "targx" "tar xfvz $*"
- "tarb" "tar cfvj $*"
- "tarbx" "tar xfvj $*"
- ;; Lisp
- "lisp" "rlwrap ros -Q run $*"
- "lisp-swank" "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
- ;; macOS
- "app-unblock" "sudo xattr -d com.apple.quarantine $*"
- "app-clear" "sudo xattr -crv $*"
- "app-sign" "sudo codesign --force --deep --sign - $*"
- ;; Homebrew
- "brewup" "brew update && brew upgrade"
- "brewu" "brew update"
- ;; Apt-get
- "pacu" "sudo apt-get update"
- "pacup" "sudo apt-get update && sudo apt-get upgrade"
- "pacupd" "sudo apt-get dist-upgrade"
- "pacs" "apt-cache search $*"
- "pacinfo" "apt-cache show $*"
- "paci" "sudo apt-get install --no-install-recommends $*"
- "pacli" "apt list --installed"
- "paclig" "apt list --installed | grep $*"
- "pacmark" "sudo apt-mark $*"
- "pacr" "sudo apt-get remove --purge $*"
- "pacar" "sudo apt-get autoremove --purge $*"
- ;; Guix
- "guixup" "guix pull && guix package -u"
- ;; Nix
- "nixup" "nix-channel --update nixpkgs && nix-env -u '*'"
- ;; Too small /tmp directory
- "resizetmp" "sudo mount -o remount,size=8G,noatime /tmp")
+(after! eshell
+  ;; Browseable Eshell buffer even during output
+  (setq! eshell-scroll-to-bottom-on-output nil)
+  (set-eshell-alias!
+   "q" "exit"
+   "l" "ls"
+   "ll" "ls -lh"
+   "lla" "ls -lhA"
+   "lt" "eza -T"
+   "llt" "eza -lT"
+   "llat" "eza -lAT"
+   "mkdir" "mkdir -p -v $*"
+   "r" "trash $*"
+   ;; Emacs commands
+   "e" "find-file $1"
+   "f" "find-file $1"
+   "fo" "find-file-other-window $1"
+   "d" "dired $*"
+   "do" "dired-other-window $*"
+   "g" "magit-status"
+   ;; Tar archives
+   "targ" "tar cfvz $*"
+   "targx" "tar xfvz $*"
+   "tarb" "tar cfvj $*"
+   "tarbx" "tar xfvj $*"
+   ;; Lisp
+   "lisp" "rlwrap ros -Q run $*"
+   "lisp-swank" "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+   ;; macOS
+   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
+   "app-clear" "sudo xattr -crv $*"
+   "app-sign" "sudo codesign --force --deep --sign - $*"
+   ;; Homebrew
+   "brewup" "brew update && brew upgrade"
+   "brewu" "brew update"
+   ;; Apt-get
+   "pacu" "sudo apt-get update"
+   "pacup" "sudo apt-get update && sudo apt-get upgrade"
+   "pacupd" "sudo apt-get dist-upgrade"
+   "pacs" "apt-cache search $*"
+   "pacinfo" "apt-cache show $*"
+   "paci" "sudo apt-get install --no-install-recommends $*"
+   "pacli" "apt list --installed"
+   "paclig" "apt list --installed | grep $*"
+   "pacmark" "sudo apt-mark $*"
+   "pacr" "sudo apt-get remove --purge $*"
+   "pacar" "sudo apt-get autoremove --purge $*"
+   ;; Guix
+   "guixup" "guix pull && guix package -u"
+   ;; Nix
+   "nixup" "nix-channel --update nixpkgs && nix-env -u '*'"
+   ;; Too small /tmp directory
+   "resizetmp" "sudo mount -o remount,size=8G,noatime /tmp"))
 
 ;;  ____________________________________________________________________________
 ;;; PDF-TOOLS
@@ -237,9 +245,7 @@
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
-;; TODO: Add keybindings for search and replace
-;; The 'query-' variant asks with each string. Confirm with "SPC",
-;; or omit the current selection via "n"
+(global-tree-sitter-mode 1)
 
 ;; Structural editing
 ;; <https://github.com/Fuco1/smartparens>
@@ -247,6 +253,10 @@
 ;; <https://github.com/emacs-evil/evil-cleverparens>
 ;; (after! (:and smartparens evil-cleverparens)
 ;;   (setq! sp-hybrid-kill-excessive-whitespace t))
+
+;; TODO: Add keybindings for search and replace
+;; The 'query-' variant asks with each string. Confirm with "SPC",
+;; or omit the current selection via "n"
 
 ;; Delete the whole indentation instead spaces one-by-one via <backspace>?
 ;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
@@ -271,9 +281,8 @@
 ;;; LISP
 
 (defun my-lisp-modes ()
-  "A non-exhaustive list of Lisp-related modes.
-This list is derived from the `smartparens` package and reduced to actually
-installed modes."
+  "Generates a non-exhaustive list of loaded Lisp-related modes.
+This list is derived from the smartparens package"
   (seq-filter #'fboundp '(clojure-mode
                           clojurec-mode
                           clojurescript-mode
@@ -287,15 +296,15 @@ installed modes."
                           gerbil-mode
                           lfe-mode  ; addition
                           lisp-mode
+                          lisp-data-mode  ; addition
                           racket-mode
                           scheme-mode
                           stumpwm-mode
                           )))
 
 (defun my-lisp-repl-modes ()
-  "A non-exhaustive list of Lisp-related REPLs.
-This list is derived from the `smartparens` package and reduced to actually
-installed modes."
+  "Generates a non-exhaustive list of loaded Lisp-related REPLs.
+This list is derived from the smartparens package."
   (seq-filter #'fboundp '(cider-repl-mode
                           eshell-mode
                           fennel-repl-mode
@@ -325,10 +334,10 @@ installed modes."
   (advice-add 'lispy-eval-and-comment
               :around #'evil-collection-elisp-mode-last-sexp)
   (map! :localleader
-        :mode #'lisp-interaction-mode
-        :mode #'emacs-lisp-mode
-        :prefix ("e" . "eval")
-        :nv "c" #'lispy-eval-and-comment))
+        :map lisp-interaction-mode-map
+        :map emacs-lisp-mode-map
+        :prefix "e"
+        :n "c" #'lispy-eval-and-comment))
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; COMMON LISP
@@ -341,7 +350,7 @@ installed modes."
 
 (add-to-list '+lisp-quicklisp-paths "~/.roswell/lisp/quicklisp" 'append)
 
-(add-hook! 'lisp-mode-hook
+(add-hook! '(lisp-mode-hook lisp-data-mode-hook)
   (indent-bars-mode -1))
 
 (after! sly
@@ -351,6 +360,7 @@ installed modes."
            (sbcl ("ros" "-L" "sbcl" "-Q" "run") :coding-system utf-8-unix)
            (ccl ("ros" "-L" "ccl-bin" "-Q" "run"))))
   (setq! sly-default-lisp 'roswell
+         sly-command-switch-to-existing-lisp 'always
          sly-complete-symbol-function #'sly-flex-completions)
   (add-hook! 'sly-mrepl-mode-hook
              #'rainbow-delimiters-mode)
@@ -372,8 +382,9 @@ installed modes."
          :desc "Sly"                       "'" #'sly
          :desc "Sly (ask)"                 ";" (cmd!! #'sly '-)
          :desc "Expand macro"              "m" #'macrostep-expand
-         :desc "Find local Quicklisp file" "f" #'+lisp/find-file-in-quicklisp
-         (:prefix ("c" . "compile")
+         :desc "Find file in Quicklisp" "f" #'+lisp/find-file-in-quicklisp
+         :desc "Quickload System"       "q" #'sly-quickload
+         (:prefix "c"  ; ("c" . "compile")
           :desc "Compile toplevel form" "c" #'sly-compile-defun
           :desc "Compile file"          "C" nil ; #'sly-compile-file
           :desc "Compile file"          "f" #'sly-compile-file
@@ -382,7 +393,7 @@ installed modes."
           :desc "Compile/load file"     "L" #'sly-compile-and-load-file
           :desc "Remove notes"          "n" #'sly-remove-notes
           :desc "Compile region"        "r" #'sly-compile-region)
-         (:prefix ("e" . "evaluate")
+         (:prefix "e"  ; ("e" . "evaluate")
           :desc "Evaluate buffer"        "b" #'sly-eval-buffer
           :desc "Evaluate defun"         "d" #'sly-overlay-eval-defun
           :desc "Evaluate last"          "e" #'sly-eval-last-expression
@@ -390,10 +401,10 @@ installed modes."
           :desc "Evaluate defun (async)" "f" #'sly-eval-defun
           :desc "Undefine function"      "F" nil ; #'sly-undefine-function
           :desc "Evaluate region"        "r" #'sly-eval-region)
-         (:prefix ("u" . "Undefine")
+         (:prefix ("u" . "undefine")
           :desc "Undefine function"      "f" #'sly-undefine-function
           :desc "Unintern symbol"        "s" #'sly-unintern-symbol)
-         (:prefix ("g" . "goto")
+         (:prefix "g"  ; ("g" . "goto")
           :desc "Go back"              "b" #'sly-pop-find-definition-stack
           :desc "Go to"                "d" #'sly-edit-definition
           :desc "Go to (other window)" "D" #'sly-edit-definition-other-window
@@ -401,7 +412,7 @@ installed modes."
           :desc "Previous note"        "N" #'sly-previous-note
           :desc "Next sticker"         "s" #'sly-stickers-next-sticker
           :desc "Previous sticker"     "S" #'sly-stickers-prev-sticker)
-         (:prefix ("h" . "help")
+         (:prefix "h"  ; ("h" . "help")
           :desc "Who calls"               "<" #'sly-who-calls
           :desc "Calls who"               ">" #'sly-calls-who
           :desc "Lookup format directive" "~" #'hyperspec-lookup-format
@@ -416,27 +427,26 @@ installed modes."
           :desc "Who references"          "r" #'sly-who-references
           :desc "Who specializes"         "s" #'sly-who-specializes
           :desc "Who sets"                "S" #'sly-who-sets)
-         (:prefix ("r" . "repl")
+         (:prefix "r"  ; ("r" . "repl")
           :desc "Clear REPL"         "c" #'sly-mrepl-clear-repl
           :desc "Load System"        "l" #'sly-asdf-load-system
           :desc "Quit connection"    "q" #'sly-quit-lisp
           :desc "Restart connection" "r" #'sly-restart-inferior-lisp
           :desc "Reload Project"     "R" #'+lisp/reload-project
           :desc "Sync REPL"          "s" #'sly-mrepl-sync)
-         (:prefix ("s" . "stickers")
+         (:prefix "s"  ; ("s" . "stickers")
           :desc "Toggle breaking stickers" "b" #'sly-stickers-toggle-break-on-stickers
           :desc "Clear defun stickers"     "c" #'sly-stickers-clear-defun-stickers
           :desc "Clear buffer stickers"    "C" #'sly-stickers-clear-buffer-stickers
           :desc "Fetch stickers"           "f" #'sly-stickers-fetch
           :desc "Replay stickers"          "r" #'sly-stickers-replay
           :desc "Add/remove sticker"       "s" #'sly-stickers-dwim)
-         (:prefix ("t" . "test")
-          :desc "Test System" "s" #'sly-asdf-test-system)
-         (:prefix ("T" . "trace")
+         (:prefix "t"  ; ("t" . "test")
+          :desc "Test system" "s" #'sly-asdf-test-system)
+         (:prefix "T"  ; ("T" . "trace")
           :desc "Toggle"         "t" #'sly-toggle-trace-fdefinition
           :desc "Toggle (fancy)" "T" #'sly-toggle-fancy-trace
-          :desc "Untrace all"    "u" #'sly-untrace-all)
-         )))
+          :desc "Untrace all"    "u" #'sly-untrace-all))))
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; LFE
@@ -469,8 +479,7 @@ installed modes."
   :defer t)
 
 (use-package! lfe-start
-  :init
-  (require 'lfe-start))
+  :defer t)
 
 (after! eglot
   (add-to-list 'eglot-server-programs
