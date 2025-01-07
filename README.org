@@ -1,7 +1,9 @@
+#+TITLE: Doom Emacs Config with Vim keybindings
 
 * How to install Doom Emacs on MacOS
 
-*1.* Install Emacs Plus from Homebrew
+*1.* Install Emacs Plus from Homebrew:
+<https://github.com/d12frosted/homebrew-emacs-plus>
 #+begin_src shell
 brew install d12frosted/emacs-plus/emacs-plus \
     --with-no-frame-refocus \
