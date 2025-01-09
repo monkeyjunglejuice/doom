@@ -24,7 +24,7 @@
        doom-serif-font
        (font-spec :family "FiraCode Nerd Font" :size 15 :weight 'light)
        doom-variable-pitch-font
-       (font-spec :family "Fira Sans" :size 15))
+       (font-spec :family "Fira Sans" :size 18))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
@@ -34,7 +34,7 @@
 
 ;; Set light/dark theme
 (setq! doom-theme-light 'doom-one-light)
-(setq! doom-theme-dark 'doom-nord-aurora)
+(setq! doom-theme-dark 'doom-city-lights)
 
 ;; Switch between dark/light theme based on the system appearance
 (defun my-apply-theme (appearance)
