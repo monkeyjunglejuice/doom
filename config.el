@@ -81,8 +81,7 @@
 ;;  ____________________________________________________________________________
 ;;; MISC UI
 
-(after! which-key
-  (setq! which-key-idle-delay 0.15))
+(setq! which-key-idle-delay 0.2)
 
 (after! hl-line
   (setq! global-hl-line-modes
