@@ -50,7 +50,7 @@
        :emacs
        (dired +icons)
        electric
-       ;; eww
+       eww
        (ibuffer +icons)
        undo
        vc
