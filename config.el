@@ -331,7 +331,7 @@
 
 (defun my-lisp-modes ()
   "Generates a non-exhaustive list of loaded Lisp-related modes.
-This list is derived from the smartparens package"
+Entries are derived from the smartparens package"
   (seq-filter #'fboundp '(clojure-mode
                           clojurec-mode
                           clojurescript-mode
@@ -353,7 +353,7 @@ This list is derived from the smartparens package"
 
 (defun my-lisp-repl-modes ()
   "Generates a non-exhaustive list of loaded Lisp-related REPLs.
-This list is derived from the smartparens package."
+Entries are derived from the smartparens package."
   (seq-filter #'fboundp '(cider-repl-mode
                           eshell-mode
                           fennel-repl-mode
