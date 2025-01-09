@@ -377,16 +377,22 @@ Entries are derived from the smartparens package."
 (add-hook! 'emacs-lisp-mode-hook
   (indent-bars-mode -1))
 
-(after! lispy
+(after! (lispy lispyville)
   ;; Make sure that the comment with the result is placed after the evaluated
   ;; expression, not inside it
   (advice-add 'lispy-eval-and-comment
               :around #'evil-collection-elisp-mode-last-sexp)
   (map! :localleader
-        :map lisp-interaction-mode-map
-        :map emacs-lisp-mode-map
+        :map (emacs-lisp-mode-map lisp-interaction-mode-map)
         :prefix "e"
-        :n "c" #'lispy-eval-and-comment))
+        :n "c" #'lispy-eval-and-comment)
+  (map! :map lispy-mode-map-lispy
+        ;; Unbind individual bracket keys
+        "[" nil
+        "]" nil
+        ;; Re-bind commands bound to bracket keys by default
+        "M-[" #'lispyville-previous-opening
+        "M-]" #'lispyville.next-opening))
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; COMMON LISP
