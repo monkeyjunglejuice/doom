@@ -146,6 +146,7 @@
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Dired>
 
 (after! dired
+  (setq! dired-kill-when-opening-new-dired-buffer t)
   (add-hook! 'dired-mode-hook
              #'dired-hide-details-mode
              #'dired-omit-mode
