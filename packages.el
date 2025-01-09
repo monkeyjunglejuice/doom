@@ -1,7 +1,8 @@
 ;;; $DOOMDIR/packages.el -*- no-byte-compile: t; -*-
 
-(package! evil-cleverparens :disable t)
+(package! eshell-did-you-mean :disable t)
 (package! evil-snipe :disable t)
+(package! evil-cleverparens :disable t)
 (package! aggressive-indent :disable t)
 
 (package! inf-elixir)
