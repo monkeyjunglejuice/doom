@@ -3,8 +3,9 @@
 ;;  ____________________________________________________________________________
 ;;; COMPILATION SETTINGS
 
+;; Compile ahead of time to Avoid lagging caused by sudden compilation
 (setq! package-native-compile t)
-;; (setq! native-comp-jit-compilation nil)
+(setq! native-comp-jit-compilation nil)
 
 ;;  ____________________________________________________________________________
 ;;; DOOM MODULES

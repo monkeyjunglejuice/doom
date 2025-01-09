@@ -63,11 +63,16 @@
       :desc "Switch buffer"         "<"   nil
       :desc "Org capture"           "X"   nil
       :desc "Switch to last buffer" "`"   nil
-      :desc "M-x"                   "m"   #'execute-extended-command
+      :desc "Toggle last popup"     "~"   nil
+      :desc "Toggle last popup"     "`"   #'+popup/toggle
+      :desc "Command"               "m"   #'execute-extended-command
+      :desc "Complex command"       "M"   #'consult-complex-command
       :desc "Switch buffer"         ","   #'switch-to-buffer
+      :desc "Previous window"       "j"   #'evil-window-mru
       :desc "Lisp"                  "l"   #'sly
-      :desc "Eshell"                "e"   #'+eshell/here
-      :desc "IEx"                   "r"   #'inf-elixir)
+      :desc "Eshell"                "e"   #'+eshell/toggle
+      :desc "IEx"                   "r"   #'inf-elixir-run
+      )
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; MACOS
