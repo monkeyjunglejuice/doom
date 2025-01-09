@@ -517,8 +517,8 @@ Entries are derived from the smartparens package."
              #'eglot-ensure))
 
 (use-package! inferior-lfe
-  :defer t
   :when (modulep! :tools eval)
+  :defer t
   :config
   (set-popup-rule! "^\\*inferior-lfe.*\\*" :size 0.3 :quit nil :ttl nil)
   (add-hook! 'inferior-lfe-mode-hook
@@ -538,6 +538,8 @@ Entries are derived from the smartparens package."
 
 (after! eglot
   (add-to-list 'eglot-server-programs
+               ;; FIXME: the LFE language server is broken
+               ;; https://github.com/mdbergmann/lfe-ls/issues/10#issue-2714103164
                '(lfe-mode . ("~/code/lfe-ls/_build/prod/bin/lfe-ls"
                              "--transport" "tcp" "--port" :autoport))))
 
