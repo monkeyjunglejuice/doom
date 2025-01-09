@@ -553,10 +553,22 @@ Entries are derived from the smartparens package."
 ;;; REPL
 
 (use-package! inf-elixir
-  :when (modulep! :tools eval)
+  :when (and (modulep! :lang elixir) (modulep! :tools eval))
   :defer t
+  :init
+  (defun inf-elixir-run ()
+    "Start IEx in the project context when a Mix project is detected.
+The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") or
+`inf-elixir-base-command' (defaults to \"iex\")."
+    (interactive)
+    ;; Return the project root directory if a mix.exs file is found
+    (if (locate-dominating-file default-directory "mix.exs")
+        (progn (message "[inf-elixir] IEx running in project context...")
+               (inf-elixir-project))
+      (progn (message "[inf-elixir] IEx running standalone...")
+             (inf-elixir))))
   :config
-  (set-repl-handler! 'elixir-mode #'inf-elixir)
+  (set-repl-handler! 'elixir-mode #'inf-elixir-run)
   (set-eval-handler! 'elixir-mode #'inf-elixir-send-region)
   (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.3 :quit nil :ttl nil)
   (defun inf-elixir-recompile ()
@@ -574,28 +586,35 @@ configuration or restarting applications."
   (setq! inf-elixir-switch-to-repl-on-send nil)
   (add-hook! 'inf-elixir-mode-hook
              #'rainbow-delimiters-mode)
-  ;; TODO: Refactor this mess into one expression
-  (map! :localleader :mode elixir-mode :prefix ("e" . "eval")
-        :nv "l" #'inf-elixir-send-line)
-  (map! :localleader :mode elixir-mode :prefix ("e" . "eval")
-        :nv "r" #'inf-elixir-send-region)
-  (map! :localleader :mode elixir-mode :prefix ("e" . "eval")
-        :nv "b" #'inf-elixir-send-buffer)
-  (map! :localleader :mode elixir-mode
-        :n "R" #'inf-elixir-recompile)
-  (map! :localleader :mode elixir-mode
-        :n "r" #'inf-elixir-reload-module)
-  (map! :localleader :mode elixir-mode
-        :n "o" #'inf-elixir-observer)
-  (map! :localleader :mode elixir-mode
-        :n "s" #'inf-elixir-project))
+  (map! (:mode elixir-mode
+         :localleader
+         :desc "IEx"
+         :n "'" #'inf-elixir-run
+         :n "r" #'inf-elixir-reload-module
+         :n "R" #'inf-elixir-recompile
+         :n "o" #'inf-elixir-observer
+         (:prefix ("e" . "eval")
+          :n "l" #'inf-elixir-send-line
+          :v "r" #'inf-elixir-send-region
+          :n "b" #'inf-elixir-send-buffer))))
 
-;; <https://github.com/elixir-lsp/elixir-ls>
-;; <https://gist.github.com/Nezteb/dc63f1d5ad9d88907dd103da2ca000b1>
+(use-package! mix
+  :when (modulep! :lang elixir)
+  :defer t
+  :config
+  (map! (:mode elixir-mode
+         :localleader
+         (:prefix ("m" . "mix")
+          :n "c" #'mix-compile
+          :n "t" #'mix-test
+          :n "m" #'mix-execute-task
+          :n "l" #'mix-last-command))))
+
 (after! eglot
-  ;; A longer timeout seems required for the first run in a new project
+  :when (modulep! :lang elixir)
+  ;; <https://github.com/elixir-lsp/elixir-ls>
   (add-to-list 'eglot-server-programs
-               '(elixir-mode . ("elixir-ls"))))
+               '((elixir-mode) . ("elixir-ls"))))
 
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
