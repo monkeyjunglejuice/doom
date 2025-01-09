@@ -129,7 +129,7 @@
        (default +bindings +gnupg +smartparens))
 
 ;;  ____________________________________________________________________________
-;;; DEFINITIONS
+;;; DECLARATIONS
 
 (defvar doom-theme-light "Specifies the default light theme.")
 (defvar doom-theme-dark "Specifies the default dark theme.")
