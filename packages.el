@@ -2,8 +2,10 @@
 
 (package! eshell-did-you-mean :disable t)
 (package! evil-snipe :disable t)
+(package! ace-window :disable t)
 (package! evil-cleverparens :disable t)
-(package! aggressive-indent :disable t)
+
+(package! aggressive-indent)
 
 (package! inf-elixir)
 (package! mix)
@@ -14,6 +16,7 @@
            :build (:not compile)))
 
 (package! srfi)
+(package! scheme-complete)
 
 ;; (package! apprentice
 ;;   :recipe (:host github :repo "Sasanidas/Apprentice"

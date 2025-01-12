@@ -28,11 +28,10 @@
        modeline
        ophints
        (popup +defaults)
-       ;; tabs
        treemacs
        (vc-gutter +pretty)
        vi-tilde-fringe
-       ;; (window-select +switch-window)
+       (window-select +switch-window)
        workspaces
        ;; zen
 
@@ -100,11 +99,11 @@
        (lua +fennel +lsp +tree-sitter)
        (markdown)
        ;; nim
-       (ocaml +lsp +tree-sitter)
+       (ocaml +tree-sitter)
        (org +pandoc +passwords)
        graphviz
        ;; python
-       (racket +lsp +xp)
+       ;; (racket +lsp +xp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
        (scheme +guile)

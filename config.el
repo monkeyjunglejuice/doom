@@ -1,4 +1,4 @@
-;;DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
 ;;; FRAME PLACEMENT
@@ -16,7 +16,7 @@
           '(height . 54)
           '(left . 0))
 
-;;   ____________________________________________________________________________
+;;  ____________________________________________________________________________
 ;;; FONTS
 
 (setq! doom-font
@@ -24,7 +24,7 @@
        doom-serif-font
        (font-spec :family "FiraCode Nerd Font" :size 15 :weight 'light)
        doom-variable-pitch-font
-       (font-spec :family "Fira Sans" :size 18))
+       (font-spec :family "Gentium Book Plus" :size 17 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
@@ -32,11 +32,18 @@
 ;; Add personal themes directory
 (load! "~/.emacs.themes/init-themes.el")
 
+;; Theme settings
+(setq! doom-nord-aurora-brighter-comments t
+       doom-nord-aurora-comment-bg nil)
+(setq! doom-city-lights-brighter-comments t
+       doom-city-lights-comment-bg nil)
+
 ;; Set light/dark theme
 (setq! doom-theme-light 'doom-one-light)
-(setq! doom-theme-dark 'doom-city-lights)
+(setq! doom-theme-dark 'doom-one)
 
 ;; Switch between dark/light theme based on the system appearance
+;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
 (defun my-apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
@@ -58,21 +65,21 @@
        doom-localleader-alt-key "M-SPC ,")
 
 ;; doom-leader-map
+;; FIXME: https://github.com/doomemacs/doomemacs/issues/7887
 (map! :leader
-      :desc "M-x"                   ":"   nil
-      :desc "Switch buffer"         "<"   nil
-      :desc "Org capture"           "X"   nil
-      :desc "Switch to last buffer" "`"   nil
-      :desc "Toggle last popup"     "~"   nil
-      :desc "Toggle last popup"     "`"   #'+popup/toggle
-      :desc "Command"               "m"   #'execute-extended-command
-      :desc "Complex command"       "M"   #'consult-complex-command
-      :desc "Switch buffer"         ","   #'switch-to-buffer
-      :desc "Previous window"       "j"   #'evil-window-mru
-      :desc "Lisp"                  "l"   #'sly
-      :desc "Eshell"                "e"   #'+eshell/toggle
-      :desc "IEx"                   "r"   #'inf-elixir-run
-      )
+      :desc nil ":" nil                 ; M-x
+      :desc nil "<" nil                 ; Switch buffer
+      :desc nil "X" nil                 ; Org capture
+      :desc nil "`" nil                 ; Switch to last buffer
+      :desc nil "~" nil                 ; Toggle last popup
+      :desc "Toggle popups" "`" #'+popup/toggle
+      :desc "Command" "m" #'execute-extended-command
+      :desc "Complex command" "M" #'consult-complex-command
+      :desc "Switch bufferch" "," #'switch-to-buffer
+      :desc "Previous window" "j" #'evil-window-mru
+      :desc "Lisp" "l" #'sly
+      :desc "Eshell" "e" #'+eshell/toggle
+      :desc "IEx" "r" #'inf-elixir-run)
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; MACOS
@@ -81,16 +88,63 @@
 (setq! mac-command-modifier 'control)
 
 ;; make the <Option> key on MacOS act as <Meta> key for "M- ..."
-(setq! mac-option-modifier 'meta)
+;; (setq! mac-option-modifier 'meta)
 
 ;;  ____________________________________________________________________________
-;;; MISC UI
+;;; WINDOW MANAGEMENT
+;; <https://github.com/dimitri/switch-window>
 
-(setq! which-key-idle-delay 0.2)
+(use-package! switch-window
+  :config
+  (setq! switch-window-background t)
+  (setq! switch-window-multiple-frames nil)
+  (setq! switch-window-threshold 2)
+  (setq! switch-window-mvborder-increment 1)
+  ;; Vim-like keybindings for window resizing
+  (setq! switch-window-extra-map
+         (let ((map (make-sparse-keymap)))
+           (define-key map (kbd "k") 'switch-window-mvborder-up)
+           (define-key map (kbd "j") 'switch-window-mvborder-down)
+           (define-key map (kbd "h") 'switch-window-mvborder-left)
+           (define-key map (kbd "l") 'switch-window-mvborder-right)
+           (define-key map (kbd "=") 'balance-windows)
+           (define-key map (kbd "SPC") 'switch-window-resume-auto-resize-window)
+           map))
+  (setq! switch-window-minibuffer-shortcut 109) ; m
+  (setq! switch-window-qwerty-shortcuts
+         '("a" "s" "d" "f" "g"
+           "q" "w" "e" "r" "t" "y"
+           "u" "i" "o" "p"
+           "z" "x" "c" "v"
+           "b" "n"))
+  (set-face-attribute 'switch-window-background nil
+                      :foreground 'unspecified
+                      :inherit 'shadow)
+  (set-face-attribute 'switch-window-label nil
+                      :bold t
+                      :height 1.0)
+  :bind
+  ;; Bind `switch-window' commands to regular Emacs keybindings
+  ("C-x o"   . switch-window)
+  ("C-x 1"   . switch-window-then-maximize)
+  ("C-x 2"   . switch-window-then-split-below)
+  ("C-x 3"   . switch-window-then-split-right)
+  ("C-x 0"   . switch-window-then-delete)
+  ("C-x 4 0" . switch-window-then-kill-buffer)
+  ("C-x 4 d" . switch-window-then-dired)
+  ("C-x 4 f" . switch-window-then-find-file)
+  ("C-x 4 b" . switch-window-then-display-buffer)
+  ("C-x 4 s" . switch-window-then-swap-buffer))
 
-(after! hl-line
-  (setq! global-hl-line-modes
-         '(special-mode org-agenda-mode dired-mode)))
+;; Make `other-window' work on popup-windows too
+(setq! +popup-default-parameters
+       (remove '(no-other-window . t) +popup-default-parameters))
+
+;;  ____________________________________________________________________________
+;;; POPUP WINDOWS
+
+;; Adjust defaults
+;; (plist-put +popup-defaults :height 0.3)
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -103,13 +157,20 @@
 (minibuffer-depth-indicate-mode 1)
 
 ;;  ____________________________________________________________________________
-;;; BUFFERS
+;;; MISC UI
+
+(setq! which-key-idle-delay 0.4)
+
+(after! hl-line
+  (setq! global-hl-line-modes
+         '(special-mode org-agenda-mode dired-mode)))
+
+;;  ____________________________________________________________________________
+;;; BUFFER MANAGEMENT
 
 ;; Kill both buffer and window
 (map! :leader
       :desc "Kill buffer and window" :n "b D" #'kill-buffer-and-window)
-
-;; TODO: Toggle between `+popup/raise' and `+popup/buffer'
 
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode)
@@ -170,10 +231,14 @@
 ;;; SHELLS
 
 (defvar my-shell (executable-find "fish"))
+(setq! explicit-shell-file-name my-shell)
 
-;; Use a Posix shell under the hood to avoid certain problems
-(setq! shell-file-name (executable-find (or "dash" "bash" "zsh" "sh"))
-       explicit-shell-file-name my-shell)
+;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
+;; packages) spawn child processes via shell commands and rely on their output
+(setq! shell-file-name (or (executable-find "bash")
+                           (executable-find "dash")
+                           (executable-find "zsh")
+                           (executable-find "sh")))
 
 ;; Set the default shell for Vterm
 (after! vterm
@@ -250,7 +315,7 @@
 (url-setup-privacy-info)
 
 (defun my-user-agent (browser-name)
-  ;; TODO: interactive user-agent selection
+  ;; TODO: make user-agent selection interactive
   (cond
    ((equal browser-name 'safari-macos)
     (setq! url-user-agent
@@ -266,7 +331,7 @@
            'default))))
 
 ;; Set the user agent for the internal web browser
-(my-user-agent 'safari-iphone)
+(my-user-agent 'w3m)
 
 ;; Per default, open links with the internal web browser
 (setq! browse-url-browser-function #'eww-browse-url)
@@ -299,8 +364,6 @@
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
-(global-tree-sitter-mode 1)
-
 ;; Structural editing
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
@@ -318,9 +381,12 @@
 
 ;; Indentation guides
 (after! indent-bars
-  (setq! indent-bars-no-descend-lists nil
-         ;; indent-bars-highlight-current-depth '(:face fringe)
+  (setq! indent-bars-no-descend-lists t
+         indent-bars-highlight-current-depth '(:face fringe)
          indent-bars-display-on-blank-lines t))
+
+(remove-hook! 'text-mode-hook
+  #'indent-bars-mode)
 
 ;; Line numbers
 (setq! display-line-numbers-type 'relative)
@@ -328,8 +394,12 @@
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
   #'display-line-numbers-mode)
 
+;; Turn on rainbow delimiters globally
 (add-hook! '(prog-mode-hook conf-mode-hook)
            #'rainbow-delimiters-mode)
+
+;; Let inline comments start immediately
+(setq! comment-column 2)
 
 ;;  ____________________________________________________________________________
 ;;; LISP
@@ -376,6 +446,9 @@ Entries are derived from the smartparens package."
                           sly-mrepl-mode
                           )))
 
+(after! lisp
+  (setq! parens-require-spaces nil))
+
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; ELISP
 
@@ -383,7 +456,7 @@ Entries are derived from the smartparens package."
   (indent-bars-mode -1))
 
 (after! (lispy lispyville)
-  ;; Make sure that the comment with the result is placed after the evaluated
+  ;; Making sure that the comment with the result is placed after the evaluated
   ;; expression, not inside it
   (advice-add 'lispy-eval-and-comment
               :around #'evil-collection-elisp-mode-last-sexp)
@@ -424,7 +497,7 @@ Entries are derived from the smartparens package."
          sly-complete-symbol-function #'sly-flex-completions)
   (add-hook! 'sly-mrepl-mode-hook
              #'rainbow-delimiters-mode)
-  ;; Override some of Doom's default Common Lisp keybindings
+  ;; TODO: Change some of Doom's default Common Lisp keybindings
   (map! (:map sly-db-mode-map
          :n "gr" #'sly-db-restart-frame)
         (:map sly-inspector-mode-map
@@ -593,9 +666,8 @@ configuration or restarting applications."
   (setq! inf-elixir-switch-to-repl-on-send nil)
   (add-hook! 'inf-elixir-mode-hook
              #'rainbow-delimiters-mode)
-  (map! (:mode elixir-mode
-         :localleader
-         :desc "IEx"
+  (map! :localleader
+        (:map elixir-mode-map
          :n "'" #'inf-elixir-run
          :n "r" #'inf-elixir-reload-module
          :n "R" #'inf-elixir-recompile
@@ -603,19 +675,23 @@ configuration or restarting applications."
          (:prefix ("e" . "eval")
           :n "l" #'inf-elixir-send-line
           :v "r" #'inf-elixir-send-region
-          :n "b" #'inf-elixir-send-buffer))))
+          :n "b" #'inf-elixir-send-buffer))
+        (:map inf-elixir-mode-map
+         :n "r" #'inf-elixir-reload-module
+         :n "R" #'inf-elixir-recompile
+         :n "o" #'inf-elixir-observer)))
 
 (use-package! mix
   :when (modulep! :lang elixir)
   :defer t
   :config
-  (map! (:mode elixir-mode
-         :localleader
-         (:prefix ("m" . "mix")
-          :n "c" #'mix-compile
-          :n "t" #'mix-test
-          :n "m" #'mix-execute-task
-          :n "l" #'mix-last-command))))
+  (map! :localleader
+        (:map (elixir-mode-map inf-elixir-mode-map)
+              (:prefix ("m" . "mix")
+               :n "c" #'mix-compile
+               :n "t" #'mix-test
+               :n "m" #'mix-execute-task
+               :n "l" #'mix-last-command))))
 
 (after! eglot
   :when (modulep! :lang elixir)
@@ -624,14 +700,27 @@ configuration or restarting applications."
                '((elixir-mode) . ("elixir-ls"))))
 
 ;;  ____________________________________________________________________________
+;;; OCAML
+
+(use-package! utop
+  :when (and (modulep! :lang ocaml) (modulep! :tools eval))
+  :config
+  (set-repl-handler! 'tuareg-mode #'utop)
+  (set-eval-handler! 'tuareg-mode #'utop-eval-region)
+  (set-popup-rule! "^\\*utop\\*" :size 0.3 :quit nil :ttl nil)
+  (setq! utop-command "opam exec -- dune utop . -- -emacs")
+  (add-hook! 'utop-mode-hook
+             ;; HACK: Thats how to get completions from Merlin in Utop
+             ;; <https://github.com/ocaml-community/utop/issues/455>
+             (progn (merlin-mode +1) (merlin-mode -1))))
+
+;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
 
 ;; Private user information
 (load! "~/.emacs.lisp/my-private.el")
-
 ;; Personal Elisp
 (load! "~/.emacs.lisp/my-tools.el")
-
 ;;; MJJ blog
 (load! "~/Documents/monkeyjunglejuice/static/mjj-publish.el")
 
