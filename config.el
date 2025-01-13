@@ -67,19 +67,19 @@
 ;; doom-leader-map
 ;; FIXME: https://github.com/doomemacs/doomemacs/issues/7887
 (map! :leader
-      :desc nil ":" nil                 ; M-x
-      :desc nil "<" nil                 ; Switch buffer
-      :desc nil "X" nil                 ; Org capture
-      :desc nil "`" nil                 ; Switch to last buffer
-      :desc nil "~" nil                 ; Toggle last popup
-      :desc "Toggle popups" "`" #'+popup/toggle
-      :desc "Command" "m" #'execute-extended-command
+      :desc nil ":" nil  ; M-x
+      :desc nil "<" nil  ; Switch buffer
+      :desc nil "X" nil  ; Org capture
+      :desc nil "`" nil  ; Switch to last buffer
+      :desc nil "~" nil  ; Toggle last popup
+      :desc "Toggle popups" "`"   #'+popup/toggle
+      :desc "Command" "m"         #'execute-extended-command
       :desc "Complex command" "M" #'consult-complex-command
-      :desc "Switch buffer" "," #'switch-to-buffer
+      :desc "Switch buffer" ","   #'switch-to-buffer
       :desc "Previous window" "j" #'evil-window-mru
-      :desc "Lisp" "l" #'sly
-      :desc "Eshell" "e" #'+eshell/toggle
-      :desc "IEx" "r" #'inf-elixir-run)
+      :desc "Lisp" "l"            #'sly
+      :desc "Eshell" "e"          #'+eshell/toggle
+      :desc "IEx" "r"             #'inf-elixir-run)
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; MACOS
@@ -103,12 +103,12 @@
   ;; Vim-like keybindings for window resizing
   (setq! switch-window-extra-map
          (let ((map (make-sparse-keymap)))
-           (define-key map (kbd "k") 'switch-window-mvborder-up)
-           (define-key map (kbd "j") 'switch-window-mvborder-down)
-           (define-key map (kbd "h") 'switch-window-mvborder-left)
-           (define-key map (kbd "l") 'switch-window-mvborder-right)
-           (define-key map (kbd "=") 'balance-windows)
-           (define-key map (kbd "SPC") 'switch-window-resume-auto-resize-window)
+           (define-key map (kbd "k")   #'switch-window-mvborder-up)
+           (define-key map (kbd "j")   #'switch-window-mvborder-down)
+           (define-key map (kbd "h")   #'switch-window-mvborder-left)
+           (define-key map (kbd "l")   #'switch-window-mvborder-right)
+           (define-key map (kbd "=")   #'balance-windows)
+           (define-key map (kbd "SPC") #'switch-window-resume-auto-resize-window)
            map))
   (setq! switch-window-minibuffer-shortcut 109)  ; "m"
   (setq! switch-window-qwerty-shortcuts
@@ -251,60 +251,60 @@
   ;; Browseable Eshell buffer even during output
   (setq! eshell-scroll-to-bottom-on-output nil)
   (set-eshell-alias!
-   "q" "exit"
-   "l" "ls $*"
-   "la" "ls -lA $*"
-   "ll" "ls -lh $*"
-   "lla" "ls -lhA $*"
-   "lt" "eza -T --icons $*"
-   "lat" "eza -AT --icons $*"
-   "llt" "eza -lT --icons $*"
-   "llat" "eza -lAT --icons $*"
-   "up" "eshell-up $1"
-   "cdp" "cd-to-project"
-   "mkdir" "mkdir -p $*"
-   "tr" "trash $*"
+   "q"           "exit"
+   "l"           "ls $*"
+   "la"          "ls -lA $*"
+   "ll"          "ls -lh $*"
+   "lla"         "ls -lhA $*"
+   "lt"          "eza -T --icons $*"
+   "lat"         "eza -AT --icons $*"
+   "llt"         "eza -lT --icons $*"
+   "llat"        "eza -lAT --icons $*"
+   "up"          "eshell-up $1"
+   "cdp"         "cd-to-project"
+   "mkdir"       "mkdir -p $*"
+   "tr"          "trash $*"
    ;; Emacs commands
-   "f" "find-file $1"
-   "fo" "find-file-other-window $1"
-   "d" "dired $1"
-   "do" "dired-other-window $1"
-   "g" "magit-status"
+   "f"           "find-file $1"
+   "fo"          "find-file-other-window $1"
+   "d"           "dired $1"
+   "do"          "dired-other-window $1"
+   "g"           "magit-status"
    ;; Git
-   "git" "git --no-pager $*"
+   "git"         "git --no-pager $*"
    ;; Tar archives
-   "targ" "tar cfvz $*"
-   "targx" "tar xfvz $*"
-   "tarb" "tar cfvj $*"
-   "tarbx" "tar xfvj $*"
+   "targ"        "tar cfvz $*"
+   "targx"       "tar xfvz $*"
+   "tarb"        "tar cfvj $*"
+   "tarbx"       "tar xfvj $*"
    ;; Lisp
-   "lisp" "rlwrap ros -Q run $*"
-   "lisp-swank" "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+   "lisp"        "rlwrap ros -Q run $*"
+   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
    ;; macOS
    "app-unblock" "sudo xattr -d com.apple.quarantine $*"
-   "app-clear" "sudo xattr -crv $*"
-   "app-sign" "sudo codesign --force --deep --sign - $*"
+   "app-clear"   "sudo xattr -crv $*"
+   "app-sign"    "sudo codesign --force --deep --sign - $*"
    ;; Homebrew
-   "brewup" "brew update && brew upgrade"
-   "brewu" "brew update"
+   "brewup"      "brew update && brew upgrade"
+   "brewu"       "brew update"
    ;; Apt-get
-   "pacu" "sudo apt-get update"
-   "pacup" "sudo apt-get update && sudo apt-get upgrade"
-   "pacupd" "sudo apt-get dist-upgrade"
-   "pacs" "apt-cache search $*"
-   "pacinfo" "apt-cache show $*"
-   "paci" "sudo apt-get install --no-install-recommends $*"
-   "pacli" "apt list --installed"
-   "paclig" "apt list --installed | grep $*"
-   "pacmark" "sudo apt-mark $*"
-   "pacr" "sudo apt-get remove --purge $*"
-   "pacar" "sudo apt-get autoremove --purge $*"
+   "pacu"        "sudo apt-get update"
+   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
+   "pacupd"      "sudo apt-get dist-upgrade"
+   "pacs"        "apt-cache search $*"
+   "pacinfo"     "apt-cache show $*"
+   "paci"        "sudo apt-get install --no-install-recommends $*"
+   "pacli"       "apt list --installed"
+   "paclig"      "apt list --installed | grep $*"
+   "pacmark"     "sudo apt-mark $*"
+   "pacr"        "sudo apt-get remove --purge $*"
+   "pacar"       "sudo apt-get autoremove --purge $*"
    ;; Guix
-   "guixup" "guix pull && guix package -u"
+   "guixup"      "guix pull && guix package -u"
    ;; Nix
-   "nixup" "nix-channel --update nixpkgs && nix-env -u '*'"
+   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
    ;; Too small /tmp directory
-   "resizetmp" "sudo mount -o remount,size=8G,noatime /tmp"))
+   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
 
 ;;  ____________________________________________________________________________
 ;;; COMINT
@@ -569,58 +569,58 @@ Entries are derived from the smartparens package."
          :desc "Sly"                       "'" #'sly
          :desc "Sly (ask)"                 ";" (cmd!! #'sly '-)
          :desc "Expand macro"              "m" #'macrostep-expand
-         :desc "Find file in Quicklisp" "f" #'+lisp/find-file-in-quicklisp
-         :desc "Quickload System"       "q" #'sly-quickload
+         :desc "Find file in Quicklisp"    "f" #'+lisp/find-file-in-quicklisp
+         :desc "Quickload System"          "q" #'sly-quickload
          (:prefix "c"  ; ("c" . "compile")
-          :desc "Compile toplevel form" "c" #'sly-compile-defun
-          :desc "Compile file"          "C" nil ; #'sly-compile-file
-          :desc "Compile file"          "f" #'sly-compile-file
-          :desc "Compile/load file"     "F" nil ; #'sly-compile-and-load-file
-          :desc "Load file"             "l" #'sly-load-file
-          :desc "Compile/load file"     "L" #'sly-compile-and-load-file
-          :desc "Remove notes"          "n" #'sly-remove-notes
-          :desc "Compile region"        "r" #'sly-compile-region)
+          :desc "Compile toplevel form"    "c" #'sly-compile-defun
+          :desc "Compile file"             "C" nil ; #'sly-compile-file
+          :desc "Compile file"             "f" #'sly-compile-file
+          :desc "Compile/load file"        "F" nil ; #'sly-compile-and-load-file
+          :desc "Load file"                "l" #'sly-load-file
+          :desc "Compile/load file"        "L" #'sly-compile-and-load-file
+          :desc "Remove notes"             "n" #'sly-remove-notes
+          :desc "Compile region"           "r" #'sly-compile-region)
          (:prefix "e"  ; ("e" . "evaluate")
-          :desc "Evaluate buffer"        "b" #'sly-eval-buffer
-          :desc "Evaluate defun"         "d" #'sly-overlay-eval-defun
-          :desc "Evaluate last"          "e" #'sly-eval-last-expression
-          :desc "Evaluate/print last"    "E" #'sly-eval-print-last-expression
-          :desc "Evaluate defun (async)" "f" #'sly-eval-defun
-          :desc "Undefine function"      "F" nil ; #'sly-undefine-function
-          :desc "Evaluate region"        "r" #'sly-eval-region)
+          :desc "Evaluate buffer"          "b" #'sly-eval-buffer
+          :desc "Evaluate defun"           "d" #'sly-overlay-eval-defun
+          :desc "Evaluate last"            "e" #'sly-eval-last-expression
+          :desc "Evaluate/print last"      "E" #'sly-eval-print-last-expression
+          :desc "Evaluate defun (async)"   "f" #'sly-eval-defun
+          :desc "Undefine function"        "F" nil ; #'sly-undefine-function
+          :desc "Evaluate region"          "r" #'sly-eval-region)
          (:prefix ("u" . "undefine")
-          :desc "Undefine function"      "f" #'sly-undefine-function
-          :desc "Unintern symbol"        "s" #'sly-unintern-symbol)
+          :desc "Undefine function"        "f" #'sly-undefine-function
+          :desc "Unintern symbol"          "s" #'sly-unintern-symbol)
          (:prefix "g"  ; ("g" . "goto")
-          :desc "Go back"              "b" #'sly-pop-find-definition-stack
-          :desc "Go to"                "d" #'sly-edit-definition
-          :desc "Go to (other window)" "D" #'sly-edit-definition-other-window
-          :desc "Next note"            "n" #'sly-next-note
-          :desc "Previous note"        "N" #'sly-previous-note
-          :desc "Next sticker"         "s" #'sly-stickers-next-sticker
-          :desc "Previous sticker"     "S" #'sly-stickers-prev-sticker)
+          :desc "Go back"                  "b" #'sly-pop-find-definition-stack
+          :desc "Go to"                    "d" #'sly-edit-definition
+          :desc "Go to (other window)"     "D" #'sly-edit-definition-other-window
+          :desc "Next note"                "n" #'sly-next-note
+          :desc "Previous note"            "N" #'sly-previous-note
+          :desc "Next sticker"             "s" #'sly-stickers-next-sticker
+          :desc "Previous sticker"         "S" #'sly-stickers-prev-sticker)
          (:prefix "h"  ; ("h" . "help")
-          :desc "Who calls"               "<" #'sly-who-calls
-          :desc "Calls who"               ">" #'sly-calls-who
-          :desc "Lookup format directive" "~" #'hyperspec-lookup-format
-          :desc "Lookup reader macro"     "#" #'hyperspec-lookup-reader-macro
-          :desc "Apropos"                 "a" #'sly-apropos
-          :desc "Who binds"               "b" #'sly-who-binds
-          :desc "Disassemble symbol"      "d" #'sly-disassemble-symbol
-          :desc "Describe symbol"         "h" #'sly-describe-symbol
-          :desc "HyperSpec lookup"        "H" #'sly-hyperspec-lookup
-          :desc "Who macro-expands"       "m" #'sly-who-macroexpands
-          :desc "Apropos package"         "p" #'sly-apropos-package
-          :desc "Who references"          "r" #'sly-who-references
-          :desc "Who specializes"         "s" #'sly-who-specializes
-          :desc "Who sets"                "S" #'sly-who-sets)
+          :desc "Who calls"                "<" #'sly-who-calls
+          :desc "Calls who"                ">" #'sly-calls-who
+          :desc "Lookup format directive"  "~" #'hyperspec-lookup-format
+          :desc "Lookup reader macro"      "#" #'hyperspec-lookup-reader-macro
+          :desc "Apropos"                  "a" #'sly-apropos
+          :desc "Who binds"                "b" #'sly-who-binds
+          :desc "Disassemble symbol"       "d" #'sly-disassemble-symbol
+          :desc "Describe symbol"          "h" #'sly-describe-symbol
+          :desc "HyperSpec lookup"         "H" #'sly-hyperspec-lookup
+          :desc "Who macro-expands"        "m" #'sly-who-macroexpands
+          :desc "Apropos package"          "p" #'sly-apropos-package
+          :desc "Who references"           "r" #'sly-who-references
+          :desc "Who specializes"          "s" #'sly-who-specializes
+          :desc "Who sets"                 "S" #'sly-who-sets)
          (:prefix "r"  ; ("r" . "repl")
-          :desc "Clear REPL"         "c" #'sly-mrepl-clear-repl
-          :desc "Load System"        "l" #'sly-asdf-load-system
-          :desc "Quit connection"    "q" #'sly-quit-lisp
-          :desc "Restart connection" "r" #'sly-restart-inferior-lisp
-          :desc "Reload Project"     "R" #'+lisp/reload-project
-          :desc "Sync REPL"          "s" #'sly-mrepl-sync)
+          :desc "Clear REPL"               "c" #'sly-mrepl-clear-repl
+          :desc "Load System"              "l" #'sly-asdf-load-system
+          :desc "Quit connection"          "q" #'sly-quit-lisp
+          :desc "Restart connection"       "r" #'sly-restart-inferior-lisp
+          :desc "Reload Project"           "R" #'+lisp/reload-project
+          :desc "Sync REPL"                "s" #'sly-mrepl-sync)
          (:prefix "s"  ; ("s" . "stickers")
           :desc "Toggle breaking stickers" "b" #'sly-stickers-toggle-break-on-stickers
           :desc "Clear defun stickers"     "c" #'sly-stickers-clear-defun-stickers
@@ -629,11 +629,11 @@ Entries are derived from the smartparens package."
           :desc "Replay stickers"          "r" #'sly-stickers-replay
           :desc "Add/remove sticker"       "s" #'sly-stickers-dwim)
          (:prefix "t"  ; ("t" . "test")
-          :desc "Test system" "s" #'sly-asdf-test-system)
+          :desc "Test system"              "s" #'sly-asdf-test-system)
          (:prefix "T"  ; ("T" . "trace")
-          :desc "Toggle"         "t" #'sly-toggle-trace-fdefinition
-          :desc "Toggle (fancy)" "T" #'sly-toggle-fancy-trace
-          :desc "Untrace all"    "u" #'sly-untrace-all))))
+          :desc "Toggle"                   "t" #'sly-toggle-trace-fdefinition
+          :desc "Toggle (fancy)"           "T" #'sly-toggle-fancy-trace
+          :desc "Untrace all"              "u" #'sly-untrace-all))))
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; LFE
