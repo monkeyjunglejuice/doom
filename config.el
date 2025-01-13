@@ -701,9 +701,10 @@ The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") or
                (inf-elixir-project))
       (progn (message "[inf-elixir] IEx running standalone...")
              (inf-elixir))))
-  :config
+  (defalias 'run-elixir #'inf-elixir-run "Alias for `inf-elixir-run")
   (set-repl-handler! 'elixir-mode #'inf-elixir-run)
   (set-eval-handler! 'elixir-mode #'inf-elixir-send-region)
+  :config
   (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.3 :quit nil :ttl nil)
   (defun inf-elixir-recompile ()
     "Send `IEx.Helpers.recompile/1' to recompile the current Mix project.
