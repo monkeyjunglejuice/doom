@@ -547,6 +547,10 @@ Entries are derived from the smartparens package."
          sly-complete-symbol-function #'sly-flex-completions)
   (add-hook! 'sly-mrepl-mode-hook
              #'rainbow-delimiters-mode)
+  (add-hook! 'sly-net-process-close-hooks
+             ;; Switch to normal state when connection is closed
+             (when (string-match-p "^\\*sly-mrepl.*\\*" (buffer-name))
+               (evil-normal-state)))
   ;; TODO: Change some of Doom's default Common Lisp keybindings
   (map! (:map sly-db-mode-map
          :n "gr" #'sly-db-restart-frame)
