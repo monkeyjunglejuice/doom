@@ -170,8 +170,7 @@
          hl-line-sticky-flag nil))
 
 (after! vertico
-  (setq! vertico-resize 'grow-only
-         vertico-cycle nil))
+  (setq! vertico-cycle nil))
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
