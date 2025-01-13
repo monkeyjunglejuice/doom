@@ -6,6 +6,7 @@
 (package! evil-cleverparens :disable t)
 
 (package! aggressive-indent)
+(package! clean-kill-ring)
 
 (package! inf-elixir)
 (package! mix)

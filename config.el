@@ -364,7 +364,13 @@
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
-;; Structural editing
+;; Kill-ring, yanking, copy & paste
+;; <https://github.com/NicholasBHubbard/clean-kill-ring.el>
+(use-package! clean-kill-ring
+  :config
+  (clean-kill-ring-mode 1))
+
+;; Structural editing / parenthesis
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
 ;; <https://github.com/emacs-evil/evil-cleverparens>
