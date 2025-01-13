@@ -75,7 +75,7 @@
       :desc "Toggle popups" "`" #'+popup/toggle
       :desc "Command" "m" #'execute-extended-command
       :desc "Complex command" "M" #'consult-complex-command
-      :desc "Switch bufferch" "," #'switch-to-buffer
+      :desc "Switch buffer" "," #'switch-to-buffer
       :desc "Previous window" "j" #'evil-window-mru
       :desc "Lisp" "l" #'sly
       :desc "Eshell" "e" #'+eshell/toggle
@@ -87,7 +87,7 @@
 ;; Make the <Command> key on MacOS act as <Ctrl> key: "C- ..."
 (setq! mac-command-modifier 'control)
 
-;; make the <Option> key on MacOS act as <Meta> key for "M- ..."
+;; Make the <Option> key on MacOS act as <Meta> key for "M- ..."
 ;; (setq! mac-option-modifier 'meta)
 
 ;;  ____________________________________________________________________________
@@ -110,7 +110,7 @@
            (define-key map (kbd "=") 'balance-windows)
            (define-key map (kbd "SPC") 'switch-window-resume-auto-resize-window)
            map))
-  (setq! switch-window-minibuffer-shortcut 109) ; m
+  (setq! switch-window-minibuffer-shortcut 109)  ; "m"
   (setq! switch-window-qwerty-shortcuts
          '("a" "s" "d" "f" "g"
            "q" "w" "e" "r" "t" "y"
