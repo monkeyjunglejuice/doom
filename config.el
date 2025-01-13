@@ -24,7 +24,7 @@
        doom-serif-font
        (font-spec :family "FiraCode Nerd Font" :size 15 :weight 'light)
        doom-variable-pitch-font
-       (font-spec :family "Gentium Book Plus" :size 17 :weight 'normal))
+       (font-spec :family "Gentium Book Plus" :size 18 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
