@@ -156,6 +156,9 @@
 ;; Show the depth of recursive minibuffers?
 (minibuffer-depth-indicate-mode 1)
 
+;; Delete duplicates from the command history
+(setq! history-delete-duplicates t)
+
 ;;  ____________________________________________________________________________
 ;;; MISC UI
 
