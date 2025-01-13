@@ -184,6 +184,14 @@
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode)
   (setq! ibuffer-marked-face 'dired-marked))
 
+;; Kill all buffers at once
+(defun my-kill-all-buffers ()
+  "Really kill all buffers at once."
+  (interactive)
+  (save-some-buffers)
+  (let ((kill-buffer-query-functions '()))
+    (mapc #'kill-buffer (buffer-list))))
+
 ;;  ____________________________________________________________________________
 ;;; ELDOC
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Lisp-Doc>
