@@ -520,7 +520,7 @@ Entries are derived from the smartparens package."
         "]" nil
         ;; Re-bind commands bound to bracket keys by default
         "M-[" #'lispyville-previous-opening
-        "M-]" #'lispyville.next-opening))
+        "M-]" #'lispyville-next-opening))
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; COMMON LISP
