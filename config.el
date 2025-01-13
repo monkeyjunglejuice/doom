@@ -162,11 +162,16 @@
 ;;  ____________________________________________________________________________
 ;;; MISC UI
 
-(setq! which-key-idle-delay 0.4)
+(after! which-key
+  (setq! which-key-idle-delay 0.4))
 
 (after! hl-line
-  (setq! global-hl-line-modes
-         '(special-mode org-agenda-mode dired-mode)))
+  (setq! global-hl-line-modes '(special-mode org-agenda-mode dired-mode)
+         hl-line-sticky-flag nil))
+
+(after! vertico
+  (setq! vertico-resize 'grow-only
+         vertico-cycle nil))
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
