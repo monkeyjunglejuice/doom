@@ -224,26 +224,6 @@
        `(("." . ,(concat (getenv "HOME") "/Documents/backup/emacs/"))))
 
 ;;  ____________________________________________________________________________
-;;; DIRED
-;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Dired>
-
-(after! dired
-  (setq! dired-kill-when-opening-new-dired-buffer t)
-  (add-hook! 'dired-mode-hook
-             #'dired-hide-details-mode
-             #'dired-omit-mode
-             (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
-  (map! :localleader :mode dired-mode
-        :n "d" #'dired-hide-details-mode))
-
-;;  ____________________________________________________________________________
-;;; COMINT
-
-(after! comint
-  (setq! comint-input-ignoredups t
-         comint-scroll-to-bottom-on-input 'this))
-
-;;  ____________________________________________________________________________
 ;;; SHELLS
 
 (defvar my-shell (executable-find "fish"))
@@ -327,10 +307,45 @@
    "resizetmp" "sudo mount -o remount,size=8G,noatime /tmp"))
 
 ;;  ____________________________________________________________________________
-;;; WEB BROWSERS
+;;; COMINT
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;; EWW BUILT-IN BROWSER
+(after! comint
+  (setq! comint-input-ignoredups t
+         comint-scroll-to-bottom-on-input 'this))
+
+;;  ____________________________________________________________________________
+;;; DIRED
+;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Dired>
+
+(after! dired
+  ;; Listing columns; Switch arguments with "C-u s" e.g. hide backups with -B
+  (setq! dired-listing-switches "-lhFA -v --group-directories-first")
+  (setq! dired-kill-when-opening-new-dired-buffer t)
+  (add-hook! 'dired-mode-hook
+             #'dired-hide-details-mode
+             #'dired-omit-mode
+             (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
+  (map! :localleader :mode dired-mode
+        :n "d" #'dired-hide-details-mode))
+
+;;  ____________________________________________________________________________
+;;; CALENDAR
+;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Calendar_002fDiary>
+
+(setq! calendar-date-style 'iso
+       calendar-week-start-day 1
+       calendar-weekend-days '(6 0))
+
+;;  ____________________________________________________________________________
+;;; UTILITIES
+
+;; Show and manage OS processes
+(setq! proced-auto-update-interval 1
+       proced-auto-update-flag t
+       proced-descend t)
+
+;;  ____________________________________________________________________________
+;;; WEB BROWSERS
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/eww.html#Top>
 
 (setq! url-privacy-level '(email lastloc cookies))
