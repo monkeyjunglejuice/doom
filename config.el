@@ -353,7 +353,7 @@
            'default))))
 
 ;; Set the user agent for the internal web browser
-(my-user-agent 'w3m)
+(my-user-agent 'safari-iphone)
 
 ;; Per default, open links with the internal web browser
 (setq! browse-url-browser-function #'eww-browse-url)
