@@ -256,12 +256,18 @@
                            (executable-find "zsh")
                            (executable-find "sh")))
 
-;; Set the default shell for Vterm
+;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;; VTERM
+
 (after! vterm
   (setq! vterm-shell my-shell))
 
-;; Eshell
+;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;; ESHELL
+
 (after! eshell
+  ;; List directory content after changing into it
+  (setq eshell-list-files-after-cd t)
   ;; Browseable Eshell buffer even during output
   (setq! eshell-scroll-to-bottom-on-output nil)
   (set-eshell-alias!
