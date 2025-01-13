@@ -98,7 +98,7 @@
   :config
   (setq! switch-window-background t)
   (setq! switch-window-multiple-frames nil)
-  (setq! switch-window-threshold 2)
+  (setq! switch-window-threshold 1)
   (setq! switch-window-mvborder-increment 1)
   ;; Vim-like keybindings for window resizing
   (setq! switch-window-extra-map
@@ -121,7 +121,7 @@
                       :foreground 'unspecified
                       :inherit 'shadow)
   (set-face-attribute 'switch-window-label nil
-                      :bold t
+                      :inherit 'show-paren-match-expression
                       :height 1.0)
   :bind
   ;; Bind `switch-window' commands to regular Emacs keybindings
