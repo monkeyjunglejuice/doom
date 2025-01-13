@@ -414,13 +414,20 @@
 ;; (after! (:and smartparens evil-cleverparens)
 ;;   (setq! sp-hybrid-kill-excessive-whitespace t))
 
+;; Searching
 ;; TODO: Add keybindings for search and replace
 ;; The 'query-' variant asks with each string. Confirm with "SPC",
 ;; or omit the current selection via "n"
 
-;; Delete the whole indentation instead spaces one-by-one via <backspace>?
-;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
-(setq! backward-delete-char-untabify-method 'all)
+;; Line numbers
+(setq! display-line-numbers-type 'relative)
+
+;; Indentation
+;; <https://github.com/Malabarba/aggressive-indent-mode>
+(use-package! aggressive-indent
+  :defer t
+  :config
+  (global-aggressive-indent-mode 1))
 
 ;; Indentation guides
 (after! indent-bars
@@ -428,21 +435,21 @@
          indent-bars-highlight-current-depth '(:face fringe)
          indent-bars-display-on-blank-lines t))
 
+;; Delete the whole indentation instead spaces one-by-one via <backspace>?
+;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
+(setq! backward-delete-char-untabify-method 'all)
+
+;; Configure text modes
 (remove-hook! 'text-mode-hook
-  #'indent-bars-mode)
-
-;; Line numbers
-(setq! display-line-numbers-type 'relative)
-
-(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
+  #'indent-bars-mode
   #'display-line-numbers-mode)
 
-;; Turn on rainbow delimiters globally
+;; Configure programming modes / config modes
+(remove-hook! '(prog-mode-hook conf-mode-hook)
+  #'display-line-numbers-mode)
+
 (add-hook! '(prog-mode-hook conf-mode-hook)
            #'rainbow-delimiters-mode)
-
-;; Let inline comments start immediately
-(setq! comment-column 2)
 
 ;;  ____________________________________________________________________________
 ;;; LISP
