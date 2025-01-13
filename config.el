@@ -67,19 +67,19 @@
 ;; doom-leader-map
 ;; FIXME: https://github.com/doomemacs/doomemacs/issues/7887
 (map! :leader
-      :desc nil ":" nil  ; M-x
-      :desc nil "<" nil  ; Switch buffer
-      :desc nil "X" nil  ; Org capture
-      :desc nil "`" nil  ; Switch to last buffer
-      :desc nil "~" nil  ; Toggle last popup
-      :desc "Toggle popups" "`"   #'+popup/toggle
-      :desc "Command" "m"         #'execute-extended-command
+      :desc nil               ":" nil  ; M-x
+      :desc nil               "<" nil  ; Switch buffer
+      :desc nil               "X" nil  ; Org capture
+      :desc nil               "`" nil  ; Switch to last buffer
+      :desc nil               "~" nil  ; Toggle last popup
+      :desc "Toggle popups"   "`" #'+popup/toggle
+      :desc "Command"         "m" #'execute-extended-command
       :desc "Complex command" "M" #'consult-complex-command
-      :desc "Switch buffer" ","   #'switch-to-buffer
+      :desc "Switch buffer"   "," #'switch-to-buffer
       :desc "Previous window" "j" #'evil-window-mru
-      :desc "Lisp" "l"            #'sly
-      :desc "Eshell" "e"          #'+eshell/toggle
-      :desc "IEx" "r"             #'inf-elixir-run)
+      :desc "Lisp"            "l" #'sly
+      :desc "Eshell"          "e" #'+eshell/toggle
+      :desc "IEx"             "r" #'inf-elixir-run)
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; MACOS
