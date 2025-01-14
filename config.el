@@ -65,7 +65,6 @@
        doom-localleader-alt-key "M-SPC ,")
 
 ;; doom-leader-map
-;; FIXME: https://github.com/doomemacs/doomemacs/issues/7887
 (map! :leader
       :desc nil               ":" nil  ; M-x
       :desc nil               "<" nil  ; Switch buffer
