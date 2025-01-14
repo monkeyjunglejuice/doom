@@ -82,6 +82,21 @@
       :desc "IEx"             "r" #'inf-elixir-run)
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; SWAP KEYS
+;; <https://github.com/wbolster/evil-swap-keys>
+
+(use-package! evil-swap-keys
+  :init
+  (global-evil-swap-keys-mode 1)
+  :config
+  (pushnew! evil-swap-keys-text-input-states 'visual 'normal)
+  (add-hook! '(prog-mode-hook
+               text-mode-hook
+               ;; dired-mode-hook
+               special-mode-hook)
+             #'evil-swap-keys-swap-number-row))
+
+;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; MACOS
 
 ;; Make the <Command> key on MacOS act as <Ctrl> key: "C- ..."

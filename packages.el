@@ -5,6 +5,7 @@
 (package! ace-window :disable t)
 (package! evil-cleverparens :disable t)
 
+(package! evil-swap-keys)
 (package! aggressive-indent)
 (package! clean-kill-ring)
 
