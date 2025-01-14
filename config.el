@@ -165,14 +165,14 @@
 ;;; MINIBUFFER
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Minibuffer>
 
-;; Modal editing in the minibuffer, too?
-(setq! evil-collection-setup-minibuffer t)
-
 ;; Show the depth of recursive minibuffers?
 (minibuffer-depth-indicate-mode 1)
 
 ;; Delete duplicates from the command history
 (setq! history-delete-duplicates t)
+
+;; Modal editing in the minibuffer, too?
+(setq! evil-collection-setup-minibuffer t)
 
 ;;  ____________________________________________________________________________
 ;;; MISC UI
