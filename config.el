@@ -77,7 +77,7 @@
       :desc "Switch buffer"   "," #'switch-to-buffer
       :desc "Previous window" "j" #'evil-window-mru
       :desc "Lisp"            "l" #'sly
-      :desc "Eshell"          "e" #'+eshell/toggle
+      :desc "Eshell"          "e" #'+eshell/here
       :desc "IEx"             "r" #'inf-elixir-run)
 
 ;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
