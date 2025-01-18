@@ -20,10 +20,6 @@
 (package! srfi)
 (package! scheme-complete)
 
-;; (package! apprentice
-;;   :recipe (:host github :repo "Sasanidas/Apprentice"
-;;            :branch "master"))
-
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
 
