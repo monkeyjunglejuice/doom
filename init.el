@@ -3,9 +3,13 @@
 ;;  ____________________________________________________________________________
 ;;; COMPILATION SETTINGS
 
-;; Compile ahead of time to Avoid lagging caused by sudden compilation
+;; Compile ahead of time to avoid lagging caused by sudden compilation
 (setq! package-native-compile t)
 (setq! native-comp-jit-compilation nil)
+
+;; Always use these additional arguments to sync or upgrade Doom Emacs:
+;; doom sync --gc --aot
+;; doom upgrade --aot
 
 ;;  ____________________________________________________________________________
 ;;; DOOM MODULES
@@ -30,9 +34,9 @@
        (popup +defaults)
        treemacs
        (vc-gutter +pretty)
-       vi-tilde-fringe
+       ;; vi-tilde-fringe
        (window-select +switch-window)
-       workspaces
+       ;; workspaces
        ;; zen
 
        :editor
@@ -68,7 +72,7 @@
        ;; ansible
        ;; biblio
        ;; collab
-       ;; debugger
+       debugger
        ;; direnv
        ;; docker
        ;; editorconfig
@@ -90,7 +94,7 @@
        ;; (cc +lsp +tree-sitter)
        common-lisp
        data
-       (elixir +lsp +tree-sitter)
+       (elixir +lsp +tree-sitter +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
        ;; (haskell +lsp +tree-sitter)
@@ -125,7 +129,7 @@
        ;; (rss +org)
 
        :config
-       (default +bindings +gnupg +smartparens))
+       (default +bindings +smartparens +gnupg))
 
 ;;  ____________________________________________________________________________
 ;;; DECLARATIONS
