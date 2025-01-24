@@ -1,46 +1,41 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
-;;; FRAME PLACEMENT
+;;; FRAMES
 
-;; Initial frame
+;; Initial frame placement
 (pushnew! initial-frame-alist
-          '(width . 80)
+          '(width . 81)
           '(height . 54)
-          '(left . 940)
+          '(left . 930)
           '(top . 0))
 
-;; Default frame
+;; Default frame placement
 (pushnew! default-frame-alist
-          '(width . 102)
+          '(width . 81)
           '(height . 54)
-          '(left . 0))
+          '(left . 930)
+          '(top . 0))
+
+;; Bring frame to the front
+(select-frame-set-input-focus (selected-frame))
 
 ;;  ____________________________________________________________________________
 ;;; FONTS
 
 (setq! doom-font
-       (font-spec :family "FiraCode Nerd Font" :size 15 :weight 'normal)
+       (font-spec :family "Source Code Pro" :size 15.5 :weight 'normal)
        doom-serif-font
-       (font-spec :family "FiraCode Nerd Font" :size 15 :weight 'light)
+       (font-spec :family "Source Code Pro" :size 15.5 :weight 'medium)
        doom-variable-pitch-font
-       (font-spec :family "Gentium Book Plus" :size 18 :weight 'normal))
+       (font-spec :family "Gentium Book Plus" :size 17 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
 
-;; Add personal themes directory
-(load! "~/.emacs.themes/init-themes.el")
-
-;; Theme settings
-(setq! doom-nord-aurora-brighter-comments t
-       doom-nord-aurora-comment-bg nil)
-(setq! doom-city-lights-brighter-comments t
-       doom-city-lights-comment-bg nil)
-
-;; Set light/dark theme
+;;; - Set light/dark theme:
 (setq! doom-theme-light 'doom-one-light)
-(setq! doom-theme-dark 'doom-one)
+(setq! doom-theme-dark 'doom-outrun-electric)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -50,8 +45,10 @@
   (setq! doom-theme
          (pcase appearance
            ('light (load-theme doom-theme-light t)
+                   (doom/set-frame-opacity 100)
                    doom-theme-light)
            ('dark (load-theme doom-theme-dark t)
+                  (doom/set-frame-opacity 80)
                   doom-theme-dark))))
 
 (add-hook! 'ns-system-appearance-change-functions #'my-apply-theme)
@@ -80,23 +77,8 @@
       :desc "Eshell"          "e" #'+eshell/here
       :desc "IEx"             "r" #'inf-elixir-run)
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; SWAP KEYS
-;; <https://github.com/wbolster/evil-swap-keys>
-
-(use-package! evil-swap-keys
-  :init
-  (global-evil-swap-keys-mode 1)
-  :config
-  (pushnew! evil-swap-keys-text-input-states 'visual 'normal)
-  (add-hook! '(prog-mode-hook
-               text-mode-hook
-               ;; dired-mode-hook
-               special-mode-hook)
-             #'evil-swap-keys-swap-number-row))
-
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; MACOS
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - MacOS
 
 ;; Make the <Command> key on MacOS act as <Ctrl> key: "C- ..."
 (setq! mac-command-modifier 'control)
@@ -139,6 +121,7 @@
                       :height 1.0)
   :bind
   ;; Bind `switch-window' commands to regular Emacs keybindings
+  ;; TODO Set up Evil equivalents and replace some default Doom bindings
   ("C-x o"   . switch-window)
   ("C-x 1"   . switch-window-then-maximize)
   ("C-x 2"   . switch-window-then-split-below)
@@ -150,15 +133,15 @@
   ("C-x 4 b" . switch-window-then-display-buffer)
   ("C-x 4 s" . switch-window-then-swap-buffer))
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Popup windows
+
 ;; Make `other-window' work on popup-windows too
 (setq! +popup-default-parameters
        (remove '(no-other-window . t) +popup-default-parameters))
 
-;;  ____________________________________________________________________________
-;;; POPUP WINDOWS
-
 ;; Adjust defaults
-;; (plist-put +popup-defaults :height 0.3)
+;; (plist-put +popup-defaults :height 0.38)
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -176,15 +159,26 @@
 ;;  ____________________________________________________________________________
 ;;; MISC UI
 
+(menu-bar-mode -1)
+
+(after! vertico
+  (setq! vertico-cycle nil))
+
 (after! which-key
   (setq! which-key-idle-delay 0.4))
 
 (after! hl-line
-  (setq! global-hl-line-modes '(special-mode org-agenda-mode dired-mode)
-         hl-line-sticky-flag nil))
+  (setq! hl-line-sticky-flag nil)
+  (setq! global-hl-line-modes '(prog-mode
+                                text-mode
+                                special-mode
+                                org-agenda-mode
+                                dired-mode)))
 
-(after! vertico
-  (setq! vertico-cycle nil))
+;; Don't hide mode-line
+(after! hide-mode-line
+  (advice-add 'hide-mode-line-mode :around
+              (lambda (orig &optional args) nil)))
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
@@ -194,8 +188,7 @@
       :desc "Kill buffer and window" :n "b D" #'kill-buffer-and-window)
 
 (after! ibuffer
-  (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode)
-  (setq! ibuffer-marked-face 'dired-marked))
+  (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
 
 ;; Kill all buffers at once
 (defun my-kill-all-buffers ()
@@ -244,29 +237,27 @@
 
 ;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
 ;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "bash")
-                           (executable-find "dash")
-                           (executable-find "zsh")
+(setq! shell-file-name (or (executable-find "dash")
+                           (executable-find "bash")
                            (executable-find "sh")))
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;; VTERM
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Vterm
 
 (after! vterm
   (setq! vterm-shell my-shell))
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;; ESHELL
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Eshell
 
 (after! eshell
-  ;; List directory content after changing into it
-  (setq eshell-list-files-after-cd t)
-  ;; Browseable Eshell buffer even during output
   (setq! eshell-scroll-to-bottom-on-output nil)
+  (setq eshell-list-files-after-cd t)
+  (setq! eshell-term-name "xterm-256color")
   (set-eshell-alias!
    "q"           "exit"
    "l"           "ls $*"
-   "la"          "ls -lA $*"
+   "la"          "ls -A $*"
    "ll"          "ls -lh $*"
    "lla"         "ls -lhA $*"
    "lt"          "eza -T --icons $*"
@@ -283,6 +274,8 @@
    "d"           "dired $1"
    "do"          "dired-other-window $1"
    "g"           "magit-status"
+   "doomS"       "doom sync --gc --aot"
+   "doomU"       "doom upgrade --aot"
    ;; Git
    "git"         "git --no-pager $*"
    ;; Tar archives
@@ -333,13 +326,23 @@
 (after! dired
   ;; Listing columns; Switch arguments with "C-u s" e.g. hide backups with -B
   (setq! dired-listing-switches "-lhFA -v --group-directories-first")
-  (setq! dired-kill-when-opening-new-dired-buffer t)
+  ;; (setq! dired-kill-when-opening-new-dired-buffer t)
   (add-hook! 'dired-mode-hook
              #'dired-hide-details-mode
              #'dired-omit-mode
-             (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
+             (setq! dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
   (map! :localleader :mode dired-mode
-        :n "d" #'dired-hide-details-mode))
+        :n "d" #'dired-hide-details-mode)
+  ;; BUG <https://github.com/doomemacs/doomemacs/issues/8170>
+  (defun reset-cursor-after-wdired-exit ()
+    "Restore the evil-normal-state-cursor to 'box' after exiting Editable Dired."
+    (kill-local-variable 'evil-normal-state-cursor)
+    (kill-local-variable 'cursor-type)
+    (setq evil-normal-state-cursor 'box)
+    (setq cursor-type 'box))
+  (advice-add 'wdired-finish-edit :after #'reset-cursor-after-wdired-exit) ;; ZZ
+  (advice-add 'wdired-abort-changes :after #'reset-cursor-after-wdired-exit) ;; ZQ
+  (advice-add 'evil-force-normal-state :after #'reset-cursor-after-wdired-exit)) ;; ESC
 
 ;;  ____________________________________________________________________________
 ;;; CALENDAR
@@ -383,19 +386,16 @@
 ;; Set the user agent for the internal web browser
 (my-user-agent 'safari-iphone)
 
-;; Per default, open links with the internal web browser
+;; Default system browser
 (setq! browse-url-browser-function #'eww-browse-url)
 
 ;; Secondary web browser
 (setq! browse-url-secondary-browser-function #'browse-url-default-browser)
-;; (setq! browse-url-browser-function #'browse-url-firefox)
-;; (setq! browse-url-generic-program (executable-find "nyxt")
-;;        browse-url-browser-function #'browse-url-generic)
 
 ;; Keybindings
 (map! :leader
       :desc "Browse URL"           "o w"   #'browse-url
-      :desc "Browse URL in EWW"    "o W"   #'browse-web
+      :desc "Browse URL external"  "o W"   #'browse-url-default-macosx-browser
       :desc "Browse URL in Webkit" "o C-w" #'xwidget-webkit-browse-url)
 
 ;;  ____________________________________________________________________________
@@ -406,36 +406,137 @@
   (pdf-tools-install :no-query))
 
 ;;  ____________________________________________________________________________
+;;; PROJECTS / WORKSPACES
+
+;; Permanently display workspaces in minibuffer
+;; (after! persp-mode
+;;   (defun display-workspaces-in-minibuffer ()
+;;     (with-current-buffer " *Minibuf-0*"
+;;       (erase-buffer)
+;;       (insert (+workspace--tabline))))
+;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
+;;   (+workspace/display))
+
+;;  ____________________________________________________________________________
 ;;; ORG
 
 (after! org
-  (setq! org-directory "~/Documents/org/"))
+  (setq! org-directory "~/Documents/org/")
+  (setq! org-hide-leading-stars nil))
+
+;; <https://github.com/alphapapa/org-sticky-header>
+(use-package! org-sticky-header
+  :after org
+  :config
+  (add-hook! 'org-mode-hook #'org-sticky-header-mode))
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
-;; Kill-ring, yanking, copy & paste
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Swap keys
+
+;; <https://github.com/wbolster/evil-swap-keys>
+(use-package! evil-swap-keys
+  :config
+  (global-evil-swap-keys-mode 1)
+  ;; Shift number keys in all Evil states for any buffer type
+  (setq-hook! 'evil-local-mode-hook
+    evil-swap-keys-text-input-states
+    '(emacs insert replace visual normal motion operator operator-pending))
+  (add-hook! 'evil-local-mode-hook
+             #'evil-swap-keys-swap-number-row))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Tree-Sitter text objects
+
+(map! (:map +tree-sitter-outer-text-objects-map
+            ;; Use 'm' like "module" instead
+            "m" (evil-textobj-tree-sitter-get-textobj "class.outer"))
+      (:map +tree-sitter-inner-text-objects-map
+            ;; Use 'm' like "module" instead
+            "m" (evil-textobj-tree-sitter-get-textobj "class.inner")))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Kill-ring, yanking, copy & paste
 ;; <https://github.com/NicholasBHubbard/clean-kill-ring.el>
+
 (use-package! clean-kill-ring
   :config
   (clean-kill-ring-mode 1))
 
-;; Structural editing / parenthesis
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Parenthesis
+
+;; Color-code nested parens
+;; <https://github.com/Fanael/rainbow-delimiters>
+(add-hook! '(prog-mode-hook conf-mode-hook)
+           #'rainbow-delimiters-mode)
+
+;; Structural editing: Lispyville
+;; <https://oremacs.com/lispy>
+;; <https://github.com/abo-abo/lispy>
+(after! (lispy lispyville)
+  (map! :map lispy-mode-map-lispy
+        ;; Unbind individual bracket keys
+        "[" nil
+        "]" nil
+        ;; Re-bind commands bound to bracket keys by default
+        "M-[" #'lispyville-previous-opening
+        "M-]" #'lispyville-next-opening))
+
+;; Structural editing: Smartparens
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
-;; <https://github.com/emacs-evil/evil-cleverparens>
-;; (after! (:and smartparens evil-cleverparens)
-;;   (setq! sp-hybrid-kill-excessive-whitespace t))
+(after! smartparens
+  (setq! smartparens-global-strict-mode t)
+  (setq! show-paren-mode nil
+         show-smartparens-global-mode t)
+  ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
+  ;; and Paredit keybindings
+  ;; (map! :map smartparens-mode-map
+  ;;       ;; Navigation
+  ;;       "C-M-f"           #'sp-forward-sexp
+  ;;       "C-M-b"           #'sp-backward-sexp
+  ;;       "C-M-u"           #'sp-backward-up-sexp
+  ;;       "C-M-d"           #'sp-down-sexp
+  ;;       "C-M-p"           #'sp-backward-down-sexp
+  ;;       "C-M-n"           #'sp-up-sexp
+  ;;       "C-M-a"           #'sp-beginning-of-sexp
+  ;;       "C-M-e"           #'sp-end-of-sexp
+  ;;       ;; Depth-changing commands
+  ;;       "C-M-g"           #'sp-unwrap-sexp
+  ;;       "C-M-s"           #'sp-splice-sexp
+  ;;       ;; Forward slurp/barf
+  ;;       "C-)"             #'sp-forward-slurp-sexp
+  ;;       "C-}"             #'sp-forward-barf-sexp
+  ;;       ;; Backward slurp/barf
+  ;;       "C-("             #'sp-backward-slurp-sexp
+  ;;       "C-{"             #'sp-backward-barf-sexp
+  ;;       ;; Misc
+  ;;       "C-M-k"           #'sp-kill-sexp
+  ;;       "C-M-<backspace>" #'sp-backward-kill-sexp
+  ;;       "C-M-SPC"         #'sp-mark-sexp
+  ;;       "C-M-w"           #'sp-copy-sexp
+  ;;       "C-M-t"           #'sp-transpose-sexp
+  ;;       "M-("             #'sp-wrap-round)
+  )
 
-;; Searching
-;; TODO: Add keybindings for search and replace
-;; The 'query-' variant asks with each string. Confirm with "SPC",
-;; or omit the current selection via "n"
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Line numbers
 
-;; Line numbers
 (setq! display-line-numbers-type 'relative)
 
-;; Indentation
+(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
+  #'display-line-numbers-mode)
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Indentation
+
+;; Delete the whole indentation instead spaces one-by-one via <backspace>?
+;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
+(setq! backward-delete-char-untabify-method 'all)
+
 ;; <https://github.com/Malabarba/aggressive-indent-mode>
 (use-package! aggressive-indent
   :defer t
@@ -446,28 +547,21 @@
 (after! indent-bars
   (setq! indent-bars-no-descend-lists t
          indent-bars-highlight-current-depth '(:face fringe)
-         indent-bars-display-on-blank-lines t))
+         indent-bars-display-on-blank-lines t)
+  (remove-hook! 'text-mode-hook
+    #'indent-bars-mode))
 
-;; Delete the whole indentation instead spaces one-by-one via <backspace>?
-;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
-(setq! backward-delete-char-untabify-method 'all)
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Searching
 
-;; Configure text modes
-(remove-hook! 'text-mode-hook
-  #'indent-bars-mode
-  #'display-line-numbers-mode)
-
-;; Configure programming modes / config modes
-(remove-hook! '(prog-mode-hook conf-mode-hook)
-  #'display-line-numbers-mode)
-
-(add-hook! '(prog-mode-hook conf-mode-hook)
-           #'rainbow-delimiters-mode)
+;; TODO: Add keybindings for search and replace
+;; The 'query-' variant asks with each string. Confirm with "SPC",
+;; or omit the current selection via "n"
 
 ;;  ____________________________________________________________________________
 ;;; LISP
 
-(defun my-lisp-modes ()
+(defun my-lisp-src-modes ()
   "Generates a non-exhaustive list of loaded Lisp-related modes.
 Entries are derived from the smartparens package"
   (seq-filter #'fboundp '(clojure-mode
@@ -509,11 +603,8 @@ Entries are derived from the smartparens package."
                           sly-mrepl-mode
                           )))
 
-(after! lisp
-  (setq! parens-require-spaces nil))
-
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; ELISP
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Elisp
 
 (add-hook! 'emacs-lisp-mode-hook
   (indent-bars-mode -1))
@@ -526,17 +617,10 @@ Entries are derived from the smartparens package."
   (map! :localleader
         :map (emacs-lisp-mode-map lisp-interaction-mode-map)
         :prefix "e"
-        :n "c" #'lispy-eval-and-comment)
-  (map! :map lispy-mode-map-lispy
-        ;; Unbind individual bracket keys
-        "[" nil
-        "]" nil
-        ;; Re-bind commands bound to bracket keys by default
-        "M-[" #'lispyville-previous-opening
-        "M-]" #'lispyville-next-opening))
+        :n "c" #'lispy-eval-and-comment))
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; COMMON LISP
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Common Lisp
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Executing-Lisp>
 ;; <http://joaotavora.github.io/sly/>
 ;; <https://github.com/joaotavora/sly>
@@ -648,8 +732,18 @@ Entries are derived from the smartparens package."
           :desc "Toggle (fancy)"           "T" #'sly-toggle-fancy-trace
           :desc "Untrace all"              "u" #'sly-untrace-all))))
 
-;;  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; LFE
+;; The hyperspec must be installed first. Adapt the path below:
+(after! hyperspec
+  (setq! common-lisp-hyperspec-root
+         (concat "file://"
+                 (expand-file-name "~/common-lisp/.hyperspec/HyperSpec/")))
+  (setq! common-lisp-hyperspec-symbol-table
+         (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
+  (setq! common-lisp-hyperspec-issuex-table
+         (concat common-lisp-hyperspec-root "Data/Map_IssX.txt")))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - LFE
 ;; <https://lfe.io/>
 
 (use-package! lfe-mode
@@ -666,8 +760,7 @@ Entries are derived from the smartparens package."
   :defer t
   :config
   (set-popup-rule! "^\\*inferior-lfe.*\\*" :size 0.3 :quit nil :ttl nil)
-  (add-hook! 'inferior-lfe-mode-hook
-             #'rainbow-delimiters-mode)
+  (add-hook! 'inferior-lfe-mode-hook #'rainbow-delimiters-mode)
   ;; (setq! inferior-lfe-program "lfe")
   ;; (setq! inferior-lfe-program-options '("-nobanner"))
   ;; (setq! inferior-lfe-check-if-rebar-project t)
@@ -707,11 +800,11 @@ Entries are derived from the smartparens package."
 ;;; LOAD EXTERNAL ELISP
 
 ;; Private user information
-(load! "~/.emacs.lisp/my-private.el")
+(use-package! my-private)
 ;; Personal Elisp
-(load! "~/.emacs.lisp/my-tools.el")
-;;; MJJ blog
-(load! "~/Documents/monkeyjunglejuice/static/mjj-publish.el")
+(use-package! my-tools)
+;; MJJ blog machinery
+(use-package! mjj-publish)
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
