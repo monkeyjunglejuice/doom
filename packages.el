@@ -20,6 +20,21 @@
 (package! srfi)
 (package! scheme-complete)
 
+(package! my-themes
+  :recipe (:local-repo "~/.emacs.themes"
+           :files ("*/*.el" "*.el")
+           :build (compile native-compile)))
+
+(package! my-elisp
+  :recipe (:local-repo "~/.emacs.lisp"
+           :files ("*.el")
+           :build (compile native-compile)))
+
+(package! mjj-publish
+  :recipe (:local-repo "~/Documents/monkeyjunglejuice"
+           :files ("static/*.el")
+           :build (compile native-compile)))
+
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
 
