@@ -3,14 +3,14 @@
 (package! eshell-did-you-mean :disable t)
 (package! evil-snipe :disable t)
 (package! ace-window :disable t)
-(package! evil-cleverparens :disable t)
+(package! iedit :disable t)
+(package! ivy :disable t)
+(package! swiper :disable t)
 
 (package! evil-swap-keys)
 (package! aggressive-indent)
 (package! clean-kill-ring)
-
-(package! inf-elixir)
-(package! mix)
+(package! org-sticky-header)
 
 (package! lfe
   :recipe (:local-repo "~/code/lfe/emacs"
