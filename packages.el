@@ -30,20 +30,21 @@
   :recipe (:host github :repo "protesilaos/ef-themes"
            :build t)
   :pin "b1333b703805a21ed6414386830cb5d1977475b7")  ; v1.9
+
 (package! my-themes
   :recipe (:local-repo "~/.emacs.themes"
-           :files ("*/*.el" "*.el")
-           :build (compile native-compile)))
+           :files ("*.el" "*/*.el")
+           :build t))
 
 (package! my-elisp
   :recipe (:local-repo "~/.emacs.lisp"
            :files ("*.el")
-           :build (compile native-compile)))
+           :build t))
 
 (package! mjj-publish
   :recipe (:local-repo "~/Documents/monkeyjunglejuice"
            :files ("static/*.el")
-           :build (compile native-compile)))
+           :build t))
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
