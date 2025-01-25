@@ -169,8 +169,7 @@
 
 (after! hl-line
   (setq! hl-line-sticky-flag nil)
-  (setq! global-hl-line-modes '(prog-mode
-                                text-mode
+  (setq! global-hl-line-modes '(text-mode
                                 special-mode
                                 org-agenda-mode
                                 dired-mode)))
