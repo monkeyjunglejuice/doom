@@ -5,16 +5,16 @@
 
 ;; Initial frame placement
 (pushnew! initial-frame-alist
-          '(width . 81)
+          '(width . 90)
           '(height . 54)
-          '(left . 930)
+          '(left . 940)
           '(top . 0))
 
 ;; Default frame placement
 (pushnew! default-frame-alist
-          '(width . 81)
+          '(width . 90)
           '(height . 54)
-          '(left . 930)
+          '(left . 940)
           '(top . 0))
 
 ;; Bring frame to the front
@@ -24,11 +24,11 @@
 ;;; FONTS
 
 (setq! doom-font
-       (font-spec :family "Source Code Pro" :size 15.5 :weight 'normal)
+       (font-spec :family "Iosevka Dee" :size 16 :weight 'normal)
        doom-serif-font
-       (font-spec :family "Source Code Pro" :size 15.5 :weight 'medium)
+       (font-spec :family "Iosevka Dee Slab" :size 16 :weight 'medium)
        doom-variable-pitch-font
-       (font-spec :family "Gentium Book Plus" :size 17 :weight 'normal))
+       (font-spec :family "Iosevka Aile" :size 16 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
