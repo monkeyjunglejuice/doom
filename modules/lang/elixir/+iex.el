@@ -1,8 +1,11 @@
 ;;; lang/elixir/+iex.el -*- lexical-binding: t; -*-
 
 (use-package! inf-elixir
-  :defer t
+  :autoload
+  inf-elixir--find-project-root
   :init
+  (set-repl-handler! 'elixir-mode #'inf-elixir-run)
+  (set-eval-handler! 'elixir-mode #'inf-elixir-send-region)
   (defun inf-elixir-run ()
     "Start IEx in the project context when a Mix project is detected.
 The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") and
@@ -15,8 +18,6 @@ The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") and
       (progn (message "inf-elixir: IEx running standalone...")
              (inf-elixir))))
   (defalias 'run-elixir #'inf-elixir-run "Alias for `inf-elixir-run'")
-  (set-repl-handler! 'elixir-mode #'inf-elixir-run)
-  (set-eval-handler! 'elixir-mode #'inf-elixir-send-region)
   :config
   (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.3 :quit nil :ttl nil)
   (setq! inf-elixir-switch-to-repl-on-send nil)
