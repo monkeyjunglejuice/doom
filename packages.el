@@ -11,6 +11,7 @@
 (package! aggressive-indent)
 (package! clean-kill-ring)
 (package! org-sticky-header)
+(package! show-font)
 
 (package! lfe
   :recipe (:local-repo "~/code/lfe/emacs"
