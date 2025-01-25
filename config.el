@@ -33,9 +33,17 @@
 ;;  ____________________________________________________________________________
 ;;; THEMES
 
+;; Theme settings
+(after! modus-themes
+  (setq! modus-themes-bold-constructs t))
+
+(after! ef-themes
+  (setq! ef-themes-variable-pitch-ui t
+         ef-themes-mixed-fonts t))
+
 ;;; - Set light/dark theme:
-(setq! doom-theme-light 'doom-one-light)
-(setq! doom-theme-dark 'doom-outrun-electric)
+(setq! doom-theme-light 'ef-reverie)
+(setq! doom-theme-dark 'ef-dream)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
