@@ -801,6 +801,8 @@ Entries are derived from the smartparens package."
                '(lfe-mode . ("~/code/lfe-ls/_build/prod/bin/lfe-ls"
                              "--transport" "tcp" "--port" :autoport))))
 
+(use-package! ob-lfe)
+
 ;;  ____________________________________________________________________________
 ;;; OCAML
 
