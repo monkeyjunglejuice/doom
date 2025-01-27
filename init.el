@@ -107,7 +107,7 @@
        (org +pandoc)
        graphviz
        ;; python
-       ;; (racket +lsp +xp)
+       (racket +lsp +xp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
        (scheme +guile)
