@@ -504,7 +504,6 @@
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
 (after! smartparens
-  (setq! smartparens-global-strict-mode t)
   (setq! show-paren-mode nil
          show-smartparens-global-mode t)
   ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
