@@ -28,7 +28,7 @@
        doom-serif-font
        (font-spec :family "Iosevka Dee Slab" :size 16 :weight 'medium)
        doom-variable-pitch-font
-       (font-spec :family "Iosevka Aile" :size 16 :weight 'normal))
+       (font-spec :family "Crimson Pro" :size 18 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
