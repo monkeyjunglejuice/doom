@@ -143,12 +143,18 @@
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
+;; Adjust defaults
+;; (plist-put +popup-defaults :height 0.3)
+
 ;; Make `other-window' work on popup-windows too
 (setq! +popup-default-parameters
        (remove '(no-other-window . t) +popup-default-parameters))
 
-;; Adjust defaults
-;; (plist-put +popup-defaults :height 0.38)
+(map! :map evil-window-map
+      ;; Turn popup-window into a regular window
+      "`" #'+popup/raise
+      ;; Turn regular window into a popup-window
+      "~" #'+popup/buffer)
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
