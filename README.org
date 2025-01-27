@@ -48,7 +48,7 @@ fish_add_path -U -v ~/.emacs.doom/bin
 #+begin_src shell
 PATH="$HOME/.emacs.d/bin:$PATH"
 #+end_src
-* How to install my Doom Emacs config
+* How to install this Doom Emacs config
 After Doom Emacs has been installed, synced and started at least once, make sure to delete any of =~/.doom.d= and =~/.config/doom=:
 #+begin_src shell
 rm -rf ~/.doom.d && rm -rf ~/.config/doom
