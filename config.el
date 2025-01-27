@@ -572,6 +572,12 @@
 ;; The 'query-' variant asks with each string. Confirm with "SPC",
 ;; or omit the current selection via "n"
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Comments
+
+(after! newcomment
+  (setq! comment-empty-lines t))
+
 ;;  ____________________________________________________________________________
 ;;; LISP
 
