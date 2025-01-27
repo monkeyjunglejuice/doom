@@ -38,12 +38,11 @@
   (setq! modus-themes-bold-constructs t))
 
 (after! ef-themes
-  (setq! ef-themes-variable-pitch-ui t
-         ef-themes-mixed-fonts t))
+  (setq! ef-themes-mixed-fonts t))
 
 ;;; - Set light/dark theme:
 (setq! doom-theme-light 'ef-reverie)
-(setq! doom-theme-dark 'ef-dream)
+(setq! doom-theme-dark 'ef-symbiosis)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
