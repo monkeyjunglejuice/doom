@@ -11,4 +11,5 @@
     eglot-connect-timeout 60))
 
 (when (modulep! +iex) (load! "+iex"))
+
 (when (modulep! +mix) (load! "+mix"))
