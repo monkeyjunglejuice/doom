@@ -104,7 +104,7 @@
        (markdown)
        ;; nim
        (ocaml +tree-sitter)
-       (org +pandoc +passwords)
+       (org +pandoc)
        graphviz
        ;; python
        ;; (racket +lsp +xp)
