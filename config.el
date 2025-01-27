@@ -288,6 +288,9 @@
    "g"           "magit-status"
    "doomS"       "doom sync --gc --aot"
    "doomU"       "doom upgrade --aot"
+   "doomR"       "doom/restart"
+   ;; Adblocker
+   "hblock-off"  "hblock -S none -D none"
    ;; Git
    "git"         "git --no-pager $*"
    ;; Tar archives
