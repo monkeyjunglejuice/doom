@@ -776,47 +776,6 @@ Entries are derived from the smartparens package."
   (setq! common-lisp-hyperspec-issuex-table
          (concat common-lisp-hyperspec-root "Data/Map_IssX.txt")))
 
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - LFE
-;; <https://lfe.io/>
-
-(use-package! lfe-mode
-  :defer t
-  :config
-  (set-repl-handler! 'lfe-mode #'inferior-lfe)
-  (set-eval-handler! 'lfe-mode #'lfe-eval-region)
-  ;; (set-formatter! 'lisp-indent #'apheleia-indent-lisp-buffer :modes '(lfe-mode))
-  (add-hook! 'lfe-mode-hook
-             #'eglot-ensure))
-
-(use-package! inferior-lfe
-  :when (modulep! :tools eval)
-  :defer t
-  :config
-  (set-popup-rule! "^\\*inferior-lfe.*\\*" :size 0.3 :quit nil :ttl nil)
-  (add-hook! 'inferior-lfe-mode-hook #'rainbow-delimiters-mode)
-  ;; (setq! inferior-lfe-program "lfe")
-  ;; (setq! inferior-lfe-program-options '("-nobanner"))
-  ;; (setq! inferior-lfe-check-if-rebar-project t)
-  ;; (setq! inferior-lfe-check-if-mix-project t)
-  ;; (setq! inferior-lfe-indent-on-Cj t)
-  )
-
-(use-package! lfe-indent
-  :defer t)
-
-(use-package! lfe-start
-  :defer t)
-
-(after! eglot
-  (add-to-list 'eglot-server-programs
-               ;; FIXME: the LFE language server is broken
-               ;; https://github.com/mdbergmann/lfe-ls/issues/10#issue-2714103164
-               '(lfe-mode . ("~/code/lfe-ls/_build/prod/bin/lfe-ls"
-                             "--transport" "tcp" "--port" :autoport))))
-
-(use-package! ob-lfe)
-
 ;;  ____________________________________________________________________________
 ;;; OCAML
 

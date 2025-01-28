@@ -15,12 +15,6 @@
 (package! show-font)
 (package! srfi)
 (package! scheme-complete)
-(package! ob-lfe)
-
-(package! lfe
-  :recipe (:local-repo "~/code/lfe/emacs"
-           :files ("*.el")
-           :build (:not compile)))
 
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"
