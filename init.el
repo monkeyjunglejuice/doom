@@ -24,17 +24,14 @@
        :ui
        ;; deft
        doom
-       ;; doom-quit
-       ;; (emoji +unicode)
        hl-todo
-       indent-guides
+       ;; indent-guides
        ;; ligatures
        modeline
        ophints
        (popup +defaults)
        treemacs
        (vc-gutter +pretty)
-       ;; vi-tilde-fringe
        (window-select +switch-window)
        ;; workspaces
        ;; zen
@@ -45,8 +42,7 @@
        ;; fold
        (format +onsave +lsp)
        lispy
-       ;; objed
-       ;; rotate-text
+       rotate-text
        snippets
        word-wrap
 
@@ -60,11 +56,10 @@
 
        :term
        eshell
-       ;; shell
        vterm
 
        :checkers
-       (syntax +flymake +icons)
+       syntax
        ;; (spell +flyspell)
        ;; grammar
 
@@ -101,13 +96,12 @@
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
        (lua +fennel +lsp +tree-sitter)
-       (markdown)
+       markdown
        ;; nim
        (ocaml +tree-sitter)
        (org +pandoc)
        graphviz
        ;; python
-       (racket +lsp +xp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
        (scheme +guile)
@@ -115,7 +109,7 @@
        ;; solidity
        ;; swift
        (web +lsp +tree-sitter)
-       (yaml +lsp +tree-sitter)
+       ;; (yaml +lsp +tree-sitter)
        ;; zig
 
        :email
