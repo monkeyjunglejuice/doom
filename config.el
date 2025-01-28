@@ -202,7 +202,7 @@
 
 ;; Don't hide mode-line
 (after! hide-mode-line
-  (advice-add 'hide-mode-line-mode :around
+  (advice-add #'hide-mode-line-mode :around
               (lambda (orig &optional args) nil)))
 
 ;;  ____________________________________________________________________________
@@ -645,7 +645,7 @@ Entries are derived from the smartparens package."
 (after! (lispy lispyville)
   ;; Making sure that the comment with the result is placed after the evaluated
   ;; expression, not inside it
-  (advice-add 'lispy-eval-and-comment
+  (advice-add #'lispy-eval-and-comment
               :around #'evil-collection-elisp-mode-last-sexp)
   (map! :localleader
         :map (emacs-lisp-mode-map lisp-interaction-mode-map)
