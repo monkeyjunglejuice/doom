@@ -158,6 +158,17 @@
       ;; Turn regular window into a popup-window
       "~" #'+popup/buffer)
 
+;; Make Eglot help windows higher
+(after! eglot
+  (set-popup-rule! "^\\*eglot-help" :size 0.42 :quit t :select t))
+
+;; Further popup adjustments
+(set-popup-rules!
+  '(("^\\*Customize" :slot 2 :side bottom :size 0.5 :select t :quit nil)
+    ("^\\*\\([Hh]elp\\|Apropos\\)" :slot 2 :vslot -8 :size 0.42 :select t)
+    ("^\\*eww\\*" :vslot -11 :size 0.35 :select t)
+    ("^\\*info\\*$" :slot 2 :vslot 2 :size 0.45 :select t)))
+
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Minibuffer>
