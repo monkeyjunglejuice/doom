@@ -777,6 +777,78 @@ Entries are derived from the smartparens package."
          (concat common-lisp-hyperspec-root "Data/Map_IssX.txt")))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - RACKET
+;; <https://www.racket-mode.com>
+
+(after! racket-mode
+  (set-popup-rule! "^\\*Racket REPL" :size 0.3 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*Racket Describe" :size 0.42 :quit t :select t)
+  (set-eval-handler! 'racket-mode #'racket-send-region)
+  (setq! racket-xp-eldoc-level 'minimal)
+  ;; Make sure that the last character of the sexp is not cut off
+  (advice-add #'racket-send-last-sexp
+              :around #'evil-collection-elisp-mode-last-sexp)
+  (advice-add #'racket-expand-last-sexp
+              :around #'evil-collection-elisp-mode-last-sexp)
+  (when (modulep! indent-guides)
+    (add-hook! 'racket-mode-hook (indent-bars-mode -1)))
+  ;; Change some of Doom's default Racket keybindings
+  (map! (:localleader
+         :map racket-mode-map
+         "a" #'racket-align
+         "A" #'racket-unalign
+         "f" #'racket-fold-all-tests
+         "F" #'racket-unfold-all-tests
+         "h" nil                        ; rebind to prefix "d", key "d"
+         "i" #'racket-unicode-input-method-enable
+         "l" #'racket-logger
+         "o" #'racket-profile
+         "p" #'racket-cycle-paren-shapes
+         "t" #'racket-test
+         "u" #'racket-backward-up-list
+         "y" #'racket-insert-lambda
+         "s" nil                        ; rebind to prefix "r", key "r"
+         "R" nil                        ; rebind to prefix "r", key "s"
+         (:prefix ("r" . "run")
+                  "r" #'racket-run
+                  "s" #'racket-run-and-switch-to-repl
+                  "m" #'racket-run-module-at-point)
+         (:prefix ("m" . "macros")
+                  "d" #'racket-expand-definition
+                  "e" #'racket-expand-last-sexp
+                  "r" #'racket-expand-region
+                  "a" #'racket-expand-again)
+         (:prefix ("g" . "goto")
+                  "b" #'racket-unvisit
+                  "d" #'xref-find-definitions ; replace obsolete command
+                  "m" #'racket-visit-module
+                  "r" #'racket-open-require-path)
+         (:prefix ("e" . "eval")
+                  "d" #'racket-send-definition
+                  "e" #'racket-send-last-sexp
+                  "r" #'racket-send-region)
+         (:prefix ("h" . "help")
+                  "d" #'racket-xp-describe
+                  "s" #'racket-describe-search
+                  "[" #'racket-describe-back
+                  "]" #'racket-describe-forward)
+         :map racket-repl-mode-map
+         "l" #'racket-logger
+         "h" nil                        ; rebind to "d"
+         "d" #'racket-repl-documentation
+         "y" #'racket-insert-lambda
+         "u" #'racket-backward-up-list
+         (:prefix ("m" . "macros")
+                  "d" #'racket-expand-definition
+                  "e" #'racket-expand-last-sexp
+                  "f" #'racket-expand-file
+                  "r" #'racket-expand-region)
+         (:prefix ("g" . "goto")
+                  "b" #'racket-unvisit
+                  "m" #'racket-visit-module
+                  "d" #'racket-repl-visit-definition))))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - LFE
 ;; <https://lfe.io/>
 
