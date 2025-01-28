@@ -4,8 +4,8 @@
 ;;; COMPILATION SETTINGS
 
 ;; Compile ahead of time to avoid lagging caused by sudden compilation
-(setq! package-native-compile t)
-(setq! native-comp-jit-compilation nil)
+;; (setq! package-native-compile t)
+;; (setq! native-comp-jit-compilation nil)
 
 ;; Always use these additional arguments to sync or upgrade Doom Emacs:
 ;; doom sync --gc --aot
