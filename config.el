@@ -168,7 +168,7 @@
 ;; Delete duplicates from the command history
 (setq! history-delete-duplicates t)
 
-;; Modal editing in the minibuffer, too?
+;; Modal editing in the minibuffer
 (setq! evil-collection-setup-minibuffer t)
 
 ;;  ____________________________________________________________________________
