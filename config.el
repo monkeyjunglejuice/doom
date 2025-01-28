@@ -555,13 +555,12 @@
 
 ;; <https://github.com/Malabarba/aggressive-indent-mode>
 (use-package! aggressive-indent
-  :defer t
   :config
   (global-aggressive-indent-mode 1))
 
 ;; Indentation guides
 (after! indent-bars
-  (setq! indent-bars-no-descend-lists t
+  (setq! indent-bars-no-descend-lists nil
          indent-bars-highlight-current-depth '(:face fringe)
          indent-bars-display-on-blank-lines t)
   (remove-hook! 'text-mode-hook
@@ -628,8 +627,9 @@ Entries are derived from the smartparens package."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Elisp
 
-(add-hook! 'emacs-lisp-mode-hook
-  (indent-bars-mode -1))
+(when (modulep! indent-guides)
+  (add-hook! 'emacs-lisp-mode-hook
+    (indent-bars-mode -1)))
 
 (after! (lispy lispyville)
   ;; Making sure that the comment with the result is placed after the evaluated
@@ -652,8 +652,9 @@ Entries are derived from the smartparens package."
 
 (add-to-list '+lisp-quicklisp-paths "~/.roswell/lisp/quicklisp" 'append)
 
-(add-hook! '(lisp-mode-hook lisp-data-mode-hook)
-  (indent-bars-mode -1))
+(when (modulep! indent-guides)
+  (add-hook! '(lisp-mode-hook lisp-data-mode-hook)
+    (indent-bars-mode -1)))
 
 (after! sly
   ;; Set Sly Lisp implementations
