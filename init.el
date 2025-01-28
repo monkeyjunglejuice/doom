@@ -134,8 +134,9 @@
 ;;  ____________________________________________________________________________
 ;;; DECLARATIONS
 
-(defvar doom-theme-light "Specifies the default light theme.")
-(defvar doom-theme-dark "Specifies the default dark theme.")
+(defvar my-theme-light "The default light theme.")
+(defvar my-theme-dark "The default dark theme.")
+(defvar my-frame-opacity 100 "The default frame opacity")
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
