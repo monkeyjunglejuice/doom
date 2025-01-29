@@ -30,7 +30,6 @@
        modeline
        ophints
        (popup +defaults)
-       treemacs
        (vc-gutter +pretty)
        (window-select +switch-window)
        ;; workspaces
@@ -72,7 +71,7 @@
        ;; docker
        ;; editorconfig
        eval
-       (lookup +dictionary)
+       (lookup +dictionary +docsets)
        (lsp +eglot)
        magit
        make
