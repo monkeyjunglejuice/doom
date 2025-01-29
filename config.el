@@ -426,14 +426,6 @@
       :desc "Browse URL external"  "o W"   #'browse-url-default-macosx-browser
       :desc "Browse URL in Webkit" "o C-w" #'xwidget-webkit-browse-url)
 
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - W3M
-
-(use-package! w3m
-  :defer t
-  :config
-  (setq! w3m-user-agent url-user-agent))
-
 ;;  ____________________________________________________________________________
 ;;; PDF-TOOLS
 
