@@ -127,9 +127,9 @@
 ;;  ____________________________________________________________________________
 ;;; DECLARATIONS
 
-(defvar my-theme-light "The default light theme.")
-(defvar my-theme-dark "The default dark theme.")
-(defvar my-frame-opacity 100 "The default frame opacity")
+(defvar my-theme-light nil "The default light theme.")
+(defvar my-theme-dark nil "The default dark theme.")
+(defvar my-frame-opacity 100 "The default frame opacity.")
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
