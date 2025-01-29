@@ -66,6 +66,15 @@
 
 (add-hook! 'ns-system-appearance-change-functions #'my-apply-theme)
 
+;; BUG Fix for https://github.com/doomemacs/doomemacs/issues/6720
+(after! diff-hl
+  (add-hook! 'doom-load-theme-hook
+    (defun +vc-gutter-make-diff-hl-faces-transparent-h ()
+      (mapc (doom-rpartial #'set-face-background (face-background 'default))
+            '(diff-hl-insert
+              diff-hl-delete
+              diff-hl-change)))))
+
 ;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
 
