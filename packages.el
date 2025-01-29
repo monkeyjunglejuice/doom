@@ -15,6 +15,7 @@
 (package! show-font)
 (package! srfi)
 (package! scheme-complete)
+(package! catppuccin-theme)
 
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"

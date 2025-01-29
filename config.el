@@ -41,8 +41,8 @@
   (setq! ef-themes-mixed-fonts t))
 
 ;;; - Set light/dark theme:
-(setq! my-theme-light 'ef-reverie)
-(setq! my-theme-dark 'ef-symbiosis)
+(setq! my-theme-light 'catppuccin)
+(setq! my-theme-dark 'catppuccin)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -54,10 +54,14 @@
            ('light (load-theme my-theme-light t)
                    (setq! my-frame-opacity 100)
                    (doom/set-frame-opacity my-frame-opacity)
+                   (setq! catppuccin-flavor 'latte)
+                   (catppuccin-reload)
                    my-theme-light)
            ('dark (load-theme my-theme-dark t)
-                  (setq! my-frame-opacity 80)
+                  (setq! my-frame-opacity 100)
                   (doom/set-frame-opacity my-frame-opacity)
+                  (setq! catppuccin-flavor 'macchiato)
+                  (catppuccin-reload)
                   my-theme-dark))))
 
 (add-hook! 'ns-system-appearance-change-functions #'my-apply-theme)
