@@ -42,7 +42,7 @@
 
 ;;; - Set light/dark theme:
 (setq! my-theme-light 'ef-reverie)
-(setq! my-theme-dark 'ef-dark)
+(setq! my-theme-dark 'ef-symbiosis)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
