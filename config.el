@@ -434,18 +434,6 @@
   (pdf-tools-install :no-query))
 
 ;;  ____________________________________________________________________________
-;;; PROJECTS / WORKSPACES
-
-;; Permanently display workspaces in minibuffer
-;; (after! persp-mode
-;;   (defun display-workspaces-in-minibuffer ()
-;;     (with-current-buffer " *Minibuf-0*"
-;;       (erase-buffer)
-;;       (insert (+workspace--tabline))))
-;;   (run-with-idle-timer 1 t #'display-workspaces-in-minibuffer)
-;;   (+workspace/display))
-
-;;  ____________________________________________________________________________
 ;;; ORG
 
 (after! org
