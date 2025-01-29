@@ -781,7 +781,7 @@ Entries are derived from the smartparens package."
   (add-hook! 'utop-mode-hook
              ;; HACK: Thats how to get completions from Merlin in Utop
              ;; <https://github.com/ocaml-community/utop/issues/455>
-             (progn (merlin-mode +1) (merlin-mode -1))))
+             (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1))))
 
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
