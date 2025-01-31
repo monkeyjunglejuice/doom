@@ -56,7 +56,7 @@
                    (doom/set-frame-opacity my-frame-opacity)
                    my-theme-light)
            ('dark (load-theme my-theme-dark t)
-                  (setq! my-frame-opacity 85)
+                  (setq! my-frame-opacity 80)
                   (doom/set-frame-opacity my-frame-opacity)
                   my-theme-dark))))
 
