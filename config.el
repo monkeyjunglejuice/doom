@@ -83,22 +83,36 @@
        doom-localleader-key ","
        doom-localleader-alt-key "M-SPC ,")
 
-;; doom-leader-map
 (map! :leader
-      :desc nil               ":" nil  ; M-x
-      :desc nil               "<" nil  ; Switch buffer
-      :desc nil               "X" nil  ; Org capture
-      :desc nil               "`" nil  ; Switch to last buffer
-      :desc nil               "~" nil  ; Toggle last popup
-      :desc "Toggle popups"   "`" #'+popup/toggle
-      :desc "Directories"     "d" #'consult-dir
-      :desc "Command"         "m" #'execute-extended-command
-      :desc "Complex command" "M" #'consult-complex-command
-      :desc "Switch buffer"   "," #'switch-to-buffer
-      :desc "Previous window" "j" #'evil-window-mru
-      :desc "Lisp"            "l" #'sly
-      :desc "Eshell"          "e" #'+eshell/toggle
-      :desc "IEx"             "r" #'inf-elixir-run)
+      ;; doom-leader-map
+      :desc nil                      ":"     nil  ; M-x
+      :desc nil                      "<"     nil  ; Switch buffer
+      :desc nil                      "X"     nil  ; Org capture
+      :desc nil                      "`"     nil  ; Switch to last buffer
+      :desc nil                      "~"     nil  ; Toggle last popup
+      :desc "Toggle popups"          "`"     #'+popup/toggle
+      :desc "Directories"            "d"     #'consult-dir
+      :desc "Command"                "m"     #'execute-extended-command
+      :desc "Complex command"        "M"     #'consult-complex-command
+      :desc "Switch buffer"          ","     #'switch-to-buffer
+      :desc "Previous window"        "j"     #'evil-window-mru
+      :desc "Lisp"                   "l"     #'sly
+      :desc "Eshell"                 "e"     #'+eshell/toggle
+      :desc "IEx"                    "r"     #'inf-elixir-run
+      ;; doom-leader-buffer-map
+      :desc "Kill buffer and window" "b D"   #'kill-buffer-and-window
+      ;; doom-leader-file-map
+      :desc nil                      "f l"   nil  ; Locate file
+      ;; doom-leader-open-map
+      :desc "Browse URL"             "o w"   #'browse-url
+      :desc "Browse URL external"    "o W"   #'browse-url-default-macosx-browser
+      :desc "Browse URL in Webkit"   "o C-w" #'xwidget-webkit-browse-url
+      ;; doom-leader-search-map
+      :desc "Find file at point"     "s f"   #'ffap
+      ;; evil-window-map
+      :desc ""                       "w `"   #'+popup/raise
+      :desc ""                       "w ~"   #'+popup/buffer
+      )
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - MacOS
@@ -171,12 +185,6 @@
 (setq! +popup-default-parameters
        (remove '(no-other-window . t) +popup-default-parameters))
 
-(map! :map evil-window-map
-      ;; Turn popup-window into a regular window
-      "`" #'+popup/raise
-      ;; Turn regular window into a popup-window
-      "~" #'+popup/buffer)
-
 ;; Make Eglot help windows higher
 (after! eglot
   (set-popup-rule! "^\\*eglot-help" :size 0.42 :quit t :select t))
@@ -226,10 +234,6 @@
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
-
-;; Kill both buffer and window
-(map! :leader
-      :desc "Kill buffer and window" :n "b D" #'kill-buffer-and-window)
 
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
@@ -439,12 +443,6 @@
 
 ;; Secondary web browser
 (setq! browse-url-secondary-browser-function #'browse-url-default-browser)
-
-;; Keybindings
-(map! :leader
-      :desc "Browse URL"           "o w"   #'browse-url
-      :desc "Browse URL external"  "o W"   #'browse-url-default-macosx-browser
-      :desc "Browse URL in Webkit" "o C-w" #'xwidget-webkit-browse-url)
 
 ;;  ____________________________________________________________________________
 ;;; PDF-TOOLS
