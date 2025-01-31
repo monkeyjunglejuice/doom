@@ -31,7 +31,7 @@
        ophints
        (popup +defaults)
        (vc-gutter +pretty)
-       (window-select +switch-window)
+       window-select
        ;; workspaces
        ;; zen
 
