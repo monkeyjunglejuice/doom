@@ -91,6 +91,7 @@
       :desc nil               "`" nil  ; Switch to last buffer
       :desc nil               "~" nil  ; Toggle last popup
       :desc "Toggle popups"   "`" #'+popup/toggle
+      :desc "Directories"     "d" #'consult-dir
       :desc "Command"         "m" #'execute-extended-command
       :desc "Complex command" "M" #'consult-complex-command
       :desc "Switch buffer"   "," #'switch-to-buffer
