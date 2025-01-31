@@ -33,7 +33,6 @@
 
 (package! my-elisp
   :recipe (:local-repo "~/.emacs.lisp"
-           :files ("*.el")
            :build t))
 
 (package! mjj-publish
