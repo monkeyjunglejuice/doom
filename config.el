@@ -6,14 +6,14 @@
 ;; Initial frame placement
 (pushnew! initial-frame-alist
           '(width . 90)
-          '(height . 54)
+          '(height . 50)
           '(left . 940)
           '(top . 0))
 
 ;; Default frame placement
 (pushnew! default-frame-alist
           '(width . 90)
-          '(height . 54)
+          '(height . 50)
           '(left . 940)
           '(top . 0))
 
@@ -41,8 +41,8 @@
   (setq! ef-themes-mixed-fonts t))
 
 ;;; - Set light/dark theme:
-(setq! my-theme-light 'catppuccin)
-(setq! my-theme-dark 'catppuccin)
+(setq! my-theme-light 'beach)
+(setq! my-theme-dark 'ef-duo-dark)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -54,14 +54,10 @@
            ('light (load-theme my-theme-light t)
                    (setq! my-frame-opacity 100)
                    (doom/set-frame-opacity my-frame-opacity)
-                   (setq! catppuccin-flavor 'latte)
-                   (catppuccin-reload)
                    my-theme-light)
            ('dark (load-theme my-theme-dark t)
-                  (setq! my-frame-opacity 100)
+                  (setq! my-frame-opacity 85)
                   (doom/set-frame-opacity my-frame-opacity)
-                  (setq! catppuccin-flavor 'macchiato)
-                  (catppuccin-reload)
                   my-theme-dark))))
 
 (add-hook! 'ns-system-appearance-change-functions #'my-apply-theme)
@@ -114,8 +110,8 @@
 
 (use-package! switch-window
   :config
-  (setq! switch-window-background t)
-  (setq! switch-window-multiple-frames nil)
+  (setq! switch-window-background nil)
+  (setq! switch-window-multiple-frames t)
   (setq! switch-window-threshold 1)
   (setq! switch-window-mvborder-increment 1)
   ;; Vim-like keybindings for window resizing
@@ -139,8 +135,7 @@
                       :foreground 'unspecified
                       :inherit 'shadow)
   (set-face-attribute 'switch-window-label nil
-                      :inherit 'show-paren-match-expression
-                      :height 1.0)
+                      :inherit 'org-document-title)
   :bind
   ;; Bind `switch-window' commands to regular Emacs keybindings
   ;; TODO Set up Evil equivalents and replace some default Doom bindings
@@ -275,8 +270,8 @@
 
 ;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
 ;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "dash")
-                           (executable-find "bash")
+(setq! shell-file-name (or (executable-find "bash")
+                           (executable-find "dash")
                            (executable-find "sh")))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -399,6 +394,7 @@
 ;; Show and manage OS processes
 (setq! proced-auto-update-interval 1
        proced-auto-update-flag t
+       proced-enable-color-flag t
        proced-descend t)
 
 ;;  ____________________________________________________________________________
@@ -518,8 +514,7 @@
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
 (after! smartparens
-  (setq! show-paren-mode nil
-         show-smartparens-global-mode t)
+  (setq! show-smartparens-global-mode t)
   ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
   ;; and Paredit keybindings
   ;; (map! :map smartparens-mode-map
