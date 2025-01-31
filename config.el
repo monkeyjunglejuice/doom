@@ -113,8 +113,7 @@
 ;;; WINDOW MANAGEMENT
 ;; <https://github.com/dimitri/switch-window>
 
-(use-package! switch-window
-  :config
+(after! switch-window
   (setq! switch-window-background nil)
   (setq! switch-window-multiple-frames t)
   (setq! switch-window-threshold 1)
@@ -137,23 +136,20 @@
            "z" "x" "c" "v"
            "b" "n"))
   (set-face-attribute 'switch-window-background nil
-                      :foreground 'unspecified
                       :inherit 'shadow)
-  (set-face-attribute 'switch-window-label nil
-                      :inherit 'org-document-title)
-  :bind
   ;; Bind `switch-window' commands to regular Emacs keybindings
   ;; TODO Set up Evil equivalents and replace some default Doom bindings
-  ("C-x o"   . switch-window)
-  ("C-x 1"   . switch-window-then-maximize)
-  ("C-x 2"   . switch-window-then-split-below)
-  ("C-x 3"   . switch-window-then-split-right)
-  ("C-x 0"   . switch-window-then-delete)
-  ("C-x 4 0" . switch-window-then-kill-buffer)
-  ("C-x 4 d" . switch-window-then-dired)
-  ("C-x 4 f" . switch-window-then-find-file)
-  ("C-x 4 b" . switch-window-then-display-buffer)
-  ("C-x 4 s" . switch-window-then-swap-buffer))
+  (map! :map switch-window-mode-map
+        :e  "C-x o"    #'switch-window
+        :e  "C-x 1"    #'switch-window-then-maximize
+        :e  "C-x 2"    #'switch-window-then-split-below
+        :e  "C-x 3"    #'switch-window-then-split-right
+        :e  "C-x 0"    #'switch-window-then-delete
+        :e  "C-x 4 0"  #'switch-window-then-kill-buffer
+        :e  "C-x 4 d"  #'switch-window-then-dired
+        :e  "C-x 4 f"  #'switch-window-then-find-file
+        :e  "C-x 4 b"  #'switch-window-then-display-buffer
+        :e  "C-x 4 s"  #'switch-window-then-swap-buffer))
 
 (after! ace-window
   (setq! aw-keys '(?a ?s ?d ?f ?g
