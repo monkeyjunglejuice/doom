@@ -504,6 +504,9 @@
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Parenthesis
 
+;; Highlight expressions, not just the delimiters
+(setq! show-paren-style 'expression)
+
 ;; Color-code nested parens
 ;; <https://github.com/Fanael/rainbow-delimiters>
 (add-hook! '(prog-mode-hook conf-mode-hook)
