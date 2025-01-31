@@ -71,7 +71,7 @@
        ;; docker
        ;; editorconfig
        eval
-       (lookup +dictionary +docsets)
+       (lookup +dictionary)
        (lsp +eglot)
        magit
        make
