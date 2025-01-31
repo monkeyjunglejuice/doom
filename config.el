@@ -41,8 +41,8 @@
   (setq! ef-themes-mixed-fonts t))
 
 ;;; - Set light/dark theme:
-(setq! my-theme-light 'beach)
-(setq! my-theme-dark 'ef-duo-dark)
+(setq! my-theme-light 'ef-light)
+(setq! my-theme-dark 'ef-dark)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -55,6 +55,7 @@
                    ;; Global variable will be used as an argument to launch emacsclient frames
                    (setq! my-frame-opacity 100)
                    (doom/set-frame-opacity my-frame-opacity)
+                   (set-background-color "#fffdee")
                    ;; Eventually return theme name to set `doom-theme'
                    my-theme-light)
            ('dark (load-theme my-theme-dark t)
