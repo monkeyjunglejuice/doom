@@ -150,6 +150,16 @@
   ("C-x 4 b" . switch-window-then-display-buffer)
   ("C-x 4 s" . switch-window-then-swap-buffer))
 
+(after! ace-window
+  (setq! aw-keys '(?a ?s ?d ?f ?g
+                   ?q ?w ?r ?t ?y
+                   ?i ?p))
+  (setq! aw-scope 'global)
+  (setq! ace-window-display-mode 1
+         aw-display-mode-overlay nil)
+  (set-face-attribute 'aw-background-face nil
+                      :inherit 'shadow))
+
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
