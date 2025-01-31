@@ -103,7 +103,7 @@
        ;; python
        ;; rest
        ;; (rust +lsp +tree-sitter)
-       (scheme +guile)
+       ;; (scheme +gambit)
        (sh +fish +lsp +tree-sitter)
        ;; solidity
        ;; swift
