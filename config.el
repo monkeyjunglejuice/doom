@@ -125,6 +125,93 @@
 ;; (setq! mac-option-modifier 'meta)
 
 ;;  ____________________________________________________________________________
+;;; SHELLS
+
+(defvar my-shell (executable-find "fish"))
+(setq! explicit-shell-file-name my-shell)
+
+;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
+;; packages) spawn child processes via shell commands and rely on their output
+(setq! shell-file-name (or (executable-find "bash")
+                           (executable-find "dash")
+                           (executable-find "zsh")
+                           (executable-find "sh")))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Eshell
+
+(after! eshell
+  (setq! eshell-scroll-to-bottom-on-output nil)
+  (setq eshell-list-files-after-cd t)
+  (setq! eshell-term-name "xterm-256color")
+  (set-eshell-alias!
+   "q"           "exit"
+   "l"           "ls $*"
+   "la"          "ls -A $*"
+   "ll"          "ls -lh $*"
+   "lla"         "ls -lhA $*"
+   "lt"          "eza -T --icons $*"
+   "lat"         "eza -AT --icons $*"
+   "llt"         "eza -lT --icons $*"
+   "llat"        "eza -lAT --icons $*"
+   "up"          "eshell-up $1"
+   "cdp"         "cd-to-project"
+   "mkdir"       "mkdir -p $*"
+   "tr"          "trash $*"
+   ;; Emacs commands
+   "f"           "find-file $1"
+   "fo"          "find-file-other-window $1"
+   "d"           "dired $1"
+   "do"          "dired-other-window $1"
+   "g"           "magit-status"
+   "doomS"       "doom sync --gc --aot"
+   "doomU"       "doom upgrade --aot"
+   "doomR"       "doom/restart"
+   ;; Adblocker
+   "hblock-off"  "hblock -S none -D none"
+   ;; Git
+   "git"         "git --no-pager $*"
+   ;; Tar archives
+   "targ"        "tar cfvz $*"
+   "targx"       "tar xfvz $*"
+   "tarb"        "tar cfvj $*"
+   "tarbx"       "tar xfvj $*"
+   ;; Lisp
+   "lisp"        "rlwrap ros -Q run $*"
+   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+   ;; macOS
+   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
+   "app-clear"   "sudo xattr -crv $*"
+   "app-sign"    "sudo codesign --force --deep --sign - $*"
+   ;; Homebrew
+   "brewup"      "brew update && brew upgrade"
+   "brewu"       "brew update"
+   ;; Apt-get
+   "pacu"        "sudo apt-get update"
+   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
+   "pacupd"      "sudo apt-get dist-upgrade"
+   "pacs"        "apt-cache search $*"
+   "pacinfo"     "apt-cache show $*"
+   "paci"        "sudo apt-get install --no-install-recommends $*"
+   "pacli"       "apt list --installed"
+   "paclig"      "apt list --installed | grep $*"
+   "pacmark"     "sudo apt-mark $*"
+   "pacr"        "sudo apt-get remove --purge $*"
+   "pacar"       "sudo apt-get autoremove --purge $*"
+   ;; Guix
+   "guixup"      "guix pull && guix package -u"
+   ;; Nix
+   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
+   ;; Too small /tmp directory
+   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Vterm
+
+(after! vterm
+  (setq! vterm-shell my-shell))
+
+;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
 ;; <https://github.com/dimitri/switch-window>
 
@@ -277,92 +364,6 @@
 ;; Specify file name/path patterns and directories ("REGEXP" . "DIRECTORY")
 (setq! backup-directory-alist
        `(("." . ,(concat (getenv "HOME") "/Documents/backup/emacs/"))))
-
-;;  ____________________________________________________________________________
-;;; SHELLS
-
-(defvar my-shell (executable-find "fish"))
-(setq! explicit-shell-file-name my-shell)
-
-;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
-;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "bash")
-                           (executable-find "dash")
-                           (executable-find "sh")))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Vterm
-
-(after! vterm
-  (setq! vterm-shell my-shell))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Eshell
-
-(after! eshell
-  (setq! eshell-scroll-to-bottom-on-output nil)
-  (setq eshell-list-files-after-cd t)
-  (setq! eshell-term-name "xterm-256color")
-  (set-eshell-alias!
-   "q"           "exit"
-   "l"           "ls $*"
-   "la"          "ls -A $*"
-   "ll"          "ls -lh $*"
-   "lla"         "ls -lhA $*"
-   "lt"          "eza -T --icons $*"
-   "lat"         "eza -AT --icons $*"
-   "llt"         "eza -lT --icons $*"
-   "llat"        "eza -lAT --icons $*"
-   "up"          "eshell-up $1"
-   "cdp"         "cd-to-project"
-   "mkdir"       "mkdir -p $*"
-   "tr"          "trash $*"
-   ;; Emacs commands
-   "f"           "find-file $1"
-   "fo"          "find-file-other-window $1"
-   "d"           "dired $1"
-   "do"          "dired-other-window $1"
-   "g"           "magit-status"
-   "doomS"       "doom sync --gc --aot"
-   "doomU"       "doom upgrade --aot"
-   "doomR"       "doom/restart"
-   ;; Adblocker
-   "hblock-off"  "hblock -S none -D none"
-   ;; Git
-   "git"         "git --no-pager $*"
-   ;; Tar archives
-   "targ"        "tar cfvz $*"
-   "targx"       "tar xfvz $*"
-   "tarb"        "tar cfvj $*"
-   "tarbx"       "tar xfvj $*"
-   ;; Lisp
-   "lisp"        "rlwrap ros -Q run $*"
-   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
-   ;; macOS
-   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
-   "app-clear"   "sudo xattr -crv $*"
-   "app-sign"    "sudo codesign --force --deep --sign - $*"
-   ;; Homebrew
-   "brewup"      "brew update && brew upgrade"
-   "brewu"       "brew update"
-   ;; Apt-get
-   "pacu"        "sudo apt-get update"
-   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
-   "pacupd"      "sudo apt-get dist-upgrade"
-   "pacs"        "apt-cache search $*"
-   "pacinfo"     "apt-cache show $*"
-   "paci"        "sudo apt-get install --no-install-recommends $*"
-   "pacli"       "apt list --installed"
-   "paclig"      "apt list --installed | grep $*"
-   "pacmark"     "sudo apt-mark $*"
-   "pacr"        "sudo apt-get remove --purge $*"
-   "pacar"       "sudo apt-get autoremove --purge $*"
-   ;; Guix
-   "guixup"      "guix pull && guix package -u"
-   ;; Nix
-   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
-   ;; Too small /tmp directory
-   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
 
 ;;  ____________________________________________________________________________
 ;;; COMINT
