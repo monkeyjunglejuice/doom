@@ -29,7 +29,7 @@
 (package! my-themes
   :recipe (:local-repo "~/.emacs.themes"
            :files ("*.el" "*/*.el")
-           :build t))
+           :build nil))
 
 (package! my-elisp
   :recipe (:local-repo "~/.emacs.lisp"
