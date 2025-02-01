@@ -97,6 +97,8 @@
       :desc "Lisp"                   "l"     #'sly
       :desc "Eshell"                 "e"     #'+eshell/toggle
       :desc "IEx"                    "r"     #'inf-elixir-run
+      :desc "Vertical split"         "V"     #'+evil/window-vsplit-and-follow
+      :desc "Horizontal split"       "S"     #'+evil/window-split-and-follow
       ;; doom-leader-buffer-map
       :desc "Kill buffer and window" "b D"   #'kill-buffer-and-window
       ;; doom-leader-file-map
