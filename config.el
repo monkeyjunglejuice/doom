@@ -53,15 +53,12 @@
          (pcase appearance
            ('light (load-theme my-theme-light t)
                    ;; Global variable will be used as an argument to launch emacsclient frames
-                   (setq! my-frame-opacity 100)
-                   (doom/set-frame-opacity my-frame-opacity)
-                   (set-background-color "#fffdee")
+                   (doom/set-frame-opacity (setq my-frame-opacity 100))
                    ;; Eventually return theme name to set `doom-theme'
                    my-theme-light)
            ('dark (load-theme my-theme-dark t)
                   ;; Global variable will be used as an argument to launch emacsclient frames
-                  (setq! my-frame-opacity 80)
-                  (doom/set-frame-opacity my-frame-opacity)
+                  (doom/set-frame-opacity (setq my-frame-opacity 80))
                   ;; Eventually return theme name to set `doom-theme'
                   my-theme-dark))))
 
