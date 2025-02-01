@@ -507,8 +507,8 @@
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Parenthesis
 
-;; Highlight expressions, not just the delimiters
-(setq! show-paren-style 'expression)
+;; Highlight enclosing parens, or whole expressions?
+(setq! show-paren-style 'parenthesis)
 
 ;; Color-code nested parens
 ;; <https://github.com/Fanael/rainbow-delimiters>
