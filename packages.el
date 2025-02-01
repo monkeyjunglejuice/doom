@@ -21,12 +21,6 @@
            :build t)
   :pin "895e10936adac93aa8187c9cc91092dbca898677")  ; v4.6.0
 
-
-(package! my-themes
-  :recipe (:local-repo "~/.emacs.themes"
-           :files ("*.el" "*/*.el")
-           :build nil))
-
 (package! my-elisp
   :recipe (:local-repo "~/.emacs.lisp"
            :build t))
