@@ -123,6 +123,27 @@
 ;; Make the <Option> key on MacOS act as <Meta> key for "M- ..."
 ;; (setq! mac-option-modifier 'meta)
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Swap keys
+
+;; <https://github.com/wbolster/evil-swap-keys>
+(use-package! evil-swap-keys
+  :config
+  (global-evil-swap-keys-mode 1)
+  ;; Shift number keys in all Evil states for any buffer type
+  (setq-hook! 'evil-local-mode-hook
+    evil-swap-keys-text-input-states
+    '(emacs insert replace visual normal motion operator operator-pending hyvbrid global surround next previous nil))
+  (add-hook! 'evil-local-mode-hook
+             #'evil-swap-keys-swap-number-row))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Which-key
+
+(after! which-key
+  (setq! which-key-idle-delay 0.4
+         which-key-idle-secondary-delay 0.01))
+
 ;;  ____________________________________________________________________________
 ;;; SHELLS
 
@@ -304,9 +325,6 @@
 (after! vertico
   (setq! vertico-cycle nil))
 
-(after! which-key
-  (setq! which-key-idle-delay 0.4))
-
 (after! hl-line
   (setq! hl-line-sticky-flag nil)
   (setq! global-hl-line-modes '(text-mode
@@ -467,20 +485,6 @@
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Swap keys
-
-;; <https://github.com/wbolster/evil-swap-keys>
-(use-package! evil-swap-keys
-  :config
-  (global-evil-swap-keys-mode 1)
-  ;; Shift number keys in all Evil states for any buffer type
-  (setq-hook! 'evil-local-mode-hook
-    evil-swap-keys-text-input-states
-    '(emacs insert replace visual normal motion operator operator-pending))
-  (add-hook! 'evil-local-mode-hook
-             #'evil-swap-keys-swap-number-row))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Tree-Sitter text objects
