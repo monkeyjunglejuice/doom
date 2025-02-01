@@ -338,6 +338,8 @@
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
 
+(setq! initial-major-mode #'lisp-interaction-mode)
+
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
 
