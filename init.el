@@ -92,6 +92,7 @@
        (elixir +lsp +tree-sitter +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
+       graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
@@ -100,7 +101,6 @@
        ;; nim
        (ocaml +tree-sitter)
        (org +pandoc)
-       graphviz
        ;; python
        (racket +lsp)
        ;; rest
