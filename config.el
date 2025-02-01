@@ -110,8 +110,8 @@
       ;; doom-leader-search-map
       :desc "Find file at point"     "s f"   #'ffap
       ;; evil-window-map
-      :desc ""                       "w `"   #'+popup/raise
-      :desc ""                       "w ~"   #'+popup/buffer
+      :desc nil                      "w `"   #'+popup/raise
+      :desc nil                      "w ~"   #'+popup/buffer
       )
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
