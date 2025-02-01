@@ -74,7 +74,7 @@
        eval
        (lookup +dictionary)
        (lsp +eglot)
-       magit
+       (magit +forge)
        make
        ;; pass
        pdf
@@ -102,6 +102,7 @@
        (org +pandoc)
        graphviz
        ;; python
+       (racket +lsp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
        ;; (scheme +gambit)
