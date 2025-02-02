@@ -44,7 +44,7 @@
   (setq modus-vivendi-tinted-palette-overrides
         modus-themes-preset-overrides-warmer))
 
-;; Do not extend `region' background past the end of the line.
+;; Do not extend `region' background past the end of the line
 (custom-set-faces
  '(region ((t :extend nil))))
 
