@@ -5,10 +5,7 @@
 
 ;; Initial frame placement
 (pushnew! initial-frame-alist
-          '(width . 90)
-          '(height . 50)
-          '(left . 940)
-          '(top . 0))
+          '(fullscreen . maximized))
 
 ;; Default frame placement
 (pushnew! default-frame-alist
