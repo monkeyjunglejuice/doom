@@ -31,7 +31,7 @@
        ophints
        (popup +defaults)
        (vc-gutter +pretty)
-       vi-tilde-fringe
+       ;; vi-tilde-fringe
        window-select
        ;; workspaces
        ;; zen
