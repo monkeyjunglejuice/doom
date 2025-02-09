@@ -25,7 +25,7 @@
        doom-serif-font
        (font-spec :family "Iosevka Dee Slab" :size 16 :weight 'normal)
        doom-variable-pitch-font
-       (font-spec :family "ETBembo" :size 18 :weight 'normal))
+       (font-spec :family "ETBookOT" :size 18 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
