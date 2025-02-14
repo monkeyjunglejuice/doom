@@ -573,6 +573,7 @@
 ;; <https://github.com/alphapapa/org-sticky-header>
 (use-package! org-sticky-header
   :after org
+  :defer t
   :config
   (add-hook! 'org-mode-hook #'org-sticky-header-mode))
 
