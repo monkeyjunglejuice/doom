@@ -185,7 +185,7 @@
    "up"          "eshell-up $1"
    "cdp"         "cd-to-project"
    "mkdir"       "mkdir -p $*"
-   "tr"          "trash $*"
+   "tm"          "trash $*"
    ;; Emacs commands
    "f"           "find-file $1"
    "fo"          "find-file-other-window $1"
@@ -212,8 +212,8 @@
    "app-clear"   "sudo xattr -crv $*"
    "app-sign"    "sudo codesign --force --deep --sign - $*"
    ;; Homebrew
-   "brewup"      "brew update && brew upgrade"
    "brewu"       "brew update"
+   "brewup"      "brew update && brew upgrade"
    ;; Apt-get
    "pacu"        "sudo apt-get update"
    "pacup"       "sudo apt-get update && sudo apt-get upgrade"
