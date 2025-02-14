@@ -118,7 +118,7 @@
        :app
        ;; calendar
        ;; emms
-       ;; everywhere
+       everywhere
        ;; irc
        ;; (rss +org)
 
