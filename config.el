@@ -424,7 +424,8 @@
 ;;; MISC UI
 
 (after! vertico
-  (setq! vertico-cycle nil))
+  (setq! vertico-cycle nil)
+  (setq! vertico-count 10))
 
 (after! hl-line
   (setq! hl-line-sticky-flag nil)
