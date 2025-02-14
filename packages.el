@@ -27,6 +27,7 @@
 (package! my-themes
   :recipe (:local-repo "~/.emacs.themes"
            :build t))
+
 (package! my-elisp
   :recipe (:local-repo "~/.emacs.lisp"
            :build t))
