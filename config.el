@@ -30,6 +30,9 @@
 ;;  ____________________________________________________________________________
 ;;; THEMES
 
+;; My theme settings
+(use-package! my-themes)
+
 ;; Modus theme settings
 (use-package! modus-themes
   :config
