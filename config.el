@@ -285,13 +285,17 @@
 
 ;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
-;; <https://github.com/dimitri/switch-window>
 
+;; <https://github.com/dimitri/switch-window>
 (after! switch-window
-  (setq! switch-window-background nil)
-  (setq! switch-window-multiple-frames t)
-  (setq! switch-window-threshold 1)
-  (setq! switch-window-mvborder-increment 1)
+  (custom-set-faces '(switch-window-label
+                      ((t :height 1.0 :bold t))))
+  (custom-set-faces '(switch-window-background
+                      ((t :inherit 'whitespace-space :background unspecified))))
+  (setq! switch-window-multiple-frames t
+         switch-window-threshold 1
+         switch-window-mvborder-increment 1
+         switch-window-background t)
   ;; Vim-like keybindings for window resizing
   (setq! switch-window-extra-map
          (let ((map (make-sparse-keymap)))
@@ -302,36 +306,49 @@
            (define-key map (kbd "=")   #'balance-windows)
            (define-key map (kbd "SPC") #'switch-window-resume-auto-resize-window)
            map))
-  (setq! switch-window-minibuffer-shortcut 109)  ; "m"
+  (setq! switch-window-minibuffer-shortcut 109) ; "m"
   (setq! switch-window-qwerty-shortcuts
          '("a" "s" "d" "f" "g"
-           "q" "w" "e" "r" "t" "y"
+           "q" "w" "e" "r" "t"
            "u" "i" "o" "p"
            "z" "x" "c" "v"
            "b" "n"))
-  (set-face-attribute 'switch-window-background nil
-                      :inherit 'shadow)
   ;; Bind `switch-window' commands to regular Emacs keybindings
-  ;; TODO Set up Evil equivalents and replace some default Doom bindings
-  (map! :map switch-window-mode-map
-        :e  "C-x o"    #'switch-window
-        :e  "C-x 1"    #'switch-window-then-maximize
-        :e  "C-x 2"    #'switch-window-then-split-below
-        :e  "C-x 3"    #'switch-window-then-split-right
-        :e  "C-x 0"    #'switch-window-then-delete
-        :e  "C-x 4 0"  #'switch-window-then-kill-buffer
-        :e  "C-x 4 d"  #'switch-window-then-dired
-        :e  "C-x 4 f"  #'switch-window-then-find-file
-        :e  "C-x 4 b"  #'switch-window-then-display-buffer
-        :e  "C-x 4 s"  #'switch-window-then-swap-buffer))
+  (map! :leader
+        "w w"    #'switch-window
+        "w m"    #'switch-window-then-maximize
+        "w s"    #'switch-window-then-split-below
+        "w v"    #'switch-window-then-split-right
+        "w d"    #'switch-window-then-delete
+        "w D"    #'switch-window-then-kill-buffer
+        "w , d"  #'switch-window-then-dired
+        "w , f"  #'switch-window-then-find-file
+        "w , b"  #'switch-window-then-display-buffer
+        "w , s"  #'switch-window-then-swap-buffer))
 
 (after! ace-window
+  (setq! ace-window-display-mode t
+         aw-display-mode-overlay nil
+         aw-dispatch-when-more-than 1
+         aw-scope 'global)
+  (setq! aw-dispatch-alist
+         '((?j aw-flip-window)
+           (?m aw-swap-window "Swap Windows")
+           (?M aw-move-window "Move Window")
+           (?b aw-switch-buffer-in-window "Select Buffer")
+           (?B aw-switch-buffer-other-window "Switch Buffer Other Window")
+           (?C aw-copy-window "Copy Window")
+           (?D aw-delete-window "Delete Window")
+           (?O delete-other-windows "Delete Other Windows")
+           (?F aw-split-window-fair "Split Fair Window")
+           (?S aw-split-window-vert "Split Vert Window")
+           (?V aw-split-window-horz "Split Horz Window")
+           (?X aw-execute-command-other-window "Execute Command Other Window")
+           (?T aw-transpose-frame "Transpose Frame")
+           (?? aw-show-dispatch-help)))
   (setq! aw-keys '(?a ?s ?d ?f ?g
-                   ?q ?w ?r ?t ?y
-                   ?i ?p))
-  (setq! aw-scope 'global)
-  (setq! ace-window-display-mode 1
-         aw-display-mode-overlay nil)
+                   ?q ?w ?e ?r ?t
+                   ?y ?u ?i ?o ?p))
   (set-face-attribute 'aw-background-face nil
                       :inherit 'shadow))
 
