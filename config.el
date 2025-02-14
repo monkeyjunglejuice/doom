@@ -499,7 +499,7 @@
 (after! dired
   ;; Listing columns; Switch arguments with "C-u s" e.g. hide backups with -B
   (setq! dired-listing-switches "-lhFA -v --group-directories-first")
-  ;; (setq! dired-kill-when-opening-new-dired-buffer t)
+  (setq! dired-kill-when-opening-new-dired-buffer t)
   (add-hook! 'dired-mode-hook
              #'dired-hide-details-mode
              #'dired-omit-mode
