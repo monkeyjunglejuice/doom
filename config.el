@@ -39,13 +39,13 @@
   (setq modus-themes-bold-constructs t
         modus-themes-italic-constructs nil
         modus-themes-mixed-fonts t)
-  (setq modus-themes-common-palette-overrides
-        '((border-mode-line-active unspecified)
-          (border-mode-line-inactive unspecified)))
   (setq modus-operandi-tinted-palette-overrides
         modus-themes-preset-overrides-warmer)
-  (setq modus-vivendi-tinted-palette-overrides
-        modus-themes-preset-overrides-warmer))
+  (setq modus-vivendi-palette-overrides
+        modus-themes-preset-overrides-warmer)
+  (setq modus-themes-common-palette-overrides
+        '((border-mode-line-active unspecified)
+          (border-mode-line-inactive unspecified))))
 
 ;; Do not extend `region' background past the end of the line
 (custom-set-faces
@@ -60,18 +60,18 @@
 (defun my-apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
-  (setq! doom-theme
-         (pcase appearance
-           ('light (load-theme my-theme-light t)
-                   ;; Global variable will be used as an argument to launch emacsclient frames
-                   (doom/set-frame-opacity (setq my-frame-opacity 100))
-                   ;; Eventually return theme name to set `doom-theme'
-                   my-theme-light)
-           ('dark (load-theme my-theme-dark t)
+  (setq doom-theme
+        (pcase appearance
+          ('light (load-theme my-theme-light t)
                   ;; Global variable will be used as an argument to launch emacsclient frames
-                  (doom/set-frame-opacity (setq my-frame-opacity 80))
+                  (doom/set-frame-opacity (setq my-frame-opacity 100))
                   ;; Eventually return theme name to set `doom-theme'
-                  my-theme-dark))))
+                  my-theme-light)
+          ('dark (load-theme my-theme-dark t)
+                 ;; Global variable will be used as an argument to launch emacsclient frames
+                 (doom/set-frame-opacity (setq my-frame-opacity 90))
+                 ;; Eventually return theme name to set `doom-theme'
+                 my-theme-dark))))
 
 (add-hook! 'ns-system-appearance-change-functions #'my-apply-theme)
 
