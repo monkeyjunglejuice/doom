@@ -414,10 +414,10 @@
 ;; Show the depth of recursive minibuffers?
 (minibuffer-depth-indicate-mode 1)
 
-;; Delete duplicates from the command history
+;; Delete duplicates from the command history?
 (setq! history-delete-duplicates t)
 
-;; Modal editing in the minibuffer
+;; Modal editing in the minibuffer?
 (setq! evil-collection-setup-minibuffer t)
 
 ;;  ____________________________________________________________________________
