@@ -434,10 +434,8 @@
                                 org-agenda-mode
                                 dired-mode)))
 
-;; Don't hide mode-line
-(after! hide-mode-line
-  (advice-add #'hide-mode-line-mode :around
-              (lambda (orig &optional args) nil)))
+(when (modulep! :ui modeline +light)
+  (setq! +modeline-height 26))
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
