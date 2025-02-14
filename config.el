@@ -533,7 +533,6 @@
 (url-setup-privacy-info)
 
 (defun my-user-agent (browser-name)
-  ;; TODO: make user-agent selection interactive
   (cond
    ((equal browser-name 'safari-macos)
     (setq! url-user-agent
