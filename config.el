@@ -100,16 +100,14 @@
       :desc nil                      "`"     nil  ; Switch to last buffer
       :desc nil                      "~"     nil  ; Toggle last popup
       :desc "Toggle popups"          "`"     #'+popup/toggle
+      :desc "Switch buffer"          ","     #'switch-to-buffer
       :desc "Directories"            "d"     #'consult-dir
+      :desc "Eshell"                 "e"     #'+eshell/here
       :desc "Command"                "m"     #'execute-extended-command
       :desc "Complex command"        "M"     #'consult-complex-command
-      :desc "Switch buffer"          ","     #'switch-to-buffer
-      :desc "Previous window"        "j"     #'evil-window-mru
-      :desc "Lisp"                   "l"     #'sly
-      :desc "Eshell"                 "e"     #'+eshell/toggle
       :desc "IEx"                    "r"     #'inf-elixir-run
-      :desc "Vertical split"         "V"     #'+evil/window-vsplit-and-follow
       :desc "Horizontal split"       "S"     #'+evil/window-split-and-follow
+      :desc "Vertical split"         "V"     #'+evil/window-vsplit-and-follow
       ;; doom-leader-buffer-map
       :desc "Kill buffer and window" "b D"   #'kill-buffer-and-window
       ;; doom-leader-file-map
@@ -122,8 +120,7 @@
       :desc "Find file at point"     "s f"   #'ffap
       ;; evil-window-map
       :desc nil                      "w `"   #'+popup/raise
-      :desc nil                      "w ~"   #'+popup/buffer
-      )
+      :desc nil                      "w ~"   #'+popup/buffer)
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - MacOS
@@ -550,8 +547,10 @@
         "[" nil
         "]" nil
         ;; Re-bind commands bound to bracket keys by default
-        "M-[" #'lispyville-previous-opening
-        "M-]" #'lispyville-next-opening))
+        "M-[" #'lispyville-next-opening
+        "M-{" #'lispyville-previous-opening
+        "M-]" #'lispyville-next-closing
+        "M-}" #'lispyville-previous-closing))
 
 ;; Structural editing: Smartparens
 ;; <https://github.com/Fuco1/smartparens>
@@ -838,7 +837,7 @@ Entries are derived from the smartparens package."
          "A" #'racket-unalign
          "f" #'racket-fold-all-tests
          "F" #'racket-unfold-all-tests
-         "h" nil                        ; rebind to prefix "d", key "d"
+         "h" nil  ; rebind to prefix "d", key "d"
          "i" #'racket-unicode-input-method-enable
          "l" #'racket-logger
          "o" #'racket-profile
@@ -846,8 +845,8 @@ Entries are derived from the smartparens package."
          "t" #'racket-test
          "u" #'racket-backward-up-list
          "y" #'racket-insert-lambda
-         "s" nil                        ; rebind to prefix "r", key "r"
-         "R" nil                        ; rebind to prefix "r", key "s"
+         "s" nil  ; rebind to prefix "r", key "r"
+         "R" nil  ; rebind to prefix "r", key "s"
          (:prefix ("r" . "run")
                   "r" #'racket-run
                   "s" #'racket-run-and-switch-to-repl
@@ -859,7 +858,7 @@ Entries are derived from the smartparens package."
                   "a" #'racket-expand-again)
          (:prefix ("g" . "goto")
                   "b" #'racket-unvisit
-                  "d" #'xref-find-definitions ; replace obsolete command
+                  "d" #'xref-find-definitions  ; replace obsolete command
                   "m" #'racket-visit-module
                   "r" #'racket-open-require-path)
          (:prefix ("e" . "eval")
@@ -873,7 +872,7 @@ Entries are derived from the smartparens package."
                   "]" #'racket-describe-forward)
          :map racket-repl-mode-map
          "l" #'racket-logger
-         "h" nil                        ; rebind to "d"
+         "h" nil  ; rebind to "d"
          "d" #'racket-repl-documentation
          "y" #'racket-insert-lambda
          "u" #'racket-backward-up-list
