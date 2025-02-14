@@ -40,7 +40,7 @@
        ;; fold
        (format +onsave +lsp)
        lispy
-       rotate-text
+       ;; rotate-text
        snippets
        word-wrap
 
@@ -101,10 +101,10 @@
        (ocaml +tree-sitter)
        (org +pandoc)
        ;; python
-       (racket +lsp)
+       ;; (racket +lsp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
-       ;; (scheme +gambit)
+       ;; (scheme +guile +gambit)
        (sh +fish +lsp +tree-sitter)
        ;; solidity
        ;; swift
