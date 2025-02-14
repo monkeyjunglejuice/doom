@@ -678,6 +678,7 @@
 
 (setq! display-line-numbers-type 'relative)
 
+;; Turn off line numbers
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
   #'display-line-numbers-mode)
 
@@ -688,6 +689,7 @@
 ;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
 (setq! backward-delete-char-untabify-method 'all)
 
+;; Keep code always inteted
 ;; <https://github.com/Malabarba/aggressive-indent-mode>
 (use-package! aggressive-indent
   :config
@@ -719,7 +721,7 @@
 
 (defun my-lisp-src-modes ()
   "Generates a non-exhaustive list of loaded Lisp-related modes.
-Entries are derived from the smartparens package"
+Entries are derived from the smartparens package."
   (seq-filter #'fboundp '(clojure-mode
                           clojurec-mode
                           clojurescript-mode
