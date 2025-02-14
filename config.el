@@ -506,9 +506,9 @@
              (setq! dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
   (map! :localleader :mode dired-mode
         :n "d" #'dired-hide-details-mode)
-  ;; BUG <https://github.com/doomemacs/doomemacs/issues/8170>
+  ;; BUG Fix for <https://github.com/doomemacs/doomemacs/issues/8170>
   (defun reset-cursor-after-wdired-exit ()
-    "Restore the evil-normal-state-cursor to 'box' after exiting Editable Dired."
+    "Restore the evil-normal-state-cursor to \='box' after exiting Editable Dired."
     (kill-local-variable 'evil-normal-state-cursor)
     (kill-local-variable 'cursor-type)
     (setq evil-normal-state-cursor 'box)
