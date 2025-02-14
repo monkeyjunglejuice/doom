@@ -178,6 +178,25 @@
          which-key-idle-secondary-delay 0.01))
 
 ;;  ____________________________________________________________________________
+;;; OS INTEGRATION
+
+;; Use the MacOS trash instead of freedesktop.org ~/.local/share/Trash
+;; <https://github.com/emacsorphanage/osx-trash>
+(use-package! osx-trash
+  :when (eq system-type 'darwin)
+  :config
+  (osx-trash-setup))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Utilities
+
+;; Show and manage OS processes
+(setq! proced-auto-update-interval 1
+       proced-auto-update-flag t
+       proced-enable-color-flag t
+       proced-descend t)
+
+;;  ____________________________________________________________________________
 ;;; SHELLS
 
 (defvar my-shell (executable-find "fish"))
@@ -488,15 +507,6 @@
 (setq! calendar-date-style 'iso
        calendar-week-start-day 1
        calendar-weekend-days '(6 0))
-
-;;  ____________________________________________________________________________
-;;; UTILITIES
-
-;; Show and manage OS processes
-(setq! proced-auto-update-interval 1
-       proced-auto-update-flag t
-       proced-enable-color-flag t
-       proced-descend t)
 
 ;;  ____________________________________________________________________________
 ;;; WEB BROWSERS
