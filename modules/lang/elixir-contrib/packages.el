@@ -1,6 +1,4 @@
-;;; lang/elixir/packages.el -*- no-byte-compile: t; -*-
-
-(load! "lang/elixir/packages" doom-modules-dir)
+;;; lang/elixir-contrib/packages.el -*- no-byte-compile: t; -*-
 
 (when (modulep! +iex)
   (package! inf-elixir

@@ -87,7 +87,8 @@
        ;; (cc +lsp +tree-sitter)
        common-lisp
        data
-       (elixir +lsp +tree-sitter +iex +mix)
+       (elixir +lsp +tree-sitter)
+       (elixir-contrib +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
        graphviz

@@ -1,4 +1,4 @@
-;;; lang/elixir/+mix.el -*- lexical-binding: t; -*-
+;;; lang/elixir-contrib/+mix.el -*- lexical-binding: t; -*-
 
 (use-package! mix
   :defer t
