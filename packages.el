@@ -13,8 +13,11 @@
 (package! clean-kill-ring)
 (package! org-sticky-header)
 (package! show-font)
-(package! srfi)
-(package! scheme-complete)
+(when (featurep :system 'macos)
+  (package! osx-trash))
+(when (modulep! :lang scheme)
+  (package! srfi)
+  (package! scheme-complete))
 
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"
