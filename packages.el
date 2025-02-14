@@ -12,8 +12,17 @@
 (package! clean-kill-ring)
 (package! org-sticky-header)
 (package! show-font)
+(package! ellama)
+(package! gptel)
+
 (when (featurep :system 'macos)
   (package! osx-trash))
+
+(package! aider
+  :recipe (:host github :repo "tninja/aider.el"
+           :files ("aider.el" "aider-doom.el")
+           :build t))
+
 (when (modulep! :lang scheme)
   (package! srfi)
   (package! scheme-complete))

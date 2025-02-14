@@ -495,6 +495,21 @@
   (add-hook! 'org-mode-hook #'org-sticky-header-mode))
 
 ;;  ____________________________________________________________________________
+;;; AI TOOLS
+
+(use-package! aider
+  :config
+  (setq aider-args '("--model" "r1"))
+  (after! my-private
+    (setenv "DEEPSEEK_API_KEY" my-deepseek-api-key))
+  (map! :leader
+        :desc "Menu" "A m" #'aider-transient-menu))
+
+(use-package! ellama)
+
+(use-package! gptel)
+
+;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
