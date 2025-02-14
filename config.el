@@ -764,7 +764,7 @@ Entries are derived from the smartparens package."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Elisp
 
-(when (modulep! indent-guides)
+(when (modulep! :ui indent-guides)
   (add-hook! 'emacs-lisp-mode-hook
     (indent-bars-mode -1)))
 
