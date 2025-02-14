@@ -904,10 +904,14 @@ Entries are derived from the smartparens package."
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
 
+;; Packages are natively compiled, run `doom sync --gc --aot' after changes
+
 ;; Private user information
 (use-package! my-private)
+
 ;; Personal Elisp
 (use-package! my-tools)
+
 ;; MJJ blog machinery
 (use-package! mjj-publish)
 
