@@ -374,7 +374,8 @@
   (after! eglot
     (set-popup-rule! "^\\*eglot-help" :size 0.33 :quit t :select t)))
 
-;; Popup adjustments for flag `+defaults'
+;; Popup adjustments for +defaults flag
+;; Taken from `(find-file (concat doom-emacs-dir "modules/ui/popup/config.el"))'
 (when (modulep! :ui popup +defaults)
   (set-popup-rules!
     '(("^\\*Completions" :ignore t)
