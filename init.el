@@ -110,7 +110,7 @@
        ;; solidity
        ;; swift
        (web +lsp +tree-sitter)
-       ;; (yaml +lsp +tree-sitter)
+       (yaml +lsp +tree-sitter)
        ;; zig
 
        :email
