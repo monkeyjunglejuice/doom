@@ -10,7 +10,7 @@
 ;; Default frame placement
 (pushnew! default-frame-alist
           '(width . 90)
-          '(height . 50)
+          '(height . 47)
           '(left . 940)
           '(top . 0))
 
