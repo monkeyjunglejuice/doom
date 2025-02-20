@@ -6,6 +6,7 @@
 (package! ivy :disable t)
 (package! swiper :disable t)
 (package! flycheck-popup-tip :disable t)
+(package! company :disable t)
 
 (package! evil-swap-keys)
 (package! aggressive-indent)
