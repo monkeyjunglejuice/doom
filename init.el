@@ -95,6 +95,7 @@
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
+       (lfe +lsp)
        (lua +fennel +lsp +tree-sitter)
        markdown
        ;; nim
