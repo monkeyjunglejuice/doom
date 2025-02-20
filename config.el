@@ -90,6 +90,93 @@
               diff-hl-change)))))
 
 ;;  ____________________________________________________________________________
+;;; SHELLS
+
+(defvar my-shell (executable-find "fish"))
+(setq! explicit-shell-file-name my-shell)
+
+;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
+;; packages) spawn child processes via shell commands and rely on their output
+(setq! shell-file-name (or (executable-find "dash")
+                           (executable-find "bash")
+                           (executable-find "zsh")
+                           (executable-find "sh")))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Eshell
+
+(after! eshell
+  (setq! eshell-scroll-to-bottom-on-output nil)
+  (setq eshell-list-files-after-cd t)
+  (setq! eshell-term-name "xterm-256color")
+  (set-eshell-alias!
+   "q"           "exit"
+   "l"           "ls $*"
+   "la"          "ls -A $*"
+   "ll"          "ls -lh $*"
+   "lla"         "ls -lhA $*"
+   "lt"          "eza -T --icons $*"
+   "lat"         "eza -AT --icons $*"
+   "llt"         "eza -lT --icons $*"
+   "llat"        "eza -lAT --icons $*"
+   "up"          "eshell-up $1"
+   "cdp"         "cd-to-project"
+   "mkdir"       "mkdir -p $*"
+   "tm"          "trash $*"
+   ;; Emacs commands
+   "f"           "find-file $1"
+   "fo"          "find-file-other-window $1"
+   "d"           "dired $1"
+   "do"          "dired-other-window $1"
+   "g"           "magit-status"
+   "doomS"       "doom sync --gc --aot"
+   "doomU"       "doom upgrade --aot"
+   "doomR"       "doom/restart"
+   ;; Adblocker
+   "hblock-off"  "hblock -S none -D none"
+   ;; Git
+   "git"         "git --no-pager $*"
+   ;; Tar archives
+   "targ"        "tar cfvz $*"
+   "targx"       "tar xfvz $*"
+   "tarb"        "tar cfvj $*"
+   "tarbx"       "tar xfvj $*"
+   ;; Lisp
+   "lisp"        "rlwrap ros -Q run $*"
+   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+   ;; macOS
+   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
+   "app-clear"   "sudo xattr -crv $*"
+   "app-sign"    "sudo codesign --force --deep --sign - $*"
+   ;; Homebrew
+   "brewu"       "brew update"
+   "brewup"      "brew update && brew upgrade"
+   ;; Apt-get
+   "pacu"        "sudo apt-get update"
+   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
+   "pacupd"      "sudo apt-get dist-upgrade"
+   "pacs"        "apt-cache search $*"
+   "pacinfo"     "apt-cache show $*"
+   "paci"        "sudo apt-get install --no-install-recommends $*"
+   "pacli"       "apt list --installed"
+   "paclig"      "apt list --installed | grep $*"
+   "pacmark"     "sudo apt-mark $*"
+   "pacr"        "sudo apt-get remove --purge $*"
+   "pacar"       "sudo apt-get autoremove --purge $*"
+   ;; Guix
+   "guixup"      "guix pull && guix package -u"
+   ;; Nix
+   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
+   ;; Too small tmp directory
+   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Vterm
+
+(after! vterm
+  (setq! vterm-shell my-shell))
+
+;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
 
 (setq! doom-leader-key "SPC"
@@ -200,93 +287,6 @@
        proced-auto-update-flag t
        proced-enable-color-flag t
        proced-descend t)
-
-;;  ____________________________________________________________________________
-;;; SHELLS
-
-(defvar my-shell (executable-find "fish"))
-(setq! explicit-shell-file-name my-shell)
-
-;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
-;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "bash")
-                           (executable-find "dash")
-                           (executable-find "zsh")
-                           (executable-find "sh")))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Eshell
-
-(after! eshell
-  (setq! eshell-scroll-to-bottom-on-output nil)
-  (setq eshell-list-files-after-cd t)
-  (setq! eshell-term-name "xterm-256color")
-  (set-eshell-alias!
-   "q"           "exit"
-   "l"           "ls $*"
-   "la"          "ls -A $*"
-   "ll"          "ls -lh $*"
-   "lla"         "ls -lhA $*"
-   "lt"          "eza -T --icons $*"
-   "lat"         "eza -AT --icons $*"
-   "llt"         "eza -lT --icons $*"
-   "llat"        "eza -lAT --icons $*"
-   "up"          "eshell-up $1"
-   "cdp"         "cd-to-project"
-   "mkdir"       "mkdir -p $*"
-   "tm"          "trash $*"
-   ;; Emacs commands
-   "f"           "find-file $1"
-   "fo"          "find-file-other-window $1"
-   "d"           "dired $1"
-   "do"          "dired-other-window $1"
-   "g"           "magit-status"
-   "doomS"       "doom sync --gc --aot"
-   "doomU"       "doom upgrade --aot"
-   "doomR"       "doom/restart"
-   ;; Adblocker
-   "hblock-off"  "hblock -S none -D none"
-   ;; Git
-   "git"         "git --no-pager $*"
-   ;; Tar archives
-   "targ"        "tar cfvz $*"
-   "targx"       "tar xfvz $*"
-   "tarb"        "tar cfvj $*"
-   "tarbx"       "tar xfvj $*"
-   ;; Lisp
-   "lisp"        "rlwrap ros -Q run $*"
-   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
-   ;; macOS
-   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
-   "app-clear"   "sudo xattr -crv $*"
-   "app-sign"    "sudo codesign --force --deep --sign - $*"
-   ;; Homebrew
-   "brewu"       "brew update"
-   "brewup"      "brew update && brew upgrade"
-   ;; Apt-get
-   "pacu"        "sudo apt-get update"
-   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
-   "pacupd"      "sudo apt-get dist-upgrade"
-   "pacs"        "apt-cache search $*"
-   "pacinfo"     "apt-cache show $*"
-   "paci"        "sudo apt-get install --no-install-recommends $*"
-   "pacli"       "apt list --installed"
-   "paclig"      "apt list --installed | grep $*"
-   "pacmark"     "sudo apt-mark $*"
-   "pacr"        "sudo apt-get remove --purge $*"
-   "pacar"       "sudo apt-get autoremove --purge $*"
-   ;; Guix
-   "guixup"      "guix pull && guix package -u"
-   ;; Nix
-   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
-   ;; Too small /tmp directory
-   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Vterm
-
-(after! vterm
-  (setq! vterm-shell my-shell))
 
 ;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
@@ -577,24 +577,91 @@
 ;; <https://github.com/alphapapa/org-sticky-header>
 (use-package! org-sticky-header
   :after org
-  :defer t
   :config
   (add-hook! 'org-mode-hook #'org-sticky-header-mode))
 
 ;;  ____________________________________________________________________________
 ;;; AI TOOLS
 
+;; Provide a list locally installed Ollama models to use in various places
+(defun my-ollama-models (prefix)
+  "List all locally installed Ollama models and add PREFIX to each element.
+PREFIX can be either \"nil\", or \"ollama_chat/\" or \"ollama/\" to produce
+Aider-compatible model names."
+  (let* ((output (shell-command-to-string "ollama list"))
+         (lines (split-string output "\n" t))
+         models)
+    (dolist (line (cdr lines))
+      (when (string-match "^\\([^[:space:]]+\\)" line)
+        (push (concat prefix (match-string 1 line)) models)))
+    (nreverse models)))
+
+;; <https://github.com/s-kostyaev/ellama>
+(use-package! ellama
+  :init
+  (setq! ellama-language "English")
+  (setq! ellama-sessions-directory "~/Documents/org/ellama-sessions")
+  (require 'llm-ollama)
+  (setq! ellama-provider
+         (make-llm-ollama
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("num_ctx" . 65536))
+          ))
+  (setq! ellama-coding-provider
+         (make-llm-ollama
+          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("num_ctx" . 65536))
+          ))
+  (setq! ellama-translation-provider
+         (make-llm-ollama
+          :chat-model "thinkverse/towerinstruct:7b-v0.2-q4_0"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("num_ctx" . 65536))
+          ))
+  (setq! ellama-summarization-provider
+         (make-llm-ollama
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("num_ctx" . 65536))
+          ))
+  (setq! ellama-extraction-provider
+         (make-llm-ollama
+          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("num_ctx" . 65536))
+          ))
+  (setq! ellama-naming-provider
+         (make-llm-ollama
+          :chat-model "huihui_ai/qwen2.5-abliterate:0.5b-instruct-q4_K_M"
+          :embedding-model "nomic-embed-text"
+          :default-chat-non-standard-params '(("stop" . ("\n")))
+          ))
+  :config
+  (setq! ellama-chat-display-action-function #'display-buffer-pop-up-window)
+  (setq! ellama-instant-display-action-function #'display-buffer-pop-up-window))
+
 (use-package! aider
   :config
-  (setq aider-args '("--model" "r1"))
-  (after! my-private
-    (setenv "DEEPSEEK_API_KEY" my-deepseek-api-key))
+  (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
+  (setq! aider-args '("--model" "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"))
+  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
+  ;; (after! my-private
+  ;;   (setq aider-args '("--model" "r1"))
+  ;;   (setenv "DEEPSEEK_API_KEY" my-deepseek-api-key))
   (map! :leader
         :desc "Menu" "A m" #'aider-transient-menu))
 
-(use-package! ellama)
-
-(use-package! gptel)
+(use-package! gptel
+  :config
+  (setq! gptel-default-mode 'org-mode)
+  (setq! gptel-directives '((default . "")))
+  (setq! gptel-model 'huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0
+         gptel-backend (gptel-make-ollama "Ollama"
+                         :host "localhost:11434"
+                         :stream t
+                         :models (my-ollama-models nil))))
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
