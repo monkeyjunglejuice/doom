@@ -14,10 +14,13 @@
 (package! org-sticky-header)
 (package! show-font)
 (package! ellama)
-(package! gptel)
 
 (when (featurep :system 'macos)
   (package! osx-trash))
+
+(package! gptel
+  :recipe (:host github :repo "karthink/gptel"
+           :build t))
 
 (package! aider
   :recipe (:host github :repo "tninja/aider.el"
