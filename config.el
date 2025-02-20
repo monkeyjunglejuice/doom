@@ -1078,6 +1078,19 @@ Entries are derived from the smartparens package."
     (add-hook! 'lfe-mode-hook #'eglot-ensure)))
 
 ;;  ____________________________________________________________________________
+;;; GLEAM
+;; <https://github.com/gleam-lang/gleam-mode>
+
+(use-package! gleam-ts-mode
+  :defer t
+  :mode (rx ".gleam" eos)
+  :config
+  (when (modulep! :tools lsp +eglot)
+    (after! eglot
+      (pushnew! eglot-server-programs '((gleam-ts-mode) . ("gleam" "lsp")))
+      (add-hook! 'gleam-ts-mode-hook #'eglot-ensure))))
+
+;;  ____________________________________________________________________________
 ;;; OCAML
 
 (use-package! utop
