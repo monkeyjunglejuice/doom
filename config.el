@@ -442,8 +442,12 @@
                                 org-agenda-mode
                                 dired-mode)))
 
+;; Light-weight mode-line is too high, fix that
 (when (modulep! :ui modeline +light)
-  (setq! +modeline-height 26))
+  (setq! +modeline-height 24))
+
+;; Don't ask
+(setq! confirm-kill-emacs nil)
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
