@@ -31,6 +31,9 @@
   (package! srfi)
   (package! scheme-complete))
 
+(package! gleam-ts-mode
+  :recipe (:host github :repo "gleam-lang/gleam-mode"
+           :build t))
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"
            :build t)
