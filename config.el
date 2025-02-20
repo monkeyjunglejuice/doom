@@ -427,12 +427,14 @@
 (setq! evil-collection-setup-minibuffer t)
 
 ;;  ____________________________________________________________________________
-;;; MISC UI
+;;; MISC
 
+;; Make height suitable for smaller frames too
 (after! vertico
-  (setq! vertico-cycle nil)
-  (setq! vertico-count 10))
+  (setq! vertico-cycle nil
+         vertico-count 10))
 
+;; Not everything is line-oriented, e.g. Lisp code
 (after! hl-line
   (setq! hl-line-sticky-flag nil)
   (setq! global-hl-line-modes '(text-mode
