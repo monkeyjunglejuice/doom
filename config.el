@@ -1063,6 +1063,20 @@ Entries are derived from the smartparens package."
                   "m" #'racket-visit-module
                   "d" #'racket-repl-visit-definition))))
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - LFE
+;; <https://lfe.io>
+
+(when (modulep! :lang lfe)
+  (use-package! lfe-start
+    :defer t)
+  (when (modulep! :tools lsp +eglot)
+    (after! eglot
+      (pushnew! eglot-server-programs
+                '((lfe-mode) . ("lfe-ls"
+                                "--transport" "tcp" "--port" :autoport))))
+    (add-hook! 'lfe-mode-hook #'eglot-ensure)))
+
 ;;  ____________________________________________________________________________
 ;;; OCAML
 
