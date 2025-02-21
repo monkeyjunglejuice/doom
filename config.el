@@ -590,7 +590,7 @@
 ;;  ____________________________________________________________________________
 ;;; AI TOOLS
 
-;; Provide a list locally installed Ollama models to use in various places
+;; Provide a list of locally installed Ollama models to use in various places
 (defun my-ollama-models (prefix)
   "List all locally installed Ollama models and add PREFIX to each element.
 PREFIX can be either \"nil\", or \"ollama_chat/\" or \"ollama/\" to produce
