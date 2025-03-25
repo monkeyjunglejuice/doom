@@ -1,4 +1,4 @@
-;;; init.el -*- lexical-binding: t; -*-
+;;; init.sl -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
 ;;; COMPILATION SETTINGS
@@ -32,7 +32,7 @@
        (popup +defaults)
        (vc-gutter +pretty)
        ;; vi-tilde-fringe
-       window-select
+       (window-select +switch-window)
 
        :editor
        (evil +everywhere)
@@ -91,11 +91,13 @@
        (elixir-contrib +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
+       ;; gleam
        graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
-       (lfe +lsp)
+       (julia +lsp +tree-sitter +snail)
+       ;; lfe
        (lua +fennel +lsp +tree-sitter)
        markdown
        ;; nim
@@ -105,7 +107,7 @@
        ;; (racket +lsp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
-       ;; (scheme +guile +gambit)
+       (scheme +guile)
        (sh +fish +lsp +tree-sitter)
        ;; solidity
        ;; swift

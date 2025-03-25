@@ -4,8 +4,14 @@
 ;;; FRAMES
 
 ;; Initial frame placement
+;; (pushnew! initial-frame-alist
+;;           '(fullscreen . maximized))
+
 (pushnew! initial-frame-alist
-          '(fullscreen . maximized))
+          '(width . 90)
+          '(height . 47)
+          '(left . 940)
+          '(top . 0))
 
 ;; Default frame placement
 (pushnew! default-frame-alist
@@ -45,9 +51,9 @@
         modus-themes-italic-constructs nil
         modus-themes-mixed-fonts t)
   (setq modus-operandi-tinted-palette-overrides
-        modus-themes-preset-overrides-warmer)
+        modus-themes-preset-overrides-cooler)
   (setq modus-vivendi-palette-overrides
-        modus-themes-preset-overrides-warmer)
+        modus-themes-preset-overrides-cooler)
   (setq modus-themes-common-palette-overrides
         '((border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified))))
@@ -57,8 +63,8 @@
  '(region ((t :extend nil))))
 
 ;;; - Set light/dark theme:
-(setq my-theme-light 'modus-operandi-tinted)
-(setq my-theme-dark 'modus-vivendi-tinted)
+(setq my-theme-light 'doom-one-light)
+(setq my-theme-dark 'doom-outrun-electric)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -97,84 +103,98 @@
 
 ;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
 ;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "dash")
-                           (executable-find "bash")
+(setq! shell-file-name (or (executable-find "bash")
+                           (executable-find "dash")
                            (executable-find "zsh")
                            (executable-find "sh")))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Eshell
 
-(after! eshell
+(use-package! eshell
+  :config
   (setq! eshell-scroll-to-bottom-on-output nil)
   (setq eshell-list-files-after-cd t)
-  (setq! eshell-term-name "xterm-256color")
-  (set-eshell-alias!
-   "q"           "exit"
-   "l"           "ls $*"
-   "la"          "ls -A $*"
-   "ll"          "ls -lh $*"
-   "lla"         "ls -lhA $*"
-   "lt"          "eza -T --icons $*"
-   "lat"         "eza -AT --icons $*"
-   "llt"         "eza -lT --icons $*"
-   "llat"        "eza -lAT --icons $*"
-   "up"          "eshell-up $1"
-   "cdp"         "cd-to-project"
-   "mkdir"       "mkdir -p $*"
-   "tm"          "trash $*"
-   ;; Emacs commands
-   "f"           "find-file $1"
-   "fo"          "find-file-other-window $1"
-   "d"           "dired $1"
-   "do"          "dired-other-window $1"
-   "g"           "magit-status"
-   "doomS"       "doom sync --gc --aot"
-   "doomU"       "doom upgrade --aot"
-   "doomR"       "doom/restart"
-   ;; Adblocker
-   "hblock-off"  "hblock -S none -D none"
-   ;; Git
-   "git"         "git --no-pager $*"
-   ;; Tar archives
-   "targ"        "tar cfvz $*"
-   "targx"       "tar xfvz $*"
-   "tarb"        "tar cfvj $*"
-   "tarbx"       "tar xfvj $*"
-   ;; Lisp
-   "lisp"        "rlwrap ros -Q run $*"
-   "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
-   ;; macOS
-   "app-unblock" "sudo xattr -d com.apple.quarantine $*"
-   "app-clear"   "sudo xattr -crv $*"
-   "app-sign"    "sudo codesign --force --deep --sign - $*"
-   ;; Homebrew
-   "brewu"       "brew update"
-   "brewup"      "brew update && brew upgrade"
-   ;; Apt-get
-   "pacu"        "sudo apt-get update"
-   "pacup"       "sudo apt-get update && sudo apt-get upgrade"
-   "pacupd"      "sudo apt-get dist-upgrade"
-   "pacs"        "apt-cache search $*"
-   "pacinfo"     "apt-cache show $*"
-   "paci"        "sudo apt-get install --no-install-recommends $*"
-   "pacli"       "apt list --installed"
-   "paclig"      "apt list --installed | grep $*"
-   "pacmark"     "sudo apt-mark $*"
-   "pacr"        "sudo apt-get remove --purge $*"
-   "pacar"       "sudo apt-get autoremove --purge $*"
-   ;; Guix
-   "guixup"      "guix pull && guix package -u"
-   ;; Nix
-   "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
-   ;; Too small tmp directory
-   "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp"))
+  (setq! eshell-term-name "xterm-256color"))
+
+(set-eshell-alias!
+ "q"           "exit"
+ "l"           "ls $*"
+ "la"          "ls -A $*"
+ "ll"          "ls -lh $*"
+ "lla"         "ls -lhA $*"
+ "lt"          "eza -T --icons $*"
+ "lat"         "eza -AT --icons $*"
+ "llt"         "eza -lT --icons $*"
+ "llat"        "eza -lAT --icons $*"
+ "up"          "eshell-up $1"
+ "cdp"         "cd-to-project"
+ "mkdir"       "mkdir -p $*"
+ "tm"          "trash $*"
+ ;; Emacs commands
+ "f"           "find-file $1"
+ "fo"          "find-file-other-window $1"
+ "d"           "dired $1"
+ "do"          "dired-other-window $1"
+ "g"           "magit-status"
+ "doomS"       "doom sync --gc --aot"
+ "doomU"       "doom upgrade --aot"
+ "doomR"       "doom/restart"
+ ;; Adblocker
+ "hblock-off"  "hblock -S none -D none"
+ ;; Git
+ "git"         "git --no-pager $*"
+ ;; Tar archives
+ "targ"        "tar cfvz $*"
+ "targx"       "tar xfvz $*"
+ "tarb"        "tar cfvj $*"
+ "tarbx"       "tar xfvj $*"
+ ;; Lisp
+ "lisp"        "rlwrap ros -Q run $*"
+ "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+ ;; macOS
+ "app-unblock" "sudo xattr -d com.apple.quarantine $*"
+ "app-clear"   "sudo xattr -crv $*"
+ "app-sign"    "sudo codesign --force --deep --sign - $*"
+ ;; Homebrew
+ "brewu"       "brew update"
+ "brewup"      "brew update && brew upgrade"
+ ;; Apt-get
+ "pacu"        "sudo apt-get update"
+ "pacup"       "sudo apt-get update && sudo apt-get upgrade"
+ "pacupd"      "sudo apt-get dist-upgrade"
+ "pacs"        "apt-cache search $*"
+ "pacinfo"     "apt-cache show $*"
+ "paci"        "sudo apt-get install --no-install-recommends $*"
+ "pacli"       "apt list --installed"
+ "paclig"      "apt list --installed | grep $*"
+ "pacmark"     "sudo apt-mark $*"
+ "pacr"        "sudo apt-get remove --purge $*"
+ "pacar"       "sudo apt-get autoremove --purge $*"
+ ;; Guix
+ "guixup"      "guix pull && guix package -u"
+ ;; Nix
+ "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
+ ;; Too small tmp directory
+ "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp")
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Vterm
 
 (after! vterm
   (setq! vterm-shell my-shell))
+
+;;  ____________________________________________________________________________
+;;; HELPERS
+
+(defun my-launch-shell (command name)
+  "Launch programs via shell COMMAND. The NAME can be an arbitrary string.
+The sub-process can be managed via `list-processes'"
+  (start-process-shell-command
+   name
+   (concat "*Process " name "*")  ; with named buffer or `nil' without buffer
+   command)
+  (message (concat "Launching shell command " name "...done")))
 
 ;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
@@ -191,10 +211,11 @@
       :desc nil                      "X"     nil  ; Org capture
       :desc nil                      "`"     nil  ; Switch to last buffer
       :desc nil                      "~"     nil  ; Toggle last popup
+      :desc "Switch window"          "SPC"   #'switch-window
       :desc "Toggle popups"          "`"     #'+popup/toggle
       :desc "Switch buffer"          ","     #'switch-to-buffer
       :desc "Directories"            "d"     #'consult-dir
-      :desc "Eshell"                 "e"     #'+eshell/here
+      :desc "Eshell"                 "e"     #'+eshell/toggle
       :desc "Command"                "m"     #'execute-extended-command
       :desc "Complex command"        "M"     #'consult-complex-command
       :desc "IEx"                    "r"     #'inf-elixir-run
@@ -266,8 +287,15 @@
 ;;; - Which-key
 
 (after! which-key
-  (setq! which-key-idle-delay 0.4
+  (setq! which-key-idle-delay 1.0
          which-key-idle-secondary-delay 0.01))
+
+;;  ____________________________________________________________________________
+;;; EVIL MODE
+
+(after! evil-vars
+  (setq! evil-move-cursor-back nil
+         evil-move-beyond-eol nil))
 
 ;;  ____________________________________________________________________________
 ;;; OS INTEGRATION
@@ -294,13 +322,13 @@
 ;; <https://github.com/dimitri/switch-window>
 (after! switch-window
   (custom-set-faces '(switch-window-label
-                      ((t :height 1.0 :bold t))))
+                      ((t :height 2.0))))
   (custom-set-faces '(switch-window-background
                       ((t :inherit 'whitespace-space :background unspecified))))
   (setq! switch-window-multiple-frames t
          switch-window-threshold 1
          switch-window-mvborder-increment 1
-         switch-window-background t)
+         switch-window-background nil)
   ;; Vim-like keybindings for window resizing
   (setq! switch-window-extra-map
          (let ((map (make-sparse-keymap)))
@@ -313,14 +341,12 @@
            map))
   (setq! switch-window-minibuffer-shortcut 109) ; "m"
   (setq! switch-window-qwerty-shortcuts
-         '("a" "s" "d" "f" "g"
-           "q" "w" "e" "r" "t"
-           "u" "i" "o" "p"
-           "z" "x" "c" "v"
-           "b" "n"))
+         '("s" "d" "f" 
+           "w" "e" "r" 
+           "z" "x" "c"
+           "u" "i" "o"))
   ;; Bind `switch-window' commands to regular Emacs keybindings
   (map! :leader
-        "w w"    #'switch-window
         "w m"    #'switch-window-then-maximize
         "w s"    #'switch-window-then-split-below
         "w v"    #'switch-window-then-split-right
@@ -337,7 +363,7 @@
          aw-dispatch-when-more-than 1
          aw-scope 'global)
   (setq! aw-dispatch-alist
-         '((?j aw-flip-window)
+         '((?  aw-flip-window)
            (?m aw-swap-window "Swap Windows")
            (?M aw-move-window "Move Window")
            (?b aw-switch-buffer-in-window "Select Buffer")
@@ -351,9 +377,10 @@
            (?X aw-execute-command-other-window "Execute Command Other Window")
            (?T aw-transpose-frame "Transpose Frame")
            (?? aw-show-dispatch-help)))
-  (setq! aw-keys '(?a ?s ?d ?f ?g
-                   ?q ?w ?e ?r ?t
-                   ?y ?u ?i ?o ?p))
+  (setq! aw-keys '(?s ?d ?f ?g
+                   ?w ?e ?r ?t
+                   ?l ?k ?j ?h
+                   ?o ?i ?u ?y))
   (set-face-attribute 'aw-background-face nil
                       :inherit 'shadow))
 
@@ -376,42 +403,42 @@
 
 ;; Popup adjustments for +defaults flag
 ;; Taken from `(find-file (concat doom-emacs-dir "modules/ui/popup/config.el"))'
-(when (modulep! :ui popup +defaults)
-  (set-popup-rules!
-    '(("^\\*Completions" :ignore t)
-      ("^\\*Local variables\\*$"
-       :vslot -1 :slot 1 :size +popup-shrink-to-fit)
-      ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
-       :vslot -2 :size 0.33  :autosave t :quit t :ttl nil)
-      ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
-       :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
-      ("^\\*doom:"                      ; editing buffers (interaction required)
-       :vslot -4 :size 0.33 :autosave t :select t :modeline t :quit nil :ttl t)
-      ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
-       :vslot -5 :size 0.33 :select t :modeline nil :quit nil :ttl nil)
-      ("^\\*\\(?:Wo\\)?Man "
-       :vslot -6 :size 0.33 :select t :quit t :ttl 0)
-      ("^\\*Calc"
-       :vslot -7 :side bottom :size 0.33 :select t :quit nil :ttl 0)
-      ("^\\*Customize"
-       :slot 2 :side bottom :size 0.5 :select t :quit nil)
-      ("^ \\*undo-tree\\*"
-       :slot 2 :side left :size 20 :select t :quit t)
-      ;; `help-mode', `helpful-mode'
-      ("^\\*\\([Hh]elp\\|Apropos\\)"
-       :slot 2 :vslot -8 :size 0.33 :select t)
-      ("^\\*eww\\*"                     ; `eww' (and used by dash docsets)
-       :vslot -11 :size 0.33 :select t)
-      ("^\\*xwidget"
-       :vslot -11 :size 0.33 :select nil)
-      ("^\\*info\\*$"                   ; `Info-mode'
-       :slot 2 :vslot 2 :size 0.33 :select t))
-    '(("^\\*Warnings" :vslot 99 :size 0.25)
-      ("^\\*Backtrace" :vslot 99 :size 0.33 :quit nil)
-      ("^\\*CPU-Profiler-Report "    :side bottom :vslot 100 :slot 1 :height 0.33 :width 0.5 :quit nil)
-      ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height 0.33 :width 0.5 :quit nil)
-      ("^\\*Process List\\*" :side bottom :vslot 101 :size 0.25 :select t :quit t)
-      ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
+;; (when (modulep! :ui popup +defaults)
+;;   (set-popup-rules!
+;;     '(("^\\*Completions" :ignore t)
+;;       ("^\\*Local variables\\*$"
+;;        :vslot -1 :slot 1 :size +popup-shrink-to-fit)
+;;       ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
+;;        :vslot -2 :size 0.33  :autosave t :quit t :ttl nil)
+;;       ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
+;;        :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
+;;       ("^\\*doom:"  ; editing buffers (interaction required)
+;;        :vslot -4 :size 0.33 :autosave t :select t :modeline t :quit nil :ttl t)
+;;       ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
+;;        :vslot -5 :size 0.33 :select t :modeline nil :quit nil :ttl nil)
+;;       ("^\\*\\(?:Wo\\)?Man "
+;;        :vslot -6 :size 0.33 :select t :quit t :ttl 0)
+;;       ("^\\*Calc"
+;;        :vslot -7 :side bottom :size 0.33 :select t :quit nil :ttl 0)
+;;       ("^\\*Customize"
+;;        :slot 2 :side bottom :size 0.5 :select t :quit nil)
+;;       ("^ \\*undo-tree\\*"
+;;        :slot 2 :side left :size 20 :select t :quit t)
+;;       ;; `help-mode', `helpful-mode'
+;;       ("^\\*\\([Hh]elp\\|Apropos\\)"
+;;        :slot 2 :vslot -8 :size 0.33 :select t)
+;;       ("^\\*eww\\*"                     ; `eww' (and used by dash docsets)
+;;        :vslot -11 :size 0.33 :select t)
+;;       ("^\\*xwidget"
+;;        :vslot -11 :size 0.33 :select nil)
+;;       ("^\\*info\\*$"                   ; `Info-mode'
+;;        :slot 2 :vslot 2 :size 0.33 :select t))
+;;     '(("^\\*Warnings" :vslot 99 :size 0.25)
+;;       ("^\\*Backtrace" :vslot 99 :size 0.33 :quit nil)
+;;       ("^\\*CPU-Profiler-Report "    :side bottom :vslot 100 :slot 1 :height 0.33 :width 0.5 :quit nil)
+;;       ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height 0.33 :width 0.5 :quit nil)
+;;       ("^\\*Process List\\*" :side bottom :vslot 101 :size 0.25 :select t :quit t)
+;;       ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -437,8 +464,7 @@
 ;; Not everything is line-oriented, e.g. Lisp code
 (after! hl-line
   (setq! hl-line-sticky-flag nil)
-  (setq! global-hl-line-modes '(text-mode
-                                special-mode
+  (setq! global-hl-line-modes '(special-mode
                                 org-agenda-mode
                                 dired-mode)))
 
@@ -512,7 +538,6 @@
   (setq! dired-listing-switches "-lhFA -v --group-directories-first")
   (setq! dired-kill-when-opening-new-dired-buffer t)
   (add-hook! 'dired-mode-hook
-             #'dired-hide-details-mode
              #'dired-omit-mode
              (setq! dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\."))
   (map! :localleader :mode dired-mode
@@ -527,6 +552,10 @@
   (advice-add 'wdired-finish-edit :after #'reset-cursor-after-wdired-exit) ;; ZZ
   (advice-add 'wdired-abort-changes :after #'reset-cursor-after-wdired-exit) ;; ZQ
   (advice-add 'evil-force-normal-state :after #'reset-cursor-after-wdired-exit)) ;; ESC
+
+(after! dirvish
+  ;; Can't be set in `dired-mode-hook' because that gets overridden by `dirvish'
+  (setq! dirvish-hide-details t))
 
 ;;  ____________________________________________________________________________
 ;;; CALENDAR
@@ -558,7 +587,7 @@
     (setq! url-user-agent
            'default))))
 
-;; Set the user agent for the internal web browser
+;; Set the user agent for EWW, the internal web browser
 (my-user-agent 'safari-iphone)
 
 ;; Default system browser
@@ -577,9 +606,8 @@
 ;;  ____________________________________________________________________________
 ;;; ORG
 
-(after! org
-  (setq! org-directory "~/Documents/org/")
-  (setq! org-hide-leading-stars nil))
+(setq! org-directory "~/Documents/org/")
+(setq! org-hide-leading-stars nil)
 
 ;; <https://github.com/alphapapa/org-sticky-header>
 (use-package! org-sticky-header
@@ -590,7 +618,6 @@
 ;;  ____________________________________________________________________________
 ;;; AI TOOLS
 
-;; Provide a list of locally installed Ollama models to use in various places
 (defun my-ollama-models (prefix)
   "List all locally installed Ollama models and add PREFIX to each element.
 PREFIX can be either \"nil\", or \"ollama_chat/\" or \"ollama/\" to produce
@@ -603,6 +630,8 @@ Aider-compatible model names."
         (push (concat prefix (match-string 1 line)) models)))
     (nreverse models)))
 
+(defvar my-num-ctx (* 128 1024) "Default context length for Qwen2.5 7b and up.")
+
 ;; <https://github.com/s-kostyaev/ellama>
 (use-package! ellama
   :init
@@ -611,39 +640,51 @@ Aider-compatible model names."
   (require 'llm-ollama)
   (setq! ellama-provider
          (make-llm-ollama
+          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
+          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
-          :default-chat-non-standard-params '(("num_ctx" . 65536))
           ))
   (setq! ellama-coding-provider
          (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          ;; :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          :chat-model "qwen2.5-coder:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
+          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
-          :default-chat-non-standard-params '(("num_ctx" . 65536))
           ))
   (setq! ellama-translation-provider
          (make-llm-ollama
-          :chat-model "thinkverse/towerinstruct:7b-v0.2-q4_0"
+          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
+          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
-          :default-chat-non-standard-params '(("num_ctx" . 65536))
           ))
   (setq! ellama-summarization-provider
          (make-llm-ollama
+          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
+          :default-chat-non-standard-params '(("num_ctx" . 1024000))
           :embedding-model "nomic-embed-text"
-          :default-chat-non-standard-params '(("num_ctx" . 65536))
           ))
   (setq! ellama-extraction-provider
          (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          ;; :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
+          :chat-model "qwen2.5-coder:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
+          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
-          :default-chat-non-standard-params '(("num_ctx" . 65536))
           ))
   (setq! ellama-naming-provider
          (make-llm-ollama
-          :chat-model "huihui_ai/qwen2.5-abliterate:0.5b-instruct-q4_K_M"
-          :embedding-model "nomic-embed-text"
+          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :default-chat-temperature 0.6
           :default-chat-non-standard-params '(("stop" . ("\n")))
+          :embedding-model "nomic-embed-text"
           ))
   :config
   (setq! ellama-chat-display-action-function #'display-buffer-pop-up-window)
@@ -652,23 +693,30 @@ Aider-compatible model names."
 (use-package! aider
   :config
   (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
-  (setq! aider-args '("--model" "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"))
-  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
-  ;; (after! my-private
-  ;;   (setq aider-args '("--model" "r1"))
-  ;;   (setenv "DEEPSEEK_API_KEY" my-deepseek-api-key))
-  (map! :leader
-        :desc "Menu" "A m" #'aider-transient-menu))
+  (aider-doom-enable))
+
+(use-package! aidermacs
+  :config
+  (setq! aidermacs-backend 'comint)
+  (setq! aidermacs-use-architect-mode t)
+  ;; (setq! aidermacs-default-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
+  ;;        aidermacs-editor-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
+  ;;        aidermacs-architect-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
+  ;;        aidermacs-weak-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M")
+  )
 
 (use-package! gptel
   :config
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '((default . "")))
-  (setq! gptel-model 'huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0
-         gptel-backend (gptel-make-ollama "Ollama"
-                         :host "localhost:11434"
-                         :stream t
-                         :models (my-ollama-models nil))))
+  (setq!
+   ;; gptel-model 'qwen2.5-coder:7b-instruct-q5_K_M
+   gptel-model 'qwen2.5-coder:7b-instruct-q8_0
+   gptel-backend (gptel-make-ollama "Ollama"
+                   :host "localhost:11434"
+                   :stream t
+                   :models (my-ollama-models nil))))
+
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
@@ -1021,7 +1069,7 @@ Entries are derived from the smartparens package."
          "A" #'racket-unalign
          "f" #'racket-fold-all-tests
          "F" #'racket-unfold-all-tests
-         "h" nil  ; rebind to prefix "d", key "d"
+         "h" nil                        ; rebind to prefix "d", key "d"
          "i" #'racket-unicode-input-method-enable
          "l" #'racket-logger
          "o" #'racket-profile
@@ -1029,8 +1077,8 @@ Entries are derived from the smartparens package."
          "t" #'racket-test
          "u" #'racket-backward-up-list
          "y" #'racket-insert-lambda
-         "s" nil  ; rebind to prefix "r", key "r"
-         "R" nil  ; rebind to prefix "r", key "s"
+         "s" nil                        ; rebind to prefix "r", key "r"
+         "R" nil                        ; rebind to prefix "r", key "s"
          (:prefix ("r" . "run")
                   "r" #'racket-run
                   "s" #'racket-run-and-switch-to-repl
@@ -1042,7 +1090,7 @@ Entries are derived from the smartparens package."
                   "a" #'racket-expand-again)
          (:prefix ("g" . "goto")
                   "b" #'racket-unvisit
-                  "d" #'xref-find-definitions  ; replace obsolete command
+                  "d" #'xref-find-definitions ; replace obsolete command
                   "m" #'racket-visit-module
                   "r" #'racket-open-require-path)
          (:prefix ("e" . "eval")
@@ -1056,7 +1104,7 @@ Entries are derived from the smartparens package."
                   "]" #'racket-describe-forward)
          :map racket-repl-mode-map
          "l" #'racket-logger
-         "h" nil  ; rebind to "d"
+         "h" nil                        ; rebind to "d"
          "d" #'racket-repl-documentation
          "y" #'racket-insert-lambda
          "u" #'racket-backward-up-list
@@ -1074,27 +1122,30 @@ Entries are derived from the smartparens package."
 ;;; - LFE
 ;; <https://lfe.io>
 
-(when (modulep! :lang lfe)
-  (use-package! lfe-start
-    :defer t)
+(use-package! lfe-start
+  :when (modulep! :lang lfe)
+  :defer t
+  :config
   (when (modulep! :tools lsp +eglot)
     (after! eglot
       (pushnew! eglot-server-programs
-                '((lfe-mode) . ("lfe-ls"
-                                "--transport" "tcp" "--port" :autoport))))
-    (add-hook! 'lfe-mode-hook #'eglot-ensure)))
+                '((lfe-mode) .
+                  ("lfe-ls" "--transport" "tcp" "--port" :autoport)))
+      (add-hook! 'lfe-mode-hook #'eglot-ensure))))
 
 ;;  ____________________________________________________________________________
 ;;; GLEAM
 ;; <https://github.com/gleam-lang/gleam-mode>
 
 (use-package! gleam-ts-mode
+  :when (modulep! :lang gleam)
   :defer t
   :mode (rx ".gleam" eos)
   :config
   (when (modulep! :tools lsp +eglot)
     (after! eglot
-      (pushnew! eglot-server-programs '((gleam-ts-mode) . ("gleam" "lsp")))
+      (pushnew! eglot-server-programs
+                '((gleam-ts-mode) . ("gleam" "lsp")))
       (add-hook! 'gleam-ts-mode-hook #'eglot-ensure))))
 
 ;;  ____________________________________________________________________________

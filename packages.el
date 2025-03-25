@@ -14,36 +14,35 @@
 (package! org-sticky-header)
 (package! show-font)
 (package! ellama)
+(package! gptel)
+(package! aidermacs)
 
-(when (featurep :system 'macos)
+(when (modulep! :os macos)
   (package! osx-trash))
-
-(package! gptel
-  :recipe (:host github :repo "karthink/gptel"
-           :build t))
 
 (package! aider
   :recipe (:host github :repo "tninja/aider.el"
-           :files ("aider.el" "aider-doom.el")
+           :files ("*.el")
            :build t))
 
 (when (modulep! :lang scheme)
   (package! srfi)
   (package! scheme-complete))
 
-(package! gleam-ts-mode
-  :recipe (:host github :repo "gleam-lang/gleam-mode"
-           :build t))
+(when (modulep! :lang gleam)
+  (package! gleam-ts-mode
+    :recipe (:host github :repo "gleam-lang/gleam-mode"
+             :build t)))
 
-(package! lfe-start
-  :recipe (:local-repo "~/code/lfe"
-           :files ("emacs/*.el")
-           :build t))
+(when (modulep! :lang lfe)
+  (package! lfe-start
+    :recipe (:local-repo "~/code/lfe"
+             :files ("emacs/*.el")
+             :build t)))
 
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"
-           :build t)
-  :pin "895e10936adac93aa8187c9cc91092dbca898677")  ; v4.6.0
+           :build t))
 
 (package! my-themes
   :recipe (:local-repo "~/.emacs.themes"
