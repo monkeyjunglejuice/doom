@@ -2,20 +2,16 @@
 
 (package! eshell-did-you-mean :disable t)
 (package! evil-snipe :disable t)
-(package! iedit :disable t)
-(package! ivy :disable t)
-(package! swiper :disable t)
 (package! flycheck-popup-tip :disable t)
-(package! company :disable t)
+(package! iedit :disable t)
 
-(package! evil-swap-keys)
+(package! evil-swap-keys :disable t)
 (package! aggressive-indent)
 (package! clean-kill-ring)
 (package! org-sticky-header)
 (package! show-font)
 (package! ellama)
-(package! gptel)
-(package! aidermacs)
+(package! gptel :disable t)
 
 (when (modulep! :os macos)
   (package! osx-trash))
@@ -32,12 +28,6 @@
 (when (modulep! :lang gleam)
   (package! gleam-ts-mode
     :recipe (:host github :repo "gleam-lang/gleam-mode"
-             :build t)))
-
-(when (modulep! :lang lfe)
-  (package! lfe-start
-    :recipe (:local-repo "~/code/lfe"
-             :files ("emacs/*.el")
              :build t)))
 
 (package! modus-themes

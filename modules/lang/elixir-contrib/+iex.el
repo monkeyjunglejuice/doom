@@ -39,7 +39,7 @@ without going through the proper code change callback."
         (:map elixir-mode-map
          :n "'" #'inf-elixir-run
          :n "r" #'inf-elixir-reload-module
-         :n "R" #'inf-elixir-recompile
+         :n "c" #'inf-elixir-recompile
          :n "o" #'inf-elixir-observer
          (:prefix ("e" . "eval")
           :n "b" #'inf-elixir-send-buffer
@@ -47,7 +47,7 @@ without going through the proper code change callback."
           :v "r" #'inf-elixir-send-region))
         (:map inf-elixir-mode-map
          :n "r" #'inf-elixir-reload-module
-         :n "R" #'inf-elixir-recompile
+         :n "c" #'inf-elixir-recompile
          :n "o" #'inf-elixir-observer))
   :hook
   (elixir-mode . inf-elixir-minor-mode)

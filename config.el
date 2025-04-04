@@ -8,14 +8,14 @@
 ;;           '(fullscreen . maximized))
 
 (pushnew! initial-frame-alist
-          '(width . 90)
+          '(width . 80)
           '(height . 47)
           '(left . 940)
           '(top . 0))
 
 ;; Default frame placement
 (pushnew! default-frame-alist
-          '(width . 90)
+          '(width . 80)
           '(height . 47)
           '(left . 940)
           '(top . 0))
@@ -27,22 +27,22 @@
 ;;; FONTS
 
 (setq! doom-font
-       (font-spec :family "Iosevka Dee" :size 16 :weight 'normal)
+       (font-spec :family "MesloLGM Nerd Font" :size 15 :weight 'normal)
        doom-serif-font
-       (font-spec :family "Iosevka Dee Slab" :size 16 :weight 'normal)
+       (font-spec :family "MesloLGM Nerd Font" :size 15 :weight 'normal)
        doom-variable-pitch-font
        (font-spec :family "ETBookOT" :size 18 :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
 
+;; My themes
+(use-package! my-themes)
+
 ;; Declarations
 (defvar my-theme-light nil "The default light theme.")
 (defvar my-theme-dark nil "The default dark theme.")
 (defvar my-frame-opacity 100 "The default frame opacity.")
-
-;; My theme settings
-(use-package! my-themes)
 
 ;; Modus theme settings
 (use-package! modus-themes
@@ -51,9 +51,9 @@
         modus-themes-italic-constructs nil
         modus-themes-mixed-fonts t)
   (setq modus-operandi-tinted-palette-overrides
-        modus-themes-preset-overrides-cooler)
+        modus-themes-preset-overrides-warmer)
   (setq modus-vivendi-palette-overrides
-        modus-themes-preset-overrides-cooler)
+        modus-themes-preset-overrides-warmer)
   (setq modus-themes-common-palette-overrides
         '((border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified))))
@@ -63,8 +63,8 @@
  '(region ((t :extend nil))))
 
 ;;; - Set light/dark theme:
-(setq my-theme-light 'doom-one-light)
-(setq my-theme-dark 'doom-outrun-electric)
+(setq my-theme-light 'modus-operandi-tinted)
+(setq my-theme-dark 'modus-vivendi-tinted)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -211,7 +211,6 @@ The sub-process can be managed via `list-processes'"
       :desc nil                      "X"     nil  ; Org capture
       :desc nil                      "`"     nil  ; Switch to last buffer
       :desc nil                      "~"     nil  ; Toggle last popup
-      :desc "Switch window"          "SPC"   #'switch-window
       :desc "Toggle popups"          "`"     #'+popup/toggle
       :desc "Switch buffer"          ","     #'switch-to-buffer
       :desc "Directories"            "d"     #'consult-dir
@@ -240,9 +239,6 @@ The sub-process can be managed via `list-processes'"
 
 ;; Make the <Command> key on MacOS act as <Ctrl> key: "C- ..."
 (setq! mac-command-modifier 'control)
-
-;; Make the <Option> key on MacOS act as <Meta> key for "M- ..."
-;; (setq! mac-option-modifier 'meta)
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Swap keys
@@ -326,9 +322,9 @@ The sub-process can be managed via `list-processes'"
   (custom-set-faces '(switch-window-background
                       ((t :inherit 'whitespace-space :background unspecified))))
   (setq! switch-window-multiple-frames t
-         switch-window-threshold 1
+         switch-window-threshold 2
          switch-window-mvborder-increment 1
-         switch-window-background nil)
+         switch-window-background t)
   ;; Vim-like keybindings for window resizing
   (setq! switch-window-extra-map
          (let ((map (make-sparse-keymap)))
@@ -451,7 +447,7 @@ The sub-process can be managed via `list-processes'"
 (setq! history-delete-duplicates t)
 
 ;; Modal editing in the minibuffer?
-(setq! evil-collection-setup-minibuffer t)
+(setq! evil-collection-setup-minibuffer nil)
 
 ;;  ____________________________________________________________________________
 ;;; MISC
@@ -604,10 +600,15 @@ The sub-process can be managed via `list-processes'"
   (pdf-tools-install :no-query))
 
 ;;  ____________________________________________________________________________
-;;; ORG
+;;; ORG MODE
 
-(setq! org-directory "~/Documents/org/")
-(setq! org-hide-leading-stars nil)
+(after! org
+  (setq! org-directory "~/Documents/org/")
+  (setq org-ellipsis " ▼ ")
+  (setq! org-adapt-indentation t
+         org-indent-mode-turns-on-hiding-stars nil
+         org-startup-indented t
+         org-hide-leading-stars nil))
 
 ;; <https://github.com/alphapapa/org-sticky-header>
 (use-package! org-sticky-header
@@ -630,7 +631,7 @@ Aider-compatible model names."
         (push (concat prefix (match-string 1 line)) models)))
     (nreverse models)))
 
-(defvar my-num-ctx (* 128 1024) "Default context length for Qwen2.5 7b and up.")
+(defvar my-num-ctx (* 128 1024) "Default context length for Qwen2.5-7b and up.")
 
 ;; <https://github.com/s-kostyaev/ellama>
 (use-package! ellama
@@ -695,16 +696,6 @@ Aider-compatible model names."
   (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
   (aider-doom-enable))
 
-(use-package! aidermacs
-  :config
-  (setq! aidermacs-backend 'comint)
-  (setq! aidermacs-use-architect-mode t)
-  ;; (setq! aidermacs-default-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
-  ;;        aidermacs-editor-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
-  ;;        aidermacs-architect-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M"
-  ;;        aidermacs-weak-model "ollama_chat/qwen2.5-coder:7b-instruct-q5_K_M")
-  )
-
 (use-package! gptel
   :config
   (setq! gptel-default-mode 'org-mode)
@@ -713,10 +704,9 @@ Aider-compatible model names."
    ;; gptel-model 'qwen2.5-coder:7b-instruct-q5_K_M
    gptel-model 'qwen2.5-coder:7b-instruct-q8_0
    gptel-backend (gptel-make-ollama "Ollama"
-                   :host "localhost:11434"
-                   :stream t
-                   :models (my-ollama-models nil))))
-
+                                    :host "localhost:11434"
+                                    :stream t
+                                    :models (my-ollama-models nil))))
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
@@ -771,6 +761,7 @@ Aider-compatible model names."
   (setq! show-smartparens-global-mode t)
   ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
   ;; and Paredit keybindings
+  ;; TODO: Enable these keybindings in Evil insert mode and Emacs mode only
   ;; (map! :map smartparens-mode-map
   ;;       ;; Navigation
   ;;       "C-M-f"           #'sp-forward-sexp
@@ -815,7 +806,7 @@ Aider-compatible model names."
 ;; (Possibly shadowed by 3rd-party packages like 'smartparens-mode'
 (setq! backward-delete-char-untabify-method 'all)
 
-;; Keep code always inteted
+;; Keep code always intented
 ;; <https://github.com/Malabarba/aggressive-indent-mode>
 (use-package! aggressive-indent
   :config
@@ -833,14 +824,18 @@ Aider-compatible model names."
 ;;; - Searching
 
 ;; TODO: Add keybindings for search and replace
-;; The 'query-' variant asks with each string. Confirm with "SPC",
-;; or omit the current selection via "n"
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Comments
 
 (after! newcomment
   (setq! comment-empty-lines t))
+
+;;  ____________________________________________________________________________
+;;; EGLOT
+
+(after! eglot
+  (setq! eglot-code-action-indications '(eldoc-hint)))
 
 ;;  ____________________________________________________________________________
 ;;; LISP
@@ -859,9 +854,9 @@ Entries are derived from the smartparens package."
                           emacs-lisp-mode
                           fennel-mode
                           gerbil-mode
-                          lfe-mode  ; addition
+                          lfe-mode      ; addition
                           lisp-mode
-                          lisp-data-mode  ; addition
+                          lisp-data-mode ; addition
                           racket-mode
                           scheme-mode
                           stumpwm-mode
@@ -907,8 +902,7 @@ Entries are derived from the smartparens package."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Common Lisp
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Executing-Lisp>
-;; <http://joaotavora.github.io/sly/>
-;; <https://github.com/joaotavora/sly>
+;; <http://joaotavora.github.io/sly/> and <https://github.com/joaotavora/sly>
 
 ;; Default Lisp implementation
 (setq! inferior-lisp-program "ros -Q run")
@@ -1118,20 +1112,33 @@ Entries are derived from the smartparens package."
                   "m" #'racket-visit-module
                   "d" #'racket-repl-visit-definition))))
 
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - LFE
-;; <https://lfe.io>
+;;  ____________________________________________________________________________
+;;; ERLANG
 
-(use-package! lfe-start
-  :when (modulep! :lang lfe)
-  :defer t
-  :config
-  (when (modulep! :tools lsp +eglot)
-    (after! eglot
-      (pushnew! eglot-server-programs
-                '((lfe-mode) .
-                  ("lfe-ls" "--transport" "tcp" "--port" :autoport)))
-      (add-hook! 'lfe-mode-hook #'eglot-ensure))))
+(after! erlang
+  (set-repl-handler! 'erlang-mode #'erlang-shell)
+  (set-eval-handler! 'erlang-mode #'erlang-compile)
+  (set-popup-rule! ".*\\*erlang\\*" :size 0.33 :quit nil :ttl nil)
+  (defun erlang-compile-debug ()
+    "Compile for debug with debug_info and export_all."
+    (interactive)
+    (inferior-erlang-compile t))
+  (map! :localleader
+        (:map erlang-mode-map
+         :n "'"   #'erlang-shell
+         :n "SPC" #'erlang-shell-display
+         :n "c"   #'erlang-compile
+         :n "C"   #'erlang-compile-debug
+         (:prefix ("g" . "goto")
+          :n "f"  #'erlang-beginning-of-function
+          :n "F"  #'erlang-end-of-function
+          :n "c"  #'erlang-beginning-of-clause
+          :n "C"  #'erlang-end-of-clause)
+         (:prefix ("m" . "mark")
+          :n "f"  #'erlang-mark-function
+          :n "c"  #'erlang-mark-clause))
+        (:map erlang-shell-mode-map
+         :n "SPC" #'evil-window-mru)))
 
 ;;  ____________________________________________________________________________
 ;;; GLEAM

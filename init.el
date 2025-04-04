@@ -41,7 +41,7 @@
        (format +onsave +lsp)
        lispy
        ;; rotate-text
-       snippets
+       ;; snippets
        ;; word-wrap
 
        :emacs
@@ -54,7 +54,7 @@
 
        :term
        eshell
-       vterm
+       ;; vterm
 
        :checkers
        (syntax +flymake)
@@ -81,7 +81,7 @@
 
        :os
        (:if (featurep :system 'macos) macos)
-       (tty +osc)
+       ;; (tty +osc)
 
        :lang
        ;; (cc +lsp +tree-sitter)
@@ -92,13 +92,12 @@
        emacs-lisp
        (erlang +lsp +tree-sitter)
        ;; gleam
-       graphviz
+       ;; graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
        (julia +lsp +tree-sitter +snail)
-       ;; lfe
-       (lua +fennel +lsp +tree-sitter)
+       ;; (lua +fennel +lsp +tree-sitter)
        markdown
        ;; nim
        (ocaml +tree-sitter)
