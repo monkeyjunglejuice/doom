@@ -376,45 +376,6 @@ The sub-process can be managed via `list-processes'"
   (after! eglot
     (set-popup-rule! "^\\*eglot-help" :size 0.33 :quit t :select t)))
 
-;; Popup adjustments for +defaults flag
-;; Taken from `(find-file (concat doom-emacs-dir "modules/ui/popup/config.el"))'
-;; (when (modulep! :ui popup +defaults)
-;;   (set-popup-rules!
-;;     '(("^\\*Completions" :ignore t)
-;;       ("^\\*Local variables\\*$"
-;;        :vslot -1 :slot 1 :size +popup-shrink-to-fit)
-;;       ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
-;;        :vslot -2 :size 0.33  :autosave t :quit t :ttl nil)
-;;       ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
-;;        :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
-;;       ("^\\*doom:"  ; editing buffers (interaction required)
-;;        :vslot -4 :size 0.33 :autosave t :select t :modeline t :quit nil :ttl t)
-;;       ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
-;;        :vslot -5 :size 0.33 :select t :modeline nil :quit nil :ttl nil)
-;;       ("^\\*\\(?:Wo\\)?Man "
-;;        :vslot -6 :size 0.33 :select t :quit t :ttl 0)
-;;       ("^\\*Calc"
-;;        :vslot -7 :side bottom :size 0.33 :select t :quit nil :ttl 0)
-;;       ("^\\*Customize"
-;;        :slot 2 :side bottom :size 0.5 :select t :quit nil)
-;;       ("^ \\*undo-tree\\*"
-;;        :slot 2 :side left :size 20 :select t :quit t)
-;;       ;; `help-mode', `helpful-mode'
-;;       ("^\\*\\([Hh]elp\\|Apropos\\)"
-;;        :slot 2 :vslot -8 :size 0.33 :select t)
-;;       ("^\\*eww\\*"                     ; `eww' (and used by dash docsets)
-;;        :vslot -11 :size 0.33 :select t)
-;;       ("^\\*xwidget"
-;;        :vslot -11 :size 0.33 :select nil)
-;;       ("^\\*info\\*$"                   ; `Info-mode'
-;;        :slot 2 :vslot 2 :size 0.33 :select t))
-;;     '(("^\\*Warnings" :vslot 99 :size 0.25)
-;;       ("^\\*Backtrace" :vslot 99 :size 0.33 :quit nil)
-;;       ("^\\*CPU-Profiler-Report "    :side bottom :vslot 100 :slot 1 :height 0.33 :width 0.5 :quit nil)
-;;       ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height 0.33 :width 0.5 :quit nil)
-;;       ("^\\*Process List\\*" :side bottom :vslot 101 :size 0.25 :select t :quit t)
-;;       ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
-
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Minibuffer>
