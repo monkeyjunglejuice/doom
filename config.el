@@ -838,6 +838,9 @@ Entries are derived from the smartparens package."
   (add-hook! 'emacs-lisp-mode-hook
     (indent-bars-mode -1)))
 
+(after! evil-collection
+  (evil-collection-elisp-mode-setup))
+
 (after! (lispy lispyville)
   ;; Making sure that the comment with the result is placed after the evaluated
   ;; expression, not inside it
