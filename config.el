@@ -669,8 +669,8 @@ Aider-compatible model names."
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Kill-ring, yanking, copy & paste
-;; <https://github.com/NicholasBHubbard/clean-kill-ring.el>
 
+;; <https://github.com/NicholasBHubbard/clean-kill-ring.el>
 (use-package! clean-kill-ring
   :config
   (clean-kill-ring-mode 1))
