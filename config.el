@@ -425,8 +425,6 @@ The sub-process can be managed via `list-processes'"
 ;; Delete duplicates from the command history?
 (setq! history-delete-duplicates t)
 
-;; Modal editing in the minibuffer?
-(setq! evil-collection-setup-minibuffer nil)
 
 ;;  ____________________________________________________________________________
 ;;; MISC
