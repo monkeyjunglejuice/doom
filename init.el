@@ -29,7 +29,7 @@
        ;; ligatures
        modeline
        ophints
-       (popup +defaults)
+       ;; (popup +defaults)
        (vc-gutter +pretty)
        ;; vi-tilde-fringe
        (window-select +switch-window)
