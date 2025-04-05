@@ -368,10 +368,6 @@ The sub-process can be managed via `list-processes'"
   ;; Make `other-window' work on popup-windows too
   (setq! +popup-default-parameters
          (remove '(no-other-window . t) +popup-default-parameters))
-  ;; Don't hide mode-line
-  (after! hide-mode-line
-    (advice-add #'hide-mode-line-mode :around
-                (lambda (orig &optional args) nil)))
   ;; Make Eglot help windows higher
   (after! eglot
     (set-popup-rule! "^\\*eglot-help" :size 0.33 :quit t :select t)))
@@ -399,6 +395,11 @@ The sub-process can be managed via `list-processes'"
   (setq! global-hl-line-modes '(special-mode
                                 org-agenda-mode
                                 dired-mode)))
+
+;; Don't hide mode-line
+(after! hide-mode-line
+  (advice-add #'hide-mode-line-mode :around
+              (lambda (orig &optional args) nil)))
 
 ;; Light-weight mode-line is too high, fix that
 (when (modulep! :ui modeline +light)
