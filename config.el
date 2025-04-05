@@ -13,7 +13,7 @@
           '(left . 940)
           '(top . 0))
 
-;; Default frame placement
+;; Default placement for frames that have been created after the initial frame
 (pushnew! default-frame-alist
           '(width . 80)
           '(height . 47)
