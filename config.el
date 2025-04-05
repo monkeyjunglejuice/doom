@@ -301,7 +301,7 @@ The sub-process can be managed via `list-processes'"
   (custom-set-faces '(switch-window-background
                       ((t :inherit 'whitespace-space :background unspecified))))
   (setq! switch-window-multiple-frames t
-         switch-window-threshold 2
+         switch-window-threshold 1
          switch-window-mvborder-increment 1
          switch-window-background t)
   ;; Vim-like keybindings for window resizing
