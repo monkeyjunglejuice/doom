@@ -352,10 +352,10 @@ The sub-process can be managed via `list-processes'"
            (?X aw-execute-command-other-window "Execute Command Other Window")
            (?T aw-transpose-frame "Transpose Frame")
            (?? aw-show-dispatch-help)))
-  (setq! aw-keys '(?s ?d ?f ?g
-                   ?w ?e ?r ?t
-                   ?l ?k ?j ?h
-                   ?o ?i ?u ?y))
+  (setq! aw-keys '(?s ?d ?f
+                   ?w ?e ?r
+                   ?z ?x ?c
+                   ?u ?i ?o))
   (set-face-attribute 'aw-background-face nil
                       :inherit 'shadow))
 
