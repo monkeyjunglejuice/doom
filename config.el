@@ -290,8 +290,8 @@ The sub-process can be managed via `list-processes'"
 ;;; - Which-key
 
 (after! which-key
-  (setq! which-key-idle-delay 1.0
-         which-key-idle-secondary-delay 0.01))
+  (setq! which-key-idle-delay 0.5
+         which-key-idle-secondary-delay 0.0))
 
 ;;  ____________________________________________________________________________
 ;;; EVIL MODE
