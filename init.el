@@ -54,7 +54,7 @@
 
        :term
        eshell
-       ;; vterm
+       vterm
 
        :checkers
        (syntax +flymake)
