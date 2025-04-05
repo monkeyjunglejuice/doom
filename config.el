@@ -777,6 +777,9 @@ Aider-compatible model names."
 (after! newcomment
   (setq! comment-empty-lines t))
 
+;; Don't continue comment when opening a new line
+(setq! +evil-want-o/O-to-continue-comments nil)
+
 ;;  ____________________________________________________________________________
 ;;; EGLOT
 
