@@ -448,7 +448,8 @@ The sub-process can be managed via `list-processes'"
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Backup>
 
 ;; Make backup before saving files
-(setq! make-backup-files t)
+(setq! make-backup-files t
+       vc-make-backup-files t)
 
 ;; Specify file name/path patterns and directories ("REGEXP" . "DIRECTORY")
 (setq! backup-directory-alist
