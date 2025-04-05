@@ -881,13 +881,13 @@ Entries are derived from the smartparens package."
              (when (string-match-p "^\\*sly-mrepl.*\\*" (buffer-name))
                (evil-normal-state)))
   (set-popup-rules!
-    '(("^\\*sly-mrepl"       :vslot 2 :size 0.33 :quit nil :ttl nil)
-      ("^\\*sly-compilation" :vslot 3 :ttl nil)
-      ("^\\*sly-traces"      :vslot 4 :ttl nil)
-      ("^\\*sly-description" :vslot 5 :size 0.33 :ttl 0)
-      ;; Do not display debugger or inspector buffers in a popup window. These
-      ;; buffers are meant to be displayed with sufficient vertical space.
-      ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
+   '(("^\\*sly-mrepl"       :vslot 2 :size 0.33 :quit nil :ttl nil)
+     ("^\\*sly-compilation" :vslot 3 :ttl nil)
+     ("^\\*sly-traces"      :vslot 4 :ttl nil)
+     ("^\\*sly-description" :vslot 5 :size 0.33 :ttl 0)
+     ;; Do not display debugger or inspector buffers in a popup window. These
+     ;; buffers are meant to be displayed with sufficient vertical space.
+     ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
   ;; Change some of Doom's default Common Lisp keybindings
   (map! (:map sly-db-mode-map
          :n "gr" #'sly-db-restart-frame)
@@ -988,9 +988,9 @@ Entries are derived from the smartparens package."
 
 (after! geiser
   (set-popup-rules!
-    '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
-      ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size 0.33)
-      ("^\\*Geiser .+ REPL" :size 0.33 :quit nil :ttl nil))))
+   '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
+     ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size 0.33)
+     ("^\\*Geiser .+ REPL" :size 0.33 :quit nil :ttl nil))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - RACKET
