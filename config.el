@@ -541,7 +541,7 @@ The sub-process can be managed via `list-processes'"
 
 (after! org
   (setq! org-directory "~/Documents/org/")
-  (setq org-ellipsis " ▼ ")
+  (setq! org-ellipsis " ▼ ")
   (setq! org-adapt-indentation t
          org-indent-mode-turns-on-hiding-stars nil
          org-startup-indented t
