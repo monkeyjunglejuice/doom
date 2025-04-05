@@ -210,11 +210,11 @@ The sub-process can be managed via `list-processes'"
 
 (map! :leader
       ;; doom-leader-map
-      :desc nil                      ":"     nil  ; M-x
-      :desc nil                      "<"     nil  ; Switch buffer
-      :desc nil                      "X"     nil  ; Org capture
-      :desc nil                      "`"     nil  ; Switch to last buffer
-      :desc nil                      "~"     nil  ; Toggle last popup
+      :desc nil                      ":"     nil ; M-x
+      :desc nil                      "<"     nil ; Switch buffer
+      :desc nil                      "X"     nil ; Org capture
+      :desc nil                      "`"     nil ; Switch to last buffer
+      :desc nil                      "~"     nil ; Toggle last popup
       :desc "Toggle popups"          "`"     #'+popup/toggle
       :desc "Switch buffer"          ","     #'switch-to-buffer
       :desc "Directories"            "d"     #'consult-dir
@@ -227,7 +227,10 @@ The sub-process can be managed via `list-processes'"
       ;; doom-leader-buffer-map
       :desc "Kill buffer and window" "b D"   #'kill-buffer-and-window
       ;; doom-leader-file-map
-      :desc nil                      "f l"   nil  ; Locate file
+      :desc nil                      "f l"   nil ; Locate file
+      ;; doom-leader-insert-map
+      :desc nil                      "i y"   nil ; From clipboard
+      :desc "Form kill-ring"         "i p"   #'+default/yank-pop
       ;; doom-leader-open-map
       :desc "Browse URL"             "o w"   #'browse-url
       :desc "Browse URL external"    "o W"   #'browse-url-default-macosx-browser
