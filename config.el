@@ -141,9 +141,9 @@
  "d"           "dired $1"
  "do"          "dired-other-window $1"
  "g"           "magit-status"
- "doomS"       "doom sync --gc --aot"
- "doomU"       "doom upgrade --aot"
- "doomR"       "doom/restart"
+ "dooms"       "doom sync --gc --aot"
+ "doomup"      "doom upgrade --aot"
+ "doomr"       "doom/restart"
  ;; Adblocker
  "hblock-off"  "hblock -S none -D none"
  ;; Git
