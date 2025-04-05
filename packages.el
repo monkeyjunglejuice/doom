@@ -5,7 +5,6 @@
 (package! flycheck-popup-tip :disable t)
 (package! iedit :disable t)
 
-(package! evil-swap-keys :disable t)
 (package! aggressive-indent)
 (package! clean-kill-ring)
 (package! org-sticky-header)
