@@ -37,6 +37,8 @@
 ;;; THEMES
 
 ;; My themes
+;; <https://github.com/monkeyjunglejuice/matrix-emacs-theme>
+;; <https://github.com/monkeyjunglejuice/beach-emacs-theme>
 (use-package! my-themes)
 
 ;; Declarations
