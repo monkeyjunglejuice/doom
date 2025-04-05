@@ -153,7 +153,7 @@
  "targx"       "tar xfvz $*"
  "tarb"        "tar cfvj $*"
  "tarbx"       "tar xfvj $*"
- ;; Lisp
+ ;; Common Lisp
  "lisp"        "rlwrap ros -Q run $*"
  "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
  ;; macOS
