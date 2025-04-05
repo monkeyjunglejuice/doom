@@ -49,16 +49,16 @@
 ;; Modus theme settings
 (use-package! modus-themes
   :config
-  (setq modus-themes-bold-constructs t
-        modus-themes-italic-constructs nil
-        modus-themes-mixed-fonts t)
-  (setq modus-operandi-tinted-palette-overrides
-        modus-themes-preset-overrides-warmer)
-  (setq modus-vivendi-palette-overrides
-        modus-themes-preset-overrides-warmer)
-  (setq modus-themes-common-palette-overrides
-        '((border-mode-line-active unspecified)
-          (border-mode-line-inactive unspecified))))
+  (setq! modus-themes-bold-constructs t
+         modus-themes-italic-constructs nil
+         modus-themes-mixed-fonts t)
+  (setq! modus-operandi-tinted-palette-overrides
+         modus-themes-preset-overrides-warmer)
+  (setq! modus-vivendi-tinted-palette-overrides
+         modus-themes-preset-overrides-warmer)
+  (setq! modus-themes-common-palette-overrides
+         '((border-mode-line-active unspecified)
+           (border-mode-line-inactive unspecified))))
 
 ;; Do not extend `region' background past the end of the line
 (custom-set-faces
