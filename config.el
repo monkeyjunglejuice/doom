@@ -386,11 +386,9 @@ The sub-process can be managed via `list-processes'"
 ;; Delete duplicates from the command history?
 (setq! history-delete-duplicates t)
 
-
 ;;  ____________________________________________________________________________
 ;;; MISC
 
-;; Make height suitable for smaller frames too
 (after! vertico
   (setq! vertico-cycle nil
          vertico-count 10))
