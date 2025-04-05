@@ -570,7 +570,18 @@ Aider-compatible model names."
 
 (defvar my-num-ctx (* 128 1024) "Default context length for Qwen2.5-7b and up.")
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Aider
+
+(use-package! aider
+  :config
+  (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
+  (aider-doom-enable))
+
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Ellama
 ;; <https://github.com/s-kostyaev/ellama>
+
 (use-package! ellama
   :init
   (setq! ellama-language "English")
@@ -628,10 +639,8 @@ Aider-compatible model names."
   (setq! ellama-chat-display-action-function #'display-buffer-pop-up-window)
   (setq! ellama-instant-display-action-function #'display-buffer-pop-up-window))
 
-(use-package! aider
-  :config
-  (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
-  (aider-doom-enable))
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Gptel
 
 (use-package! gptel
   :config
