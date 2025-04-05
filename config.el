@@ -262,6 +262,16 @@ The sub-process can be managed via `list-processes'"
          evil-move-cursor-back nil
          evil-move-beyond-eol nil))
 
+;; Evil states cheatsheet
+;; :n  normal
+;; :v  visual
+;; :i  insert
+;; :e  emacs
+;; :o  operator
+;; :m  motion
+;; :r  replace
+;; :g  global  (binds the key without evil current-global-map)
+
 ;;  ____________________________________________________________________________
 ;;; OS INTEGRATION
 
