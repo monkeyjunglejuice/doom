@@ -1169,9 +1169,7 @@ Entries are derived from the smartparens package."
           :n "C"  #'erlang-end-of-clause)
          (:prefix ("m" . "mark")
           :n "f"  #'erlang-mark-function
-          :n "c"  #'erlang-mark-clause))
-        (:map erlang-shell-mode-map
-         :n "SPC" #'evil-window-mru)))
+          :n "c"  #'erlang-mark-clause))))
 
 ;;  ____________________________________________________________________________
 ;;; GLEAM
