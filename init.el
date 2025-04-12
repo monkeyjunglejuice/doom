@@ -36,6 +36,7 @@
 
        :editor
        (evil +everywhere)
+       ;; (meow +qwerty)
        file-templates
        ;; fold
        (format +onsave +lsp)
