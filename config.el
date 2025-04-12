@@ -1,6 +1,15 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
+;;; DEBUG / BENCHMARK
+
+(use-package! benchmark-init
+  :when init-file-debug
+  :config
+  ;; Disable collection of benchmark data after init is done
+  (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+
+;;  ____________________________________________________________________________
 ;;; FRAMES
 
 ;; Initial frame placement
