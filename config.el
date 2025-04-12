@@ -248,6 +248,8 @@ The sub-process can be managed via `list-processes'"
       :desc "Browse URL in Webkit"   "o C-w" #'xwidget-webkit-browse-url
       ;; doom-leader-search-map
       :desc "Find file at point"     "s f"   #'ffap
+      ;; doom-leader-toggle-map
+      :desc "Toggle popups"          "t p"   #'+popup/toggle
       ;; evil-window-map
       :desc nil                      "w `"   #'+popup/raise
       :desc nil                      "w ~"   #'+popup/buffer)
