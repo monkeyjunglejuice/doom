@@ -39,10 +39,9 @@
        (evil +everywhere)
        ;; (meow +qwerty)
        file-templates
-       ;; fold
        (format +onsave +lsp)
+       ;; god
        lispy
-       ;; rotate-text
        ;; snippets
        ;; word-wrap
 
@@ -74,7 +73,7 @@
        eval
        (lookup +dictionary)
        (lsp +eglot)
-       (magit +forge)
+       magit
        make
        ;; pass
        pdf
@@ -101,7 +100,7 @@
        (julia +lsp +tree-sitter +snail)
        ;; (lua +fennel +lsp +tree-sitter)
        markdown
-       ;; nim
+       nim
        (ocaml +tree-sitter)
        (org +pandoc)
        ;; python
