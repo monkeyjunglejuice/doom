@@ -220,13 +220,14 @@ The sub-process can be managed via `list-processes'"
 
 (map! :leader
       ;; doom-leader-map
+      :desc nil                      "SPC"   #'evil-window-mru ; Find file in project
       :desc nil                      ":"     nil ; M-x
       :desc nil                      "<"     nil ; Switch buffer
       :desc nil                      "X"     nil ; Org capture
       :desc nil                      "`"     nil ; Switch to last buffer
       :desc nil                      "~"     nil ; Toggle last popup
-      :desc "Toggle popups"          "`"     #'+popup/toggle
-      :desc "Switch buffer"          ","     #'switch-to-buffer
+      :desc "Project buffers"        ","     #'projectile-switch-to-buffer
+      :desc "Project files"          "."     #'projectile-find-file-dwim
       :desc "Directories"            "d"     #'consult-dir
       :desc "Eshell"                 "e"     #'+eshell/toggle
       :desc "Command"                "m"     #'execute-extended-command
