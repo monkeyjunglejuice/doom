@@ -568,23 +568,6 @@ The sub-process can be managed via `list-processes'"
   (pdf-tools-install :no-query))
 
 ;;  ____________________________________________________________________________
-;;; ORG MODE
-
-(after! org
-  (setq! org-directory "~/Documents/org/")
-  (setq! org-ellipsis " ▼ ")
-  (setq! org-adapt-indentation t
-         org-indent-mode-turns-on-hiding-stars nil
-         org-startup-indented t
-         org-hide-leading-stars nil))
-
-;; <https://github.com/alphapapa/org-sticky-header>
-(use-package! org-sticky-header
-  :after org
-  :config
-  (add-hook! 'org-mode-hook #'org-sticky-header-mode))
-
-;;  ____________________________________________________________________________
 ;;; AI TOOLS
 
 (defun my-ollama-models (prefix)
@@ -818,10 +801,21 @@ Aider-compatible model names."
 (setq! +evil-want-o/O-to-continue-comments nil)
 
 ;;  ____________________________________________________________________________
-;;; EGLOT
+;;; ORG MODE
 
-(after! eglot
-  (setq! eglot-code-action-indications '(eldoc-hint)))
+(after! org
+  (setq! org-directory "~/Documents/org/")
+  (setq! org-ellipsis " ▼ ")
+  (setq! org-adapt-indentation 'headline-data
+         org-indent-mode-turns-on-hiding-stars nil
+         org-startup-indented t
+         org-hide-leading-stars nil))
+
+;; <https://github.com/alphapapa/org-sticky-header>
+(use-package! org-sticky-header
+  :after org
+  :config
+  (add-hook! 'org-mode-hook #'org-sticky-header-mode))
 
 ;;  ____________________________________________________________________________
 ;;; LISP
