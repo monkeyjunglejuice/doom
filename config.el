@@ -689,12 +689,13 @@ Aider-compatible model names."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Tree-Sitter text objects
 
-(map! (:map +tree-sitter-outer-text-objects-map
-            ;; Use 'm' like module" instead
-            "m" (evil-textobj-tree-sitter-get-textobj "class.outer"))
-      (:map +tree-sitter-inner-text-objects-map
-            ;; Use 'm' like "module" instead
-            "m" (evil-textobj-tree-sitter-get-textobj "class.inner")))
+(after! evil
+  (map! (:map +tree-sitter-outer-text-objects-map
+              ;; Use 'm' like module" instead
+              "m" (evil-textobj-tree-sitter-get-textobj "class.outer"))
+        (:map +tree-sitter-inner-text-objects-map
+              ;; Use 'm' like "module" instead
+              "m" (evil-textobj-tree-sitter-get-textobj "class.inner"))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Kill-ring, yanking, copy & paste
