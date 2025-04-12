@@ -613,48 +613,42 @@ Aider-compatible model names."
   (require 'llm-ollama)
   (setq! ellama-provider
          (make-llm-ollama
-          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :default-chat-temperature 0.6
           :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
           ))
   (setq! ellama-coding-provider
          (make-llm-ollama
-          ;; :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
-          :chat-model "qwen2.5-coder:7b-instruct-q8_0"
+          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
           :default-chat-temperature 0.6
           :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
           ))
   (setq! ellama-translation-provider
          (make-llm-ollama
-          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :default-chat-temperature 0.6
           :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
           ))
   (setq! ellama-summarization-provider
          (make-llm-ollama
-          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :default-chat-temperature 0.6
-          :default-chat-non-standard-params '(("num_ctx" . 1024000))
+          :default-chat-non-standard-params '(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
           ))
   (setq! ellama-extraction-provider
          (make-llm-ollama
-          ;; :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
-          :chat-model "qwen2.5-coder:7b-instruct-q8_0"
+          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
           :default-chat-temperature 0.6
           :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
           :embedding-model "nomic-embed-text"
           ))
   (setq! ellama-naming-provider
          (make-llm-ollama
-          ;; :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q8_0"
+          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
           :default-chat-temperature 0.6
           :default-chat-non-standard-params '(("stop" . ("\n")))
           :embedding-model "nomic-embed-text"
@@ -671,12 +665,11 @@ Aider-compatible model names."
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '((default . "")))
   (setq!
-   ;; gptel-model 'qwen2.5-coder:7b-instruct-q5_K_M
-   gptel-model 'qwen2.5-coder:7b-instruct-q8_0
+   gptel-model 'qwen2.5-coder:7b-instruct-q5_K_M
    gptel-backend (gptel-make-ollama "Ollama"
-                                    :host "localhost:11434"
-                                    :stream t
-                                    :models (my-ollama-models nil))))
+                   :host "localhost:11434"
+                   :stream t
+                   :models (my-ollama-models nil))))
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
