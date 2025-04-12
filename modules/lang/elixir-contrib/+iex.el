@@ -19,7 +19,7 @@ The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") and
              (inf-elixir))))
   (defalias 'run-elixir #'inf-elixir-run "Alias for `inf-elixir-run'")
   :config
-  (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.33 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.35 :quit nil :ttl nil)
   (setq! inf-elixir-switch-to-repl-on-send nil)
   (defun inf-elixir-recompile ()
     "Send `IEx.Helpers.recompile/1' to recompile the current Mix project.

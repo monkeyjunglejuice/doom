@@ -395,15 +395,64 @@ The sub-process can be managed via `list-processes'"
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
+(defun popup-size () (floor (frame-height) 3))
+
 (when (modulep! :ui popup)
   ;; Adjust defaults
-  (plist-put +popup-defaults :height 0.33)
-  ;; Make `other-window' work on popup-windows too
+  (setq! +popup-defaults
+         (list :side   'bottom
+               :height 0.35
+               :width  40
+               :quit   t
+               :select #'ignore
+               :ttl    5))
+  ;; Make `other-window' work on popup-windows
   (setq! +popup-default-parameters
          (remove '(no-other-window . t) +popup-default-parameters))
   ;; Make Eglot help windows higher
   (after! eglot
-    (set-popup-rule! "^\\*eglot-help" :size 0.33 :quit t :select t)))
+    (set-popup-rule!
+      "^\\*eglot-help" :size #'+popup-shrink-to-fit :quit t :select t)))
+
+(set-popup-rules!
+  (when (modulep! :ui popup +all)
+    '(("^\\*"  :slot 1 :vslot -1 :select t)
+      ("^ \\*" :slot 1 :vslot -1 :size 0.35)))
+  (when (modulep! :ui popup +defaults)
+    '(("^\\*Completions" :ignore t)
+      ("^\\*Local variables\\*$"
+       :vslot -1 :slot 1 :size +popup-shrink-to-fit)
+      ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
+       :vslot -2 :size +popup-shrink-to-fit :autosave t :quit t :ttl nil)
+      ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
+       :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
+      ("^\\*doom:"  ; editing buffers (interaction required)
+       :vslot -4 :size 0.35 :autosave t :select t :modeline t :quit nil :ttl t)
+      ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup"  ; editing buffers (interaction required)
+       :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil)
+      ("^\\*\\(?:Wo\\)?Man "
+       :vslot -6 :size +popup-shrink-to-fit :select t :quit t :ttl 0)
+      ("^\\*Calc"
+       :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
+      ("^\\*Customize"
+       :slot 2 :side bottom :size 0.5 :select t :quit nil)
+      ("^ \\*undo-tree\\*"
+       :slot 2 :side left :size 20 :select t :quit t)
+      ;; `help-mode', `helpful-mode'
+      ("^\\*\\([Hh]elp\\|Apropos\\)"
+       :slot 2 :vslot -8 :size +popup-shrink-to-fit :select t)
+      ("^\\*eww\\*"  ; `eww' (and used by dash docsets)
+       :vslot -11 :size +popup-shrink-to-fit :select t)
+      ("^\\*xwidget"
+       :vslot -11 :size +popup-shrink-to-fit :select nil)
+      ("^\\*info\\*$"  ; `Info-mode'
+       :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
+  '(("^\\*Warnings" :vslot 99 :size +popup-shrink-to-fit)
+    ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
+    ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+    ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+    ("^\\*Process List\\*" :side bottom :vslot 101 :size +popup-shrink-to-fit :select t :quit t)
+    ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t)))
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -912,13 +961,13 @@ Entries are derived from the smartparens package."
              (when (string-match-p "^\\*sly-mrepl.*\\*" (buffer-name))
                (evil-normal-state)))
   (set-popup-rules!
-   '(("^\\*sly-mrepl"       :vslot 2 :size 0.33 :quit nil :ttl nil)
-     ("^\\*sly-compilation" :vslot 3 :ttl nil)
-     ("^\\*sly-traces"      :vslot 4 :ttl nil)
-     ("^\\*sly-description" :vslot 5 :size 0.33 :ttl 0)
-     ;; Do not display debugger or inspector buffers in a popup window. These
-     ;; buffers are meant to be displayed with sufficient vertical space.
-     ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
+    '(("^\\*sly-mrepl"       :vslot 2 :size 0.35 :quit nil :ttl nil)
+      ("^\\*sly-compilation" :vslot 3 :ttl nil)
+      ("^\\*sly-traces"      :vslot 4 :ttl nil)
+      ("^\\*sly-description" :vslot 5 :size #'+popup-shrink-to-fit :ttl 0)
+      ;; Do not display debugger or inspector buffers in a popup window. These
+      ;; buffers are meant to be displayed with sufficient vertical space.
+      ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
   ;; Change some of Doom's default Common Lisp keybindings
   (map! (:map sly-db-mode-map
          :n "gr" #'sly-db-restart-frame)
@@ -1019,17 +1068,17 @@ Entries are derived from the smartparens package."
 
 (after! geiser
   (set-popup-rules!
-   '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
-     ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size 0.33)
-     ("^\\*Geiser .+ REPL" :size 0.33 :quit nil :ttl nil))))
+    '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
+      ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size #'+popup-shrink-to-fit)
+      ("^\\*Geiser .+ REPL" :size 0.35 :quit nil :ttl nil))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - RACKET
 ;; <https://www.racket-mode.com>
 
 (after! racket-mode
-  (set-popup-rule! "^\\*Racket REPL" :size 0.33 :quit nil :ttl nil)
-  (set-popup-rule! "^\\*Racket Describe" :size 0.33 :quit t :select t)
+  (set-popup-rule! "^\\*Racket REPL" :size 0.35 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*Racket Describe" :size #'+popup-shrink-to-fit :quit t :select t)
   (set-eval-handler! 'racket-mode #'racket-send-region)
   (setq! racket-xp-eldoc-level 'minimal)
   ;; Make sure that the last character of the sexp is not cut off
@@ -1101,7 +1150,7 @@ Entries are derived from the smartparens package."
 (after! erlang
   (set-repl-handler! 'erlang-mode #'erlang-shell)
   (set-eval-handler! 'erlang-mode #'erlang-compile)
-  (set-popup-rule! ".*\\*erlang\\*" :size 0.33 :quit nil :ttl nil)
+  (set-popup-rule! ".*\\*erlang\\*" :size 0.35 :quit nil :ttl nil)
   (defun erlang-compile-debug ()
     "Compile for debug with debug_info and export_all."
     (interactive)
@@ -1146,7 +1195,7 @@ Entries are derived from the smartparens package."
   :config
   (set-repl-handler! 'tuareg-mode #'utop)
   (set-eval-handler! 'tuareg-mode #'utop-eval-region)
-  (set-popup-rule! "^\\*utop\\*" :size 0.33 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*utop\\*" :size 0.35 :quit nil :ttl nil)
   (setq! utop-command "opam exec -- dune utop . -- -emacs")
   (add-hook! 'utop-mode-hook
              ;; HACK: Thats how to get completions from Merlin in Utop
