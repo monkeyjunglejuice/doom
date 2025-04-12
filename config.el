@@ -1148,7 +1148,8 @@ Entries are derived from the smartparens package."
 ;;; ERLANG
 
 (after! erlang
-  (set-repl-handler! 'erlang-mode #'erlang-shell)
+  ;; FIXME repl-handler and eval-handler don't work with Doom out-of-the box
+  (set-repl-handler! 'erlang-mode #'erlang-repl)
   (set-eval-handler! 'erlang-mode #'erlang-compile)
   (set-popup-rule! ".*\\*erlang\\*" :size 0.35 :quit nil :ttl nil)
   (defun erlang-compile-debug ()
