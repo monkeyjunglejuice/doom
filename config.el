@@ -275,6 +275,9 @@ The sub-process can be managed via `list-processes'"
          evil-move-cursor-back nil
          evil-move-beyond-eol nil))
 
+(after! evil-collection
+  (setq! evil-collection-setup-minibuffer t))
+
 ;; Evil states cheatsheet
 ;; :n  normal
 ;; :v  visual
