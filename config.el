@@ -150,9 +150,9 @@
  "d"           "dired $1"
  "do"          "dired-other-window $1"
  "g"           "magit-status"
- "dooms"       "doom sync --gc --aot"
- "doomup"      "doom upgrade --aot"
- "doomr"       "doom/restart"
+ "doomS"       "doom sync --gc --aot"
+ "doomU"      "doom upgrade --aot"
+ "doomR"       "doom/restart"
  ;; Adblocker
  "hblock-off"  "hblock -S none -D none"
  ;; Git
@@ -165,13 +165,14 @@
  ;; Common Lisp
  "lisp"        "rlwrap ros -Q run $*"
  "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+ ;; Erlang
+ "reb"         "rebar3 $*"
  ;; macOS
  "app-unblock" "sudo xattr -d com.apple.quarantine $*"
  "app-clear"   "sudo xattr -crv $*"
  "app-sign"    "sudo codesign --force --deep --sign - $*"
  ;; Homebrew
- "brewu"       "brew update"
- "brewup"      "brew update && brew upgrade"
+ "brewU"       "brew update && brew upgrade"
  ;; Apt-get
  "pacu"        "sudo apt-get update"
  "pacup"       "sudo apt-get update && sudo apt-get upgrade"
@@ -185,9 +186,9 @@
  "pacr"        "sudo apt-get remove --purge $*"
  "pacar"       "sudo apt-get autoremove --purge $*"
  ;; Guix
- "guixup"      "guix pull && guix package -u"
+ "guixU"      "guix pull && guix package -u"
  ;; Nix
- "nixup"       "nix-channel --update nixpkgs && nix-env -u '*'"
+ "nixU"       "nix-channel --update nixpkgs && nix-env -u '*'"
  ;; Too small tmp directory
  "resizetmp"   "sudo mount -o remount,size=8G,noatime /tmp")
 
