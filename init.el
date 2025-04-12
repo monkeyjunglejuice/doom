@@ -29,7 +29,8 @@
        ;; ligatures
        modeline
        ophints
-       ;; (popup +defaults)
+       (popup +defaults)
+       ;; smooth-scroll
        (vc-gutter +pretty)
        ;; vi-tilde-fringe
        (window-select +switch-window)
