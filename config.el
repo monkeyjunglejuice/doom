@@ -672,6 +672,12 @@ Aider-compatible model names."
                    :models (my-ollama-models nil))))
 
 ;;  ____________________________________________________________________________
+;;; PROJECT MANAGEMENT
+
+(after! projectile
+  (setq! projectile-project-search-path '("~/code/")))
+
+;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
