@@ -303,8 +303,25 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
 
+(setq! switch-to-buffer-obey-display-actions t)
+
 ;; <https://github.com/dimitri/switch-window>
 (after! switch-window
+  (defun switch-window--then-other-window (prompt function)
+    "PROMPT a question and let use select or create a window to run FUNCTION."
+    (let ((f (switch-window--get-preferred-function function)))
+      (switch-window--then
+       prompt
+       (lambda ()
+         (select-window
+          (if (one-window-p)
+              ;; TODO Write advice instead, default was `split-window-right`
+              (split-window-sensibly)
+            (next-window)))
+         (call-interactively f))
+       (lambda () (call-interactively f))
+       nil
+       2)))
   (custom-set-faces '(switch-window-label
                       ((t :height 2.0))))
   (custom-set-faces '(switch-window-background
