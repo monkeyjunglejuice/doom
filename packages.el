@@ -4,13 +4,15 @@
 (package! evil-snipe :disable t)
 (package! flycheck-popup-tip :disable t)
 (package! iedit :disable t)
+(package! company :disable t)
 
 (package! aggressive-indent)
 (package! clean-kill-ring)
 (package! org-sticky-header)
+(package! benchmark-init)
 (package! show-font)
 (package! ellama)
-(package! gptel :disable t)
+(package! gptel)
 
 (when (modulep! :os macos)
   (package! osx-trash))
