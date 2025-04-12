@@ -678,6 +678,12 @@ Aider-compatible model names."
   (setq! projectile-project-search-path '("~/code/")))
 
 ;;  ____________________________________________________________________________
+;;; EGLOT
+
+(after! eglot
+  (setq! eglot-code-action-indications '(eldoc-hint)))
+
+;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
