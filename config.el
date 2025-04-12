@@ -422,17 +422,14 @@ The sub-process can be managed via `list-processes'"
                                 org-agenda-mode
                                 dired-mode)))
 
-;; Don't hide mode-line
+;; Don't ever hide the mode-line
 (after! hide-mode-line
   (advice-add #'hide-mode-line-mode :around
               (lambda (orig &optional args) nil)))
 
-;; Light-weight mode-line is too high, fix that
+;; The light-weight mode-line is too high, fix that
 (when (modulep! :ui modeline +light)
   (setq! +modeline-height 24))
-
-;; Don't ask
-(setq! confirm-kill-emacs nil)
 
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
