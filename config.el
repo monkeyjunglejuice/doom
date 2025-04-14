@@ -330,7 +330,7 @@ The sub-process can be managed via `list-processes'"
        nil
        2)))
   (custom-set-faces '(switch-window-label
-                      ((t :height 2.0))))
+                      ((t :height 1.0 :weight bold))))
   (custom-set-faces '(switch-window-background
                       ((t :inherit 'whitespace-space :background unspecified))))
   (setq! switch-window-multiple-frames t
@@ -447,7 +447,7 @@ The sub-process can be managed via `list-processes'"
        :vslot -11 :size +popup-shrink-to-fit :select nil)
       ("^\\*info\\*$"  ; `Info-mode'
        :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
-  '(("^\\*Warnings" :vslot 99 :size +popup-shrink-to-fit)
+  '(("^\\*Warnings\\|*Disabled" :vslot 99 :size +popup-shrink-to-fit)
     ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
     ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
     ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
@@ -1195,11 +1195,18 @@ Entries are derived from the smartparens package."
   (set-repl-handler! 'tuareg-mode #'utop)
   (set-eval-handler! 'tuareg-mode #'utop-eval-region)
   (set-popup-rule! "^\\*utop\\*" :size 0.35 :quit nil :ttl nil)
+  (when (featurep 'aggressive-indent)
+    (cl-pushnew #'tuareg-interactive-mode aggressive-indent-excluded-modes))
   (setq! utop-command "opam exec -- dune utop . -- -emacs")
-  (add-hook! 'utop-mode-hook
-             ;; HACK: Thats how to get completions from Merlin in Utop
-             ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
-             (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1))))
+  (when (featurep 'merlin-mode)
+    (add-hook! 'tuareg-interactive-mode-hook
+               ;; HACK: Thats how to get completions from Merlin in Utop
+               ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
+               (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1)))
+    (add-hook! 'utop-mode-hook
+               ;; HACK: Thats how to get completions from Merlin in Utop
+               ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
+               (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1)))))
 
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP

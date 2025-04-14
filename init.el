@@ -26,18 +26,14 @@
        doom
        hl-todo
        ;; indent-guides
-       ;; ligatures
        modeline
        ophints
        (popup +defaults)
-       ;; smooth-scroll
        (vc-gutter +pretty)
-       ;; vi-tilde-fringe
        (window-select +switch-window)
 
        :editor
        (evil +everywhere)
-       ;; (meow +qwerty)
        file-templates
        (format +onsave +lsp)
        ;; god
@@ -96,12 +92,12 @@
        ;; graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
-       ;; (javascript +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
        (julia +lsp +tree-sitter +snail)
        ;; (lua +fennel +lsp +tree-sitter)
        markdown
-       nim
-       (ocaml +tree-sitter)
+       ;; nim
+       (ocaml +lsp +tree-sitter)
        (org +pandoc)
        ;; python
        ;; (racket +lsp)
