@@ -1204,16 +1204,17 @@ Entries are derived from the smartparens package."
   (set-popup-rule! "^\\*utop\\*" :size 0.35 :quit nil :ttl nil)
   (when (featurep 'aggressive-indent)
     (cl-pushnew #'tuareg-interactive-mode aggressive-indent-excluded-modes))
+  ;; (setq! utop-command "opam exec -- utop -emacs")
   (setq! utop-command "opam exec -- dune utop . -- -emacs")
-  (when (featurep 'merlin-mode)
+  (when (modulep! :lang ocaml -lsp)
     (add-hook! 'tuareg-interactive-mode-hook
-               ;; HACK: Thats how to get completions from Merlin in Utop
+               ;; HACK: Thats how to get completions from Merlin
                ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
-               (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1)))
+               (progn (merlin-mode +1) (merlin-mode -1)))
     (add-hook! 'utop-mode-hook
-               ;; HACK: Thats how to get completions from Merlin in Utop
+               ;; HACK: Thats how to get completions from Merlin
                ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
-               (progn (merlin-mode +1) (merlin-mode -1) (merlin-mode +1)))))
+               (progn (merlin-mode +1) (merlin-mode -1)))))
 
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
