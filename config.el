@@ -857,7 +857,9 @@ Aider-compatible model names."
 ;;; - Completion
 
 (after! corfu
-  (setq! corfu-preselect 'first))
+  (setq! corfu-popupinfo-delay '(0.5 . 0.3)
+         corfu-popupinfo-hide nil
+         corfu-preview-current nil))
 
 ;;  ____________________________________________________________________________
 ;;; ORG MODE
