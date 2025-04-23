@@ -227,7 +227,7 @@ The sub-process can be managed via `list-processes'"
       :desc nil                      "`"     nil ; Switch to last buffer
       :desc nil                      "~"     nil ; Toggle last popup
       :desc "Project buffers"        ","     #'projectile-switch-to-buffer
-      :desc "Project files"          "."     #'projectile-find-file-dwim
+      :desc "Project files"          "."     #'projectile-find-file
       :desc "Directories"            "d"     #'consult-dir
       :desc "Eshell"                 "e"     #'+eshell/toggle
       :desc "Command"                "m"     #'execute-extended-command
@@ -243,11 +243,9 @@ The sub-process can be managed via `list-processes'"
       :desc nil                      "i y"   nil ; From clipboard
       :desc "Form kill-ring"         "i p"   #'+default/yank-pop
       ;; doom-leader-open-map
-      :desc "Browse URL"             "o w"   #'browse-url
-      :desc "Browse URL external"    "o W"   #'browse-url-default-macosx-browser
+      :desc "Browse URL"             "o W"   #'browse-url
+      :desc "Browse URL external"    "o w"   #'browse-url-default-macosx-browser
       :desc "Browse URL in Webkit"   "o C-w" #'xwidget-webkit-browse-url
-      ;; doom-leader-search-map
-      :desc "Find file at point"     "s f"   #'ffap
       ;; doom-leader-toggle-map
       :desc "Toggle popups"          "t p"   #'+popup/toggle
       ;; evil-window-map
