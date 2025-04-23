@@ -36,7 +36,6 @@
        (evil +everywhere)
        file-templates
        (format +onsave +lsp)
-       ;; god
        lispy
        ;; snippets
        ;; word-wrap
@@ -62,7 +61,7 @@
        ;; ansible
        ;; biblio
        ;; collab
-       debugger
+       ;; debugger
        ;; direnv
        ;; docker
        ;; editorconfig
@@ -92,18 +91,17 @@
        ;; graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
-       (javascript +lsp +tree-sitter)
-       (julia +lsp +tree-sitter +snail)
+       ;; (javascript +lsp +tree-sitter)
+       ;; (julia +lsp +tree-sitter +snail)
        ;; (lua +fennel +lsp +tree-sitter)
        markdown
-       ;; nim
-       (ocaml +lsp +tree-sitter)
+       (ocaml +tree-sitter)
        (org +pandoc)
-       ;; python
+       ;; (python +lsp +tree-sitter)
        ;; (racket +lsp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
-       (scheme +guile)
+       ;; (scheme +guile +racket)
        (sh +fish +lsp +tree-sitter)
        ;; solidity
        ;; swift
@@ -117,7 +115,7 @@
        :app
        ;; calendar
        ;; emms
-       everywhere
+       ;; everywhere
        ;; irc
        ;; (rss +org)
 
