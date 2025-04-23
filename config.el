@@ -863,7 +863,9 @@ Aider-compatible model names."
   (setq! org-adapt-indentation 'headline-data
          org-indent-mode-turns-on-hiding-stars nil
          org-startup-indented t
-         org-hide-leading-stars nil))
+         org-hide-leading-stars nil)
+  (setq! org-edit-src-content-indentation 0
+         org-src-preserve-indentation nil))
 
 ;; <https://github.com/alphapapa/org-sticky-header>
 (use-package! org-sticky-header
