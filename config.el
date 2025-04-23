@@ -36,9 +36,9 @@
 ;;; FONTS
 
 (setq! doom-font
-       (font-spec :family "MesloLGM Nerd Font" :size 15 :weight 'normal)
+       (font-spec :family "MesloLGMDZ Nerd Font" :size 15 :weight 'normal)
        doom-serif-font
-       (font-spec :family "MesloLGM Nerd Font" :size 15 :weight 'normal)
+       (font-spec :family "MesloLGMDZ Nerd Font" :size 15 :weight 'normal)
        doom-variable-pitch-font
        (font-spec :family "ETBookOT" :size 18 :weight 'normal))
 
