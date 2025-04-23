@@ -151,7 +151,7 @@
  "do"          "dired-other-window $1"
  "g"           "magit-status"
  "doomS"       "doom sync --gc --aot"
- "doomU"      "doom upgrade --aot"
+ "doomU"       "doom upgrade --aot"
  "doomR"       "doom/restart"
  ;; Adblocker
  "hblock-off"  "hblock -S none -D none"
