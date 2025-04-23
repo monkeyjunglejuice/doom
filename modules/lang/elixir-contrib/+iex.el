@@ -48,6 +48,16 @@ without going through the proper code change callback."
     (interactive)
     (inf-elixir--send (format ":observer.start()")))
 
+  (defun inf-elixir-self ()
+    "Return the PID of the IEx process."
+    (interactive)
+    (inf-elixir--send (format "self()")))
+
+  (defun inf-elixir-flush ()
+    "Flush the IEx mailbox."
+    (interactive)
+    (inf-elixir--send (format "flush()")))
+
   (map! :localleader
         (:map elixir-mode-map
          :n "'" #'inf-elixir-run
@@ -55,6 +65,8 @@ without going through the proper code change callback."
          :n "r" #'inf-elixir-reload-module
          :n "R" #'inf-elixir-recompile
          :n "o" #'inf-elixir-observer
+         :n "s" #'inf-elixir-self
+         :n "f" #'inf-elixir-flush
          (:prefix ("e" . "eval")
           :n "b" #'inf-elixir-send-buffer
           :n "l" #'inf-elixir-send-line
@@ -62,7 +74,10 @@ without going through the proper code change callback."
         (:map inf-elixir-mode-map
          :n "r" #'inf-elixir-reload-module
          :n "R" #'inf-elixir-recompile
-         :n "o" #'inf-elixir-observer))
+         :n "o" #'inf-elixir-observer
+         :n "s" #'inf-elixir-self
+         :n "f" #'inf-elixir-flush
+         ))
 
   :hook
   (elixir-mode . inf-elixir-minor-mode)
