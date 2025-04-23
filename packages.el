@@ -31,10 +31,6 @@
     :recipe (:host github :repo "gleam-lang/gleam-mode"
              :build t)))
 
-(when (modulep! :lang nim)
-  (package! inim-mode
-    :recipe (:host github :repo "serialdev/inim-mode")))
-
 (package! modus-themes
   :recipe (:host github :repo "protesilaos/modus-themes"
            :build t))
