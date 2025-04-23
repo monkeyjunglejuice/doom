@@ -767,42 +767,47 @@ Aider-compatible model names."
         "M-]" #'lispyville-next-closing
         "M-}" #'lispyville-previous-closing))
 
+(after! lispyville
+  ;; Prefer Lispyville instead of Smartparens
+  (add-hook! '(prog-mode-hook conf-mode-hook) #'lispyville-mode)
+  ;; Turn off Smartparens when Lispyville is enabled
+  (add-hook! 'lispyville-mode-hook (smartparens-mode -1)))
+
 ;; Structural editing: Smartparens
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
 
-(after! smartparens
-  (setq! show-smartparens-global-mode t)
-  ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
-  ;; and Paredit keybindings
-  ;; TODO: Enable these keybindings in Evil insert mode and Emacs mode only
-  ;; (map! :map smartparens-mode-map
-  ;;       ;; Navigation
-  ;;       "C-M-f"           #'sp-forward-sexp
-  ;;       "C-M-b"           #'sp-backward-sexp
-  ;;       "C-M-u"           #'sp-backward-up-sexp
-  ;;       "C-M-d"           #'sp-down-sexp
-  ;;       "C-M-p"           #'sp-backward-down-sexp
-  ;;       "C-M-n"           #'sp-up-sexp
-  ;;       "C-M-a"           #'sp-beginning-of-sexp
-  ;;       "C-M-e"           #'sp-end-of-sexp
-  ;;       ;; Depth-changing commands
-  ;;       "C-M-g"           #'sp-unwrap-sexp
-  ;;       "C-M-s"           #'sp-splice-sexp
-  ;;       ;; Forward slurp/barf
-  ;;       "C-)"             #'sp-forward-slurp-sexp
-  ;;       "C-}"             #'sp-forward-barf-sexp
-  ;;       ;; Backward slurp/barf
-  ;;       "C-("             #'sp-backward-slurp-sexp
-  ;;       "C-{"             #'sp-backward-barf-sexp
-  ;;       ;; Misc
-  ;;       "C-M-k"           #'sp-kill-sexp
-  ;;       "C-M-<backspace>" #'sp-backward-kill-sexp
-  ;;       "C-M-SPC"         #'sp-mark-sexp
-  ;;       "C-M-w"           #'sp-copy-sexp
-  ;;       "C-M-t"           #'sp-transpose-sexp
-  ;;       "M-("             #'sp-wrap-round)
-  )
+;; (after! smartparens
+;;   (setq! show-smartparens-global-mode t)
+;;   ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
+;;   ;; and Paredit keybindings
+;;   ;; TODO: Enable these keybindings in Evil insert mode and Emacs mode only
+;;   (map! :map smartparens-mode-map
+;;         ;; Navigation
+;;         "C-M-f"           #'sp-forward-sexp
+;;         "C-M-b"           #'sp-backward-sexp
+;;         "C-M-u"           #'sp-backward-up-sexp
+;;         "C-M-d"           #'sp-down-sexp
+;;         "C-M-p"           #'sp-backward-down-sexp
+;;         "C-M-n"           #'sp-up-sexp
+;;         "C-M-a"           #'sp-beginning-of-sexp
+;;         "C-M-e"           #'sp-end-of-sexp
+;;         ;; Depth-changing commands
+;;         "C-M-g"           #'sp-unwrap-sexp
+;;         "C-M-s"           #'sp-splice-sexp
+;;         ;; Forward slurp/barf
+;;         "C-)"             #'sp-forward-slurp-sexp
+;;         "C-}"             #'sp-forward-barf-sexp
+;;         ;; Backward slurp/barf
+;;         "C-("             #'sp-backward-slurp-sexp
+;;         "C-{"             #'sp-backward-barf-sexp
+;;         ;; Misc
+;;         "C-M-k"           #'sp-kill-sexp
+;;         "C-M-<backspace>" #'sp-backward-kill-sexp
+;;         "C-M-SPC"         #'sp-mark-sexp
+;;         "C-M-w"           #'sp-copy-sexp
+;;         "C-M-t"           #'sp-transpose-sexp
+;;         "M-("             #'sp-wrap-round))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Line numbers
