@@ -65,7 +65,7 @@ without going through the proper code change callback."
          :n "'" #'inf-elixir-run
          :n "SPC" #'inf-elixir-switch-to-repl
          :n "r" #'inf-elixir-reload-module
-         :n "R" #'inf-elixir-recompile
+         :n "c" #'inf-elixir-recompile
          :n "o" #'inf-elixir-observer
          :n "s" #'inf-elixir-self
          :n "f" #'inf-elixir-flush
@@ -75,7 +75,7 @@ without going through the proper code change callback."
           :v "r" #'inf-elixir-send-region))
         (:map inf-elixir-mode-map
          :n "r" #'inf-elixir-reload-module
-         :n "R" #'inf-elixir-recompile
+         :n "c" #'inf-elixir-recompile
          :n "o" #'inf-elixir-observer
          :n "s" #'inf-elixir-self
          :n "f" #'inf-elixir-flush
