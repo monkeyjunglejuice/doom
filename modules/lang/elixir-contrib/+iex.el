@@ -5,6 +5,7 @@
   inf-elixir--find-project-root
 
   :init
+
   (set-repl-handler! 'elixir-mode #'inf-elixir-run)
   (set-eval-handler! 'elixir-mode #'inf-elixir-send-region)
 
@@ -23,6 +24,7 @@ The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") and
   (defalias 'run-elixir #'inf-elixir-run "Alias for `inf-elixir-run'")
 
   :config
+
   (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.35 :quit nil :ttl nil)
   (setq! inf-elixir-switch-to-repl-on-send t)
 
@@ -80,5 +82,6 @@ without going through the proper code change callback."
          ))
 
   :hook
+
   (elixir-mode . inf-elixir-minor-mode)
   (inf-elixir-mode . rainbow-delimiters-mode))
