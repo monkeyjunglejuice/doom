@@ -718,7 +718,7 @@ Aider-compatible model names."
 ;;; EGLOT
 
 (after! eglot
-  (setq! eglot-code-action-indications '(eldoc-hint)))
+  (setq! eglot-code-action-indications '()))
 
 ;;  ____________________________________________________________________________
 ;;; EDITING / PROGRAMMING
