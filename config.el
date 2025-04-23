@@ -848,6 +848,12 @@ Aider-compatible model names."
 ;; Don't continue comment when opening a new line
 (setq! +evil-want-o/O-to-continue-comments nil)
 
+;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+;;; - Completion
+
+(after! corfu
+  (setq! corfu-preselect 'first))
+
 ;;  ____________________________________________________________________________
 ;;; ORG MODE
 
