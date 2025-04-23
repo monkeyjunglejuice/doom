@@ -7,7 +7,7 @@
   :when init-file-debug
   :config
   ;; Disable collection of benchmark data after init is done
-  (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+  (add-hook! 'doom-first-input-hook #'benchmark-init/deactivate))
 
 ;;  ____________________________________________________________________________
 ;;; FRAMES
