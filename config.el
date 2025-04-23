@@ -770,6 +770,7 @@ Aider-compatible model names."
 ;; Structural editing: Smartparens
 ;; <https://github.com/Fuco1/smartparens>
 ;; <https://smartparens.readthedocs.io/en/latest/>
+
 (after! smartparens
   (setq! show-smartparens-global-mode t)
   ;; Custom keybinding set, a blend of standard Emacs sexp keybindings
