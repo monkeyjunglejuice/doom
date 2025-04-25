@@ -25,7 +25,6 @@
        ;; deft
        doom
        hl-todo
-       ;; indent-guides
        modeline
        ophints
        (popup +defaults)
