@@ -37,7 +37,7 @@
        (format +onsave +lsp)
        lispy
        ;; snippets
-       ;; word-wrap
+       word-wrap
 
        :emacs
        (dired +icons)
