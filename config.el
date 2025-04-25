@@ -35,12 +35,35 @@
 ;;  ____________________________________________________________________________
 ;;; FONTS
 
+;; Menlo derivative
+;; (setq! doom-font
+;;        (font-spec :family "MesloLGMDZ Nerd Font"
+;;                   :size 15
+;;                   :weight 'normal)
+;;        doom-serif-font
+;;        (font-spec :family "MesloLGMDZ Nerd Font"
+;;                   :size 15
+;;                   :weight 'normal)
+;;        doom-variable-pitch-font
+;;        (font-spec :family "Gentium Plus"
+;;                   :size 17
+;;                   :weight 'normal))
+
+;; Custom Iosevka build
 (setq! doom-font
-       (font-spec :family "MesloLGMDZ Nerd Font" :size 15 :weight 'normal)
+       (font-spec :family "Iosevka Dee"
+                  :size 16
+                  :weight 'normal
+                  :width 'semi-expanded)
        doom-serif-font
-       (font-spec :family "MesloLGMDZ Nerd Font" :size 15 :weight 'normal)
+       (font-spec :family "Iosevka Dee"
+                  :size 16
+                  :weight 'normal
+                  :width 'semi-expanded)
        doom-variable-pitch-font
-       (font-spec :family "ETBookOT" :size 18 :weight 'normal))
+       (font-spec :family "Gentium Plus"
+                  :size 17
+                  :weight 'normal))
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
