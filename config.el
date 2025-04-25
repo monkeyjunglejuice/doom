@@ -891,8 +891,9 @@ Aider-compatible model names."
   (setq! org-ellipsis " ▼ ")
   (setq! org-adapt-indentation 'headline-data
          org-indent-mode-turns-on-hiding-stars nil
-         org-startup-indented t
+         org-startup-indented nil
          org-hide-leading-stars nil)
+  ;; Don't add leading indentation to code blocks, remove them during export
   (setq! org-edit-src-content-indentation 0
          org-src-preserve-indentation nil))
 
