@@ -1248,6 +1248,7 @@ Entries are derived from the smartparens package."
 (use-package! my-tools)
 
 ;; MJJ blog machinery
+;; <https://github.com/monkeyjunglejuice/monkeyjunglejuice.github.io/tree/master/static>
 (use-package! mjj-publish)
 
 ;;  ____________________________________________________________________________
