@@ -951,10 +951,6 @@ Entries are derived from the smartparens package."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Elisp
 
-(when (modulep! :ui indent-guides)
-  (add-hook! 'emacs-lisp-mode-hook
-    (indent-bars-mode -1)))
-
 (after! evil-collection
   (evil-collection-elisp-mode-setup))
 
@@ -977,10 +973,6 @@ Entries are derived from the smartparens package."
 (setq! inferior-lisp-program "ros -Q run")
 
 (add-to-list '+lisp-quicklisp-paths "~/.roswell/lisp/quicklisp" 'append)
-
-(when (modulep! indent-guides)
-  (add-hook! '(lisp-mode-hook lisp-data-mode-hook)
-    (indent-bars-mode -1)))
 
 (after! sly
   ;; Set Sly Lisp implementations
@@ -1123,8 +1115,6 @@ Entries are derived from the smartparens package."
               :around #'evil-collection-elisp-mode-last-sexp)
   (advice-add #'racket-expand-last-sexp
               :around #'evil-collection-elisp-mode-last-sexp)
-  (when (modulep! indent-guides)
-    (add-hook! 'racket-mode-hook (indent-bars-mode -1)))
   ;; Change some of Doom's default Racket keybindings
   (map! (:localleader
          :map racket-mode-map
