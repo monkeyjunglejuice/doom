@@ -374,7 +374,7 @@ The sub-process can be managed via `list-processes'"
            "w" "e" "r" 
            "z" "x" "c"
            "u" "i" "o"))
-  ;; Bind `switch-window' commands to regular Emacs keybindings
+  ;; Bind `switch-window' commands to default Doom Emacs keybindings
   (map! :leader
         "w m"    #'switch-window-then-maximize
         "w s"    #'switch-window-then-split-below
