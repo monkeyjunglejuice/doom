@@ -369,8 +369,8 @@ The sub-process can be managed via `list-processes'"
            map))
   (setq! switch-window-minibuffer-shortcut 109) ; "m"
   (setq! switch-window-qwerty-shortcuts
-         '("s" "d" "f" 
-           "w" "e" "r" 
+         '("s" "d" "f"
+           "w" "e" "r"
            "z" "x" "c"
            "u" "i" "o"))
   ;; Bind `switch-window' commands to default Doom Emacs keybindings
