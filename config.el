@@ -953,12 +953,12 @@ Entries are derived from the smartparens package."
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Executing-Lisp>
 ;; <http://joaotavora.github.io/sly/> and <https://github.com/joaotavora/sly>
 
-;; Default Lisp implementation
-(setq! inferior-lisp-program "ros -Q run")
-
-(add-to-list '+lisp-quicklisp-paths "~/.roswell/lisp/quicklisp" 'append)
 
 (after! sly
+  ;; Default Lisp implementation
+  (setq! inferior-lisp-program "sbcl")
+  ;; Set Quicklisp path
+  (add-to-list '+lisp-quicklisp-paths "~/.quicklisp" 'append)
   ;; Set Sly Lisp implementations
   (setq! sly-lisp-implementations
          '((sbcl ("sbcl") :coding-system utf-8-unix)
