@@ -841,9 +841,8 @@ Aider-compatible model names."
 ;; Keep code always intented
 ;; <https://github.com/Malabarba/aggressive-indent-mode>
 (use-package! aggressive-indent
-  :config
-  (global-aggressive-indent-mode 1))
-
+  :hook
+  ((prog-mode conf-mode) . aggressive-indent-mode))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Searching
