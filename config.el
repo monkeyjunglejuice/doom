@@ -962,10 +962,9 @@ Entries are derived from the smartparens package."
 (after! sly
   ;; Set Sly Lisp implementations
   (setq! sly-lisp-implementations
-         '((roswell ("ros" "-Q" "run"))
-           (sbcl ("ros" "-L" "sbcl" "-Q" "run") :coding-system utf-8-unix)
-           (ccl ("ros" "-L" "ccl-bin" "-Q" "run"))))
-  (setq! sly-default-lisp 'roswell
+         '((sbcl ("sbcl") :coding-system utf-8-unix)
+           (ccl ("ccl"))))
+  (setq! sly-default-lisp 'sbcl
          sly-command-switch-to-existing-lisp 'always
          sly-complete-symbol-function #'sly-flex-completions)
   (add-hook! 'sly-mrepl-mode-hook
