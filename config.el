@@ -293,8 +293,7 @@ The sub-process can be managed via `list-processes'"
 
 (after! evil-vars
   (setq! evil-want-minibuffer t
-         evil-move-cursor-back nil
-         evil-move-beyond-eol nil))
+         evil-move-cursor-back nil))
 
 (after! evil-collection
   (setq! evil-collection-setup-minibuffer t))
