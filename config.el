@@ -904,7 +904,7 @@ Entries are derived from the smartparens package."
                           emacs-lisp-mode
                           fennel-mode
                           gerbil-mode
-                          lfe-mode      ; addition
+                          lfe-mode ; addition
                           lisp-mode
                           lisp-data-mode ; addition
                           racket-mode
@@ -921,7 +921,7 @@ Entries are derived from the smartparens package."
                           geiser-repl-mode
                           inf-clojure-mode
                           inferior-emacs-lisp-mode
-                          inferior-lfe-mode  ; addition
+                          inferior-lfe-mode ; addition
                           inferior-lisp-mode
                           inferior-scheme-mode
                           lisp-interaction-mode
