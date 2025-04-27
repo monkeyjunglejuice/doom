@@ -298,7 +298,7 @@ The sub-process can be managed via `list-processes'"
 (after! evil-collection
   (setq! evil-collection-setup-minibuffer t))
 
-;; Evil states cheatsheet
+;;; - Evil states cheatsheet
 ;; :n  normal
 ;; :v  visual
 ;; :i  insert
