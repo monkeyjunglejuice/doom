@@ -489,7 +489,7 @@ The sub-process can be managed via `list-processes'"
 
 (after! vertico
   (setq! vertico-cycle nil
-         vertico-count 10))
+         vertico-count 12))
 
 ;; Not everything is line-oriented, e.g. Lisp code
 (after! hl-line
