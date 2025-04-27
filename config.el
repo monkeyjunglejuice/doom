@@ -515,7 +515,6 @@ The sub-process can be managed via `list-processes'"
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
 
-
 ;;  ____________________________________________________________________________
 ;;; ELDOC
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Lisp-Doc>
