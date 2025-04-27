@@ -515,13 +515,6 @@ The sub-process can be managed via `list-processes'"
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
 
-;; Kill all buffers at once
-(defun my-kill-all-buffers ()
-  "Really kill all buffers at once."
-  (interactive)
-  (save-some-buffers)
-  (let ((kill-buffer-query-functions '()))
-    (mapc #'kill-buffer (buffer-list))))
 
 ;;  ____________________________________________________________________________
 ;;; ELDOC
