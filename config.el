@@ -956,8 +956,8 @@ Entries are derived from the smartparens package."
 (after! sly
   ;; Default Lisp implementation
   (setq! inferior-lisp-program "sbcl")
-  ;; Set Quicklisp path
-  (add-to-list '+lisp-quicklisp-paths "~/.quicklisp" 'append)
+  ;; Add Quicklisp shortcut
+  (add-to-list 'sly-mrepl-shortcut-alist '("quickload" . sly-quickload))
   ;; Set Sly Lisp implementations
   (setq! sly-lisp-implementations
          '((sbcl ("sbcl") :coding-system utf-8-unix)
