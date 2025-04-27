@@ -1218,6 +1218,30 @@ Entries are derived from the smartparens package."
                ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
                (progn (merlin-mode +1) (merlin-mode -1)))))
 
+(when (modulep! :lang ocaml)
+  (defun opam-install-basic-packages ()
+    "Install standard package selection for editor support and development."
+    (interactive)
+    (message (concat "Installing basic packages for switch: "
+                     (opam-switch--get-current-switch)))
+    (start-process
+     "opam-install-basic-packages"        ; Emacs process name
+     "*opam-install*"                     ; Emacs output buffer
+     "opam" "install"                     ; shell command
+     "--yes"                              ; answer "yes" to all questions
+     ;; Package selection
+     "dune"
+     "dune-release"
+     "merlin"
+     "tuareg"
+     "ocaml-lsp-server"
+     "ocamlformat"
+     "utop"
+     "odoc"
+     "omod"
+     "domainslib"
+     )))
+
 ;;  ____________________________________________________________________________
 ;;; LOAD EXTERNAL ELISP
 
