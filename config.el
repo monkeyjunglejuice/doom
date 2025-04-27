@@ -845,13 +845,6 @@ Aider-compatible model names."
   :config
   (global-aggressive-indent-mode 1))
 
-;; Indentation guides
-(after! indent-bars
-  (setq! indent-bars-no-descend-lists nil
-         indent-bars-highlight-current-depth '(:face fringe)
-         indent-bars-display-on-blank-lines t)
-  (remove-hook! 'text-mode-hook
-    #'indent-bars-mode))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Searching
