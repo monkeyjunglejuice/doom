@@ -132,16 +132,16 @@
               diff-hl-change)))))
 
 ;;  ____________________________________________________________________________
-;;; SHELLS
+;;; SHELL
 
 (defvar my-shell (executable-find "fish"))
 (setq! explicit-shell-file-name my-shell)
 
 ;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
 ;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "dash")
-                           (executable-find "bash")
+(setq! shell-file-name (or (executable-find "bash")
                            (executable-find "zsh")
+                           (executable-find "bash")
                            (executable-find "sh")))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
