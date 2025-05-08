@@ -79,26 +79,26 @@
 (defvar my-frame-opacity 100 "The default frame opacity.")
 
 ;; Modus theme settings
-(use-package! modus-themes
-  :config
-  (setq! modus-themes-bold-constructs t
-         modus-themes-italic-constructs nil
-         modus-themes-mixed-fonts t)
-  (setq! modus-operandi-tinted-palette-overrides
-         modus-themes-preset-overrides-warmer)
-  (setq! modus-vivendi-tinted-palette-overrides
-         modus-themes-preset-overrides-warmer)
-  (setq! modus-themes-common-palette-overrides
-         '((border-mode-line-active unspecified)
-           (border-mode-line-inactive unspecified))))
+;; (use-package! modus-themes
+;;   :config
+;;   (setq! modus-themes-bold-constructs t
+;;          modus-themes-italic-constructs nil
+;;          modus-themes-mixed-fonts t)
+;;   (setq! modus-operandi-tinted-palette-overrides
+;;          modus-themes-preset-overrides-warmer)
+;;   (setq! modus-vivendi-tinted-palette-overrides
+;;          modus-themes-preset-overrides-warmer)
+;;   (setq! modus-themes-common-palette-overrides
+;;          '((border-mode-line-active unspecified)
+;;            (border-mode-line-inactive unspecified))))
 
 ;; Do not extend `region' background past the end of the line
 (custom-set-faces
  '(region ((t :extend nil))))
 
 ;;; - Set light/dark theme:
-(setq my-theme-light 'modus-operandi-tinted)
-(setq my-theme-dark 'modus-vivendi-tinted)
+(setq my-theme-light 'doom-one-light)
+(setq my-theme-dark 'doom-tokyo-night)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
