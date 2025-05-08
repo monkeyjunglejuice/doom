@@ -5,6 +5,7 @@
 (package! flycheck-popup-tip :disable t)
 (package! iedit :disable t)
 (package! company :disable t)
+(package! ace-window :disable t)
 
 (package! aggressive-indent)
 (package! clean-kill-ring)
@@ -13,6 +14,10 @@
 (package! show-font)
 (package! ellama)
 (package! gptel)
+(package! compile-angel :disable t)
+
+(cond ((modulep! :ui popup) (package! edwina :disable t))
+      (t (package! edwina)))
 
 (when (modulep! :os macos)
   (package! osx-trash))
