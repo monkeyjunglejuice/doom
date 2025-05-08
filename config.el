@@ -13,14 +13,14 @@
 ;;; FRAMES
 
 ;; Initial frame placement
-;; (pushnew! initial-frame-alist
-;;           '(fullscreen . maximized))
-
 (pushnew! initial-frame-alist
-          '(width . 80)
-          '(height . 47)
-          '(left . 940)
-          '(top . 0))
+          '(fullscreen . maximized))
+
+;; (pushnew! initial-frame-alist
+;;           '(width . 80)
+;;           '(height . 47)
+;;           '(left . 940)
+;;           '(top . 0))
 
 ;; Default placement for frames that have been created after the initial frame
 (pushnew! default-frame-alist
