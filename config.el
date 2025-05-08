@@ -173,7 +173,7 @@
  "d"           "dired $1"
  "do"          "dired-other-window $1"
  "g"           "magit-status"
- "doomS"       "doom sync --gc --aot"
+ "doomS"       "doom sync --aot"
  "doomU"       "doom upgrade --aot"
  "doomR"       "doom/restart"
  ;; Adblocker
