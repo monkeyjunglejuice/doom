@@ -25,9 +25,9 @@
        ;; deft
        doom
        hl-todo
-       modeline
+       (modeline +light)
        ophints
-       (popup +defaults)
+       (popup +custom)
        (vc-gutter +pretty)
        (window-select +switch-window)
 
@@ -37,7 +37,6 @@
        (format +onsave +lsp)
        lispy
        ;; snippets
-       ;; word-wrap
 
        :emacs
        (dired +icons)
@@ -100,7 +99,7 @@
        ;; (racket +lsp)
        ;; rest
        ;; (rust +lsp +tree-sitter)
-       ;; (scheme +guile +racket)
+       (scheme +guile)
        (sh +fish +lsp +tree-sitter)
        ;; solidity
        ;; swift
@@ -114,7 +113,7 @@
        :app
        ;; calendar
        ;; emms
-       ;; everywhere
+       everywhere
        ;; irc
        ;; (rss +org)
 
