@@ -243,7 +243,6 @@ The sub-process can be managed via `list-processes'"
 
 (map! :leader
       ;; doom-leader-map
-      :desc nil                      "SPC"   #'evil-window-mru ; Find file in project
       :desc nil                      ":"     nil ; M-x
       :desc nil                      "<"     nil ; Switch buffer
       :desc nil                      "X"     nil ; Org capture
