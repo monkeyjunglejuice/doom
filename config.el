@@ -239,7 +239,7 @@ The sub-process can be managed via `list-processes'"
 (setq! doom-leader-key "SPC"
        doom-leader-alt-key "M-SPC"
        doom-localleader-key ","
-       doom-localleader-alt-key "M-SPC ,")
+       doom-localleader-alt-key "M-,")
 
 (map! :leader
       ;; doom-leader-map
