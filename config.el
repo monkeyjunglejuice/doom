@@ -222,10 +222,10 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
 
-(setq! doom-leader-key "SPC"
-       doom-leader-alt-key "M-SPC"
-       doom-localleader-key ","
-       doom-localleader-alt-key "M-,")
+(setq! doom-leader-key ","
+       doom-leader-alt-key "M-,"
+       doom-localleader-key "SPC"
+       doom-localleader-alt-key "M-SPC")
 
 (map! :leader
       ;; doom-leader-map
