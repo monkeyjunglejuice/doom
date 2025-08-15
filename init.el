@@ -22,7 +22,6 @@
        (vertico +icons)
 
        :ui
-       ;; deft
        doom
        hl-todo
        (modeline +light)
@@ -36,7 +35,7 @@
        file-templates
        (format +onsave +lsp)
        lispy
-       ;; snippets
+       snippets
 
        :emacs
        (dired +icons)
@@ -81,8 +80,8 @@
        ;; (cc +lsp +tree-sitter)
        common-lisp
        data
-       (elixir +lsp +tree-sitter)
-       (elixir-contrib +iex +mix)
+       ;; (elixir +lsp +tree-sitter)
+       ;; (elixir-contrib +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
        ;; gleam
@@ -91,7 +90,7 @@
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
        ;; (julia +lsp +tree-sitter +snail)
-       ;; (lua +fennel +lsp +tree-sitter)
+       (lua +fennel +lsp +tree-sitter)
        markdown
        (ocaml +tree-sitter)
        (org +pandoc)
@@ -101,7 +100,6 @@
        ;; (rust +lsp +tree-sitter)
        (scheme +guile)
        (sh +fish +lsp +tree-sitter)
-       ;; solidity
        ;; swift
        (web +lsp +tree-sitter)
        (yaml +lsp +tree-sitter)

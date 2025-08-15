@@ -14,7 +14,15 @@
 (package! show-font)
 (package! ellama)
 (package! gptel)
-(package! compile-angel :disable t)
+(package! rainbow-delimiters)
+
+;; (unpin! sly)
+;; (unpin! sly-asdf)
+;; (unpin! sly-quicklisp)
+;; (unpin! sly-stepper)
+;; (unpin! sly-macrostep)
+;; (unpin! sly-repl-ansi-color)
+;; (unpin! sly-overlay)
 
 (cond ((modulep! :ui popup) (package! edwina :disable t))
       (t (package! edwina)))

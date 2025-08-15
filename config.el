@@ -7,26 +7,32 @@
   :when init-file-debug
   :config
   ;; Disable collection of benchmark data after init is done
-  (add-hook! 'doom-first-input-hook #'benchmark-init/deactivate))
+  (add-hook! 'after-init-hook #'benchmark-init/deactivate))
+
+;;  ____________________________________________________________________________
+;;; NATIVE ELISP COMPILATION
+
+;; Ask before killing Emacs as long as compiling processes are running?
+(setq native-comp-async-query-on-exit t)
 
 ;;  ____________________________________________________________________________
 ;;; FRAMES
 
 ;; Initial frame placement
-(pushnew! initial-frame-alist
-          '(fullscreen . maximized))
-
 ;; (pushnew! initial-frame-alist
-;;           '(width . 80)
-;;           '(height . 47)
-;;           '(left . 940)
-;;           '(top . 0))
+;;           '(fullscreen . maximized))
+
+(pushnew! initial-frame-alist
+          '(width . 80)
+          '(height . 52)
+          '(left . 1020)
+          '(top . 0))
 
 ;; Default placement for frames that have been created after the initial frame
 (pushnew! default-frame-alist
           '(width . 80)
-          '(height . 47)
-          '(left . 940)
+          '(height . 52)
+          '(left . 1020)
           '(top . 0))
 
 ;; Bring frame to the front
@@ -46,23 +52,25 @@
 ;;                   :weight 'normal)
 ;;        doom-variable-pitch-font
 ;;        (font-spec :family "Gentium Plus"
-;;                   :size 17
+;;                   :size 16
 ;;                   :weight 'normal))
 
 ;; Custom Iosevka build
 (setq! doom-font
        (font-spec :family "Iosevka Dee"
-                  :size 16
+                  :size 15
                   :weight 'normal
-                  :width 'semi-expanded)
+                  ;; :width 'semi-expanded
+                  )
        doom-serif-font
        (font-spec :family "Iosevka Dee"
-                  :size 16
+                  :size 15
                   :weight 'normal
-                  :width 'semi-expanded)
+                  ;; :width 'semi-expanded
+                  )
        doom-variable-pitch-font
        (font-spec :family "Gentium Plus"
-                  :size 17
+                  :size 16
                   :weight 'normal))
 
 ;;  ____________________________________________________________________________
@@ -84,7 +92,7 @@
 
 ;;; - Set light/dark theme:
 (setq my-theme-light 'doom-one-light)
-(setq my-theme-dark 'doom-tokyo-night)
+(setq my-theme-dark 'doom-vibrant)
 
 ;; Switch between dark/light theme based on the system appearance
 ;; <https://github.com/d12frosted/homebrew-emacs-plus?tab=readme-ov-file#system-appearance-change>
@@ -102,7 +110,7 @@
           ('dark (load-theme my-theme-dark t)
                  ;; Global variable will be used as an argument to launch
                  ;; emacsclient frames
-                 (doom/set-frame-opacity (setq my-frame-opacity 90))
+                 (doom/set-frame-opacity (setq my-frame-opacity 100))
                  ;; Eventually return theme name to set `doom-theme'
                  my-theme-dark))))
 
@@ -222,10 +230,10 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
 
-(setq! doom-leader-key ","
-       doom-leader-alt-key "M-,"
-       doom-localleader-key "SPC"
-       doom-localleader-alt-key "M-SPC")
+(setq! doom-leader-key "SPC"
+       doom-leader-alt-key "M-SPC"
+       doom-localleader-key ","
+       doom-localleader-alt-key "M-,")
 
 (map! :leader
       ;; doom-leader-map
@@ -270,8 +278,8 @@ The sub-process can be managed via `list-processes'"
 ;;; - Which-key
 
 (after! which-key
-  (setq! which-key-idle-delay 0.5
-         which-key-idle-secondary-delay 0.1))
+  (setq! which-key-idle-delay 1.4
+         which-key-idle-secondary-delay 0.0))
 
 ;;  ____________________________________________________________________________
 ;;; EVIL MODE
@@ -315,7 +323,7 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
 
-(setq! switch-to-buffer-obey-display-actions t)
+(setq! switch-to-buffer-obey-display-actions nil)
 
 ;; <https://github.com/dimitri/switch-window>
 (after! switch-window
@@ -431,12 +439,12 @@ The sub-process can be managed via `list-processes'"
           "j 8" #'winum-select-window-8
           "j 9" #'winum-select-window-9
           "j 0" #'winum-select-window-0-or-10)))
+
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
-(defun popup-size () (floor (frame-height) 3))
-
 (when (modulep! :ui popup)
+  (defun popup-size () (floor (frame-height) 3))
   ;; Adjust defaults
   (setq! +popup-defaults
          (list :side   'bottom
@@ -451,47 +459,48 @@ The sub-process can be managed via `list-processes'"
   ;; Make Eglot help windows higher
   (after! eglot
     (set-popup-rule!
-      "^\\*eglot-help" :size #'+popup-shrink-to-fit :quit t :select t)))
-
-(set-popup-rules!
-  (when (modulep! :ui popup +all)
-    '(("^\\*"  :slot 1 :vslot -1 :select t)
-      ("^ \\*" :slot 1 :vslot -1 :size 0.35)))
-  (when (modulep! :ui popup +defaults)
-    '(("^\\*Completions" :ignore t)
-      ("^\\*Local variables\\*$"
-       :vslot -1 :slot 1 :size +popup-shrink-to-fit)
-      ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
-       :vslot -2 :size +popup-shrink-to-fit :autosave t :quit t :ttl nil)
-      ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
-       :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
-      ("^\\*doom:"  ; editing buffers (interaction required)
-       :vslot -4 :size 0.35 :autosave t :select t :modeline t :quit nil :ttl t)
-      ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup"  ; editing buffers (interaction required)
-       :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil)
-      ("^\\*\\(?:Wo\\)?Man "
-       :vslot -6 :size +popup-shrink-to-fit :select t :quit t :ttl 0)
-      ("^\\*Calc"
-       :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
-      ("^\\*Customize"
-       :slot 2 :side bottom :size 0.5 :select t :quit nil)
-      ("^ \\*undo-tree\\*"
-       :slot 2 :side left :size 20 :select t :quit t)
-      ;; `help-mode', `helpful-mode'
-      ("^\\*\\([Hh]elp\\|Apropos\\)"
-       :slot 2 :vslot -8 :size +popup-shrink-to-fit :select t)
-      ("^\\*eww\\*"  ; `eww' (and used by dash docsets)
-       :vslot -11 :size +popup-shrink-to-fit :select t)
-      ("^\\*xwidget"
-       :vslot -11 :size +popup-shrink-to-fit :select nil)
-      ("^\\*info\\*$"  ; `Info-mode'
-       :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
-  '(("^\\*Warnings\\|*Disabled" :vslot 99 :size +popup-shrink-to-fit)
-    ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
-    ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
-    ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
-    ("^\\*Process List\\*" :side bottom :vslot 101 :size +popup-shrink-to-fit :select t :quit t)
-    ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t)))
+      "^\\*eglot-help" :size #'+popup-shrink-to-fit :quit t :select t))
+  (set-popup-rules!
+    ;; Adjusted rules for the +all flag
+    (when (modulep! :ui popup +all)
+      '(("^\\*"  :slot 1 :vslot -1 :select t)
+        ("^ \\*" :slot 1 :vslot -1 :size 0.40)))
+    ;; Rules for the +custom flag, based on the +default flag
+    (when (modulep! :ui popup +custom)
+      '(("^\\*Completions" :ignore t)
+        ("^\\*Local variables\\*$"
+         :vslot -1 :slot 1 :size +popup-shrink-to-fit)
+        ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
+         :vslot -2 :size +popup-shrink-to-fit :autosave t :quit t :ttl nil)
+        ("^\\*\\(?:doom \\|Pp E\\)" ; transient buffers (no interaction required)
+         :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
+        ("^\\*doom:"                     ; editing buffers (interaction required)
+         :vslot -4 :size 0.40 :autosave t :select t :modeline t :quit nil :ttl t)
+        ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
+         :vslot -5 :size 0.40 :select t :modeline nil :quit nil :ttl nil)
+        ("^\\*\\(?:Wo\\)?Man "
+         :vslot -6 :size +popup-shrink-to-fit :select t :quit t :ttl 0)
+        ("^\\*Calc"
+         :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
+        ("^\\*Customize"
+         :slot 2 :side bottom :size 0.5 :select t :quit nil)
+        ("^ \\*undo-tree\\*"
+         :slot 2 :side left :size 20 :select t :quit t)
+        ;; `help-mode', `helpful-mode'
+        ("^\\*\\([Hh]elp\\|Apropos\\)"
+         :slot 2 :vslot -8 :size +popup-shrink-to-fit :select t)
+        ("^\\*eww\\*"                    ; `eww' (and used by dash docsets)
+         :vslot -11 :size +popup-shrink-to-fit :select t)
+        ("^\\*xwidget"
+         :vslot -11 :size +popup-shrink-to-fit :select nil)
+        ("^\\*info\\*$"                  ; `Info-mode'
+         :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
+    '(("^\\*Warnings\\|*Disabled" :vslot 99 :size +popup-shrink-to-fit)
+      ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
+      ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+      ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+      ("^\\*Process List\\*" :side bottom :vslot 101 :size +popup-shrink-to-fit :select t :quit t)
+      ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -529,7 +538,7 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
 
-(setq! initial-major-mode #'lisp-interaction-mode)
+(setq! initial-major-mode #'org-mode)
 
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
@@ -558,13 +567,25 @@ The sub-process can be managed via `list-processes'"
 ;;; BACKUP
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Backup>
 
-;; Make backup before saving files
-(setq! make-backup-files t
+;; Make backup before editing?
+(setq! make-backup-files t)
+
+;; Backup settings
+(setq! backup-by-copying t
+       backup-by-copying-when-linked t
+       kept-new-versions 5
+       kept-old-versions 5
+       delete-old-versions t
+       version-control t
        vc-make-backup-files t)
 
 ;; Specify file name/path patterns and directories ("REGEXP" . "DIRECTORY")
 (setq! backup-directory-alist
        `(("." . ,(concat (getenv "HOME") "/Documents/backup/emacs/"))))
+
+;; Apply the same backup policy for Tramp files on their hosts like the
+;; policy for local files
+(setq tramp-backup-directory-alist backup-directory-alist)
 
 ;;  ____________________________________________________________________________
 ;;; COMINT
@@ -662,15 +683,15 @@ Aider-compatible model names."
         (push (concat prefix (match-string 1 line)) models)))
     (nreverse models)))
 
-(defvar my-num-ctx (* 128 1024) "Default context length for Qwen2.5-7b and up.")
-
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Aider
 
 (use-package! aider
   :config
   (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
-  (aider-doom-enable))
+  (aider-doom-enable)
+  :hook
+  (aider-comint-mode . visual-line-mode))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Ellama
@@ -681,48 +702,74 @@ Aider-compatible model names."
   (setq! ellama-language "English")
   (setq! ellama-sessions-directory "~/Documents/org/ellama-sessions")
   (require 'llm-ollama)
+
+  ;; MAIN / GENERAL CHAT (7B)
   (setq! ellama-provider
          (make-llm-ollama
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
+          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
           :default-chat-temperature 0.6
-          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
-          :embedding-model "nomic-embed-text"
-          ))
+          :default-chat-non-standard-params
+          '(("num_ctx" . 4096)
+            ("num_thread" . 6)
+            ("num_batch" . 128))
+          :embedding-model "nomic-embed-text"))
+
+  ;; CODING (7B)
   (setq! ellama-coding-provider
          (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
-          :embedding-model "nomic-embed-text"
-          ))
+          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
+          :default-chat-temperature 0.3
+          :default-chat-non-standard-params
+          '(("num_ctx" . 4096)
+            ("num_thread" . 6)
+            ("num_batch" . 128))
+          :embedding-model "nomic-embed-text"))
+
+  ;; TRANSLATION (7B)
   (setq! ellama-translation-provider
          (make-llm-ollama
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
-          :embedding-model "nomic-embed-text"
-          ))
-  (setq! ellama-summarization-provider
-         (make-llm-ollama
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params '(("num_ctx" . ,my-num-ctx))
-          :embedding-model "nomic-embed-text"
-          ))
+          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
+          :default-chat-temperature 0.4
+          :default-chat-non-standard-params
+          '(("num_ctx" . 4096)
+            ("num_thread" . 6)
+            ("num_batch" . 128))
+          :embedding-model "nomic-embed-text"))
+
+  ;; EXTRACTION (7B)
   (setq! ellama-extraction-provider
          (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q5_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params `(("num_ctx" . ,my-num-ctx))
-          :embedding-model "nomic-embed-text"
-          ))
+          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
+          :default-chat-temperature 0.3
+          :default-chat-non-standard-params
+          '(("num_ctx" . 4096)
+            ("num_thread" . 6)
+            ("num_batch" . 128))
+          :embedding-model "nomic-embed-text"))
+
+  ;; SUMMARIZATION (1.5B – weak model)
+  (setq! ellama-summarization-provider
+         (make-llm-ollama
+          :chat-model "qwen2.5-coder:1.5b-instruct-q8_0"
+          :default-chat-temperature 0.4
+          :default-chat-non-standard-params
+          '(("num_ctx" . 2048)
+            ("num_thread" . 6)
+            ("num_batch" . 192))
+          :embedding-model "nomic-embed-text"))
+
+  ;; NAMING (1.5B – weak model, short outputs)
   (setq! ellama-naming-provider
          (make-llm-ollama
-          :chat-model "huihui_ai/qwen2.5-abliterate:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params '(("stop" . ("\n")))
-          :embedding-model "nomic-embed-text"
-          ))
+          :chat-model "qwen2.5-coder:1.5b-instruct-q8_0"
+          :default-chat-temperature 0.3
+          :default-chat-non-standard-params
+          '(("stop" . ("\n"))
+            ("num_ctx" . 2048)
+            ("num_thread" . 6)
+            ("num_batch" . 192))
+          :embedding-model "nomic-embed-text"))
+
   :config
   (setq! ellama-chat-display-action-function #'display-buffer-pop-up-window)
   (setq! ellama-instant-display-action-function #'display-buffer-pop-up-window))
@@ -735,7 +782,7 @@ Aider-compatible model names."
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '((default . "")))
   (setq!
-   gptel-model 'qwen2.5-coder:7b-instruct-q5_K_M
+   gptel-model 'qwen2.5-coder:7b-instruct-q4_K_M
    gptel-backend (gptel-make-ollama "Ollama"
                    :host "localhost:11434"
                    :stream t
@@ -871,9 +918,6 @@ Aider-compatible model names."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Comments
 
-(after! newcomment
-  (setq! comment-empty-lines t))
-
 ;; Don't continue comment when opening a new line
 (setq! +evil-want-o/O-to-continue-comments nil)
 
@@ -897,13 +941,25 @@ Aider-compatible model names."
          org-hide-leading-stars nil)
   ;; Don't add leading indentation to code blocks, remove them during export
   (setq! org-edit-src-content-indentation 0
-         org-src-preserve-indentation nil))
+         org-src-preserve-indentation nil)
+
+  (defun org-publish-unchanged-files-toggle ()
+    "Toggle wether to re-export Org files that haven't been changed."
+    (interactive)
+    (if org-publish-use-timestamps-flag
+        (progn (setq org-publish-use-timestamps-flag nil)
+               (message "Re-export unchanged files"))
+      (progn (setq org-publish-use-timestamps-flag t)
+             (message "Don't re-export unchanged files (default)")))))
 
 ;; <https://github.com/alphapapa/org-sticky-header>
-(use-package! org-sticky-header
+(use-package org-sticky-header
   :after org
-  :config
-  (add-hook! 'org-mode-hook #'org-sticky-header-mode))
+  :hook
+  ;; Don't load for Org mode *scratch* buffer
+  (org-mode . (lambda ()
+                (when buffer-file-name
+                  (org-sticky-header-mode 1)))))
 
 ;;  ____________________________________________________________________________
 ;;; LISP
@@ -975,8 +1031,6 @@ Entries are derived from the smartparens package."
 (after! sly
   ;; Default Lisp implementation
   (setq! inferior-lisp-program "sbcl")
-  ;; Add Quicklisp shortcut
-  (add-to-list 'sly-mrepl-shortcut-alist '("quickload" . sly-quickload))
   ;; Set Sly Lisp implementations
   (setq! sly-lisp-implementations
          '((sbcl ("sbcl") :coding-system utf-8-unix)
@@ -991,7 +1045,7 @@ Entries are derived from the smartparens package."
              (when (string-match-p "^\\*sly-mrepl.*\\*" (buffer-name))
                (evil-normal-state)))
   (set-popup-rules!
-    '(("^\\*sly-mrepl"       :vslot 2 :size 0.35 :quit nil :ttl nil)
+    '(("^\\*sly-mrepl"       :vslot 2 :size 0.40 :quit nil :ttl nil)
       ("^\\*sly-compilation" :vslot 3 :ttl nil)
       ("^\\*sly-traces"      :vslot 4 :ttl nil)
       ("^\\*sly-description" :vslot 5 :size #'+popup-shrink-to-fit :ttl 0)
@@ -1082,6 +1136,10 @@ Entries are derived from the smartparens package."
           :desc "Toggle (fancy)"           "T" #'sly-toggle-fancy-trace
           :desc "Untrace all"              "u" #'sly-untrace-all))))
 
+(after! sly-mrepl
+  ;; Add Quicklisp shortcut
+  (add-to-list 'sly-mrepl-shortcut-alist '("quickload" . sly-quickload)))
+
 ;; The hyperspec must be installed first. Adapt the path below:
 (after! hyperspec
   (setq! common-lisp-hyperspec-root
@@ -1100,14 +1158,14 @@ Entries are derived from the smartparens package."
   (set-popup-rules!
     '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
       ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size #'+popup-shrink-to-fit)
-      ("^\\*Geiser .+ REPL" :size 0.35 :quit nil :ttl nil))))
+      ("^\\*Geiser .+ REPL" :size 0.40 :quit nil :ttl nil))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - RACKET
 ;; <https://www.racket-mode.com>
 
 (after! racket-mode
-  (set-popup-rule! "^\\*Racket REPL" :size 0.35 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*Racket REPL" :size 0.40 :quit nil :ttl nil)
   (set-popup-rule! "^\\*Racket Describe" :size #'+popup-shrink-to-fit :quit t :select t)
   (set-eval-handler! 'racket-mode #'racket-send-region)
   (setq! racket-xp-eldoc-level 'minimal)
@@ -1179,11 +1237,19 @@ Entries are derived from the smartparens package."
   ;; FIXME repl-handler and eval-handler don't work with Doom out-of-the box
   (set-repl-handler! 'erlang-mode #'erlang-repl)
   (set-eval-handler! 'erlang-mode #'erlang-compile)
-  (set-popup-rule! ".*\\*erlang\\*" :size 0.35 :quit nil :ttl nil)
+  (set-popup-rule! ".*\\*erlang\\*" :size 0.40 :quit nil :ttl nil)
+
+  (when (modulep! :tools lsp +eglot)
+    (after! eglot
+      (pushnew! eglot-server-programs
+                '((erlang-mode) . ("elp" "server")))
+      (add-hook! 'erlang-mode-hook #'eglot-ensure)))
+
   (defun erlang-compile-debug ()
     "Compile for debug with debug_info and export_all."
     (interactive)
     (inferior-erlang-compile t))
+
   (map! :localleader
         (:map erlang-mode-map
          :n "'"   #'erlang-shell
@@ -1195,9 +1261,7 @@ Entries are derived from the smartparens package."
           :n "F"  #'erlang-end-of-function
           :n "c"  #'erlang-beginning-of-clause
           :n "C"  #'erlang-end-of-clause)
-         (:prefix ("m" . "mark")
-          :n "f"  #'erlang-mark-function
-          :n "c"  #'erlang-mark-clause))))
+         (:n "c"  #'erlang-mark-clause))))
 
 ;;  ____________________________________________________________________________
 ;;; GLEAM
@@ -1222,7 +1286,7 @@ Entries are derived from the smartparens package."
   :config
   (set-repl-handler! 'tuareg-mode #'utop)
   (set-eval-handler! 'tuareg-mode #'utop-eval-region)
-  (set-popup-rule! "^\\*utop\\*" :size 0.35 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*utop\\*" :size 0.40 :quit nil :ttl nil)
   (when (featurep 'aggressive-indent)
     (cl-pushnew #'tuareg-interactive-mode aggressive-indent-excluded-modes))
   ;; (setq! utop-command "opam exec -- utop -emacs")
@@ -1237,17 +1301,17 @@ Entries are derived from the smartparens package."
                ;; <https://github.com/ocaml-community/utop/issues/455#issuecomment-2061093803>
                (progn (merlin-mode +1) (merlin-mode -1)))))
 
-(when (modulep! :lang ocaml)
-  (defun opam-install-basic-packages ()
+(after! opam-switch-mode
+  (defun opam-switch-install-packages ()
     "Install standard package selection for editor support and development."
     (interactive)
-    (message (concat "Installing basic packages for switch: "
+    (message (concat "Opam: installing packages for switch: "
                      (opam-switch--get-current-switch)))
     (start-process
-     "opam-install-basic-packages"        ; Emacs process name
-     "*opam-install*"                     ; Emacs output buffer
-     "opam" "install"                     ; shell command
-     "--yes"                              ; answer "yes" to all questions
+     "opam install"    ; Emacs process name
+     "*opam install*"  ; Emacs output buffer
+     "opam" "install"  ; shell command
+     "--yes"           ; answer "yes" to all questions
      ;; Package selection
      "dune"
      "dune-release"
@@ -1274,7 +1338,8 @@ Entries are derived from the smartparens package."
 
 ;; MJJ blog machinery
 ;; <https://github.com/monkeyjunglejuice/monkeyjunglejuice.github.io/tree/master/static>
-(use-package! mjj-publish)
+(use-package! mjj-publish
+  :after org)
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
