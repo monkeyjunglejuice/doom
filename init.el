@@ -51,7 +51,7 @@
 
        :checkers
        (syntax +flymake)
-       ;; (spell +flyspell)
+       spell
        ;; grammar
 
        :tools
@@ -64,6 +64,7 @@
        ;; editorconfig
        eval
        (lookup +dictionary)
+       llm
        (lsp +eglot)
        magit
        make
@@ -74,14 +75,14 @@
 
        :os
        (:if (featurep :system 'macos) macos)
-       ;; (tty +osc)
+       (tty +osc)
 
        :lang
        ;; (cc +lsp +tree-sitter)
        common-lisp
        data
-       ;; (elixir +lsp +tree-sitter)
-       ;; (elixir-contrib +iex +mix)
+       (elixir +lsp +tree-sitter)
+       (elixir-contrib +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
        ;; gleam
@@ -90,27 +91,25 @@
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
        ;; (julia +lsp +tree-sitter +snail)
-       (lua +fennel +lsp +tree-sitter)
+       ;; (lua +fennel +lsp +tree-sitter)
        markdown
-       (ocaml +tree-sitter)
+       ;; (ocaml +tree-sitter)
        (org +pandoc)
        ;; (python +lsp +tree-sitter)
-       ;; (racket +lsp)
-       ;; rest
+       ;; (rest +jq)
        ;; (rust +lsp +tree-sitter)
        (scheme +guile)
-       (sh +fish +lsp +tree-sitter)
-       ;; swift
+       (sh +lsp +tree-sitter)
+       ;; (swift +lsp +tree-sitter)
        (web +lsp +tree-sitter)
        (yaml +lsp +tree-sitter)
-       ;; zig
+       ;; (zig +lsp +tree-sitter)
 
        :email
        ;; (mu4e +org +gmail)
 
        :app
        ;; calendar
-       ;; emms
        everywhere
        ;; irc
        ;; (rss +org)
