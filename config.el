@@ -404,41 +404,6 @@ The sub-process can be managed via `list-processes'"
   (set-face-attribute 'aw-background-face nil
                       :inherit 'shadow))
 
-(use-package! edwina
-  :config
-  (setq! switch-to-buffer-obey-display-actions nil)
-  (setq! display-buffer-base-action '(display-buffer-below-selected))
-  (setq! edwina-mfact 0.5)
-  (edwina-mode 1)
-  (map! :leader
-        "j RET"   #'edwina-zoom
-        "j r"     #'edwina-arrange
-        "j ]"     #'edwina-inc-mfact
-        "j ["     #'edwina-dec-mfact
-        "j h"     #'edwina-inc-nmaster
-        "j l"     #'edwina-dec-nmaster
-        "j s"     #'edwina-clone-window
-        "j d"     #'edwina-delete-window
-        "j j"     #'edwina-select-next-window
-        "j k"     #'edwina-select-previous-window
-        "j C-j"   #'edwina-swap-next-window
-        "j C-k"   #'edwina-swap-previous-window
-        "j J"     #'evil-window-decrease-height
-        "j K"     #'evil-window-increase-height
-        "j f"     #'evil-window-mru)
-  (after! winum
-    (map! :leader
-          "j 1" #'winum-select-window-1
-          "j 2" #'winum-select-window-2
-          "j 3" #'winum-select-window-3
-          "j 4" #'winum-select-window-4
-          "j 5" #'winum-select-window-5
-          "j 6" #'winum-select-window-6
-          "j 7" #'winum-select-window-7
-          "j 8" #'winum-select-window-8
-          "j 9" #'winum-select-window-9
-          "j 0" #'winum-select-window-0-or-10)))
-
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
