@@ -13,7 +13,6 @@
 (package! benchmark-init)
 (package! show-font)
 (package! ellama)
-(package! gptel)
 (package! rainbow-delimiters)
 
 ;; (unpin! sly)
