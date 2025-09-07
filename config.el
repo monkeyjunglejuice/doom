@@ -754,7 +754,7 @@ Aider-compatible model names."
 ;;; PROJECT MANAGEMENT
 
 (after! projectile
-  (setq! projectile-project-search-path '("~/code/" "~/common-lisp")))
+  (setq! projectile-project-search-path '("~/code" "~/common-lisp")))
 
 ;;  ____________________________________________________________________________
 ;;; EGLOT
