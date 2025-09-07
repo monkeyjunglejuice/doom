@@ -741,16 +741,14 @@ Aider-compatible model names."
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Gptel
 
-(use-package! gptel
-  :config
+(after! gptel
   (setq! gptel-default-mode 'org-mode)
-  (setq! gptel-directives '((default . "")))
-  (setq!
-   gptel-model 'qwen2.5-coder:7b-instruct-q4_K_M
-   gptel-backend (gptel-make-ollama "Ollama"
-                   :host "localhost:11434"
-                   :stream t
-                   :models (my-ollama-models nil))))
+  (setq! gptel-model 'qwen2.5-coder:7b-instruct-q4_K_M)
+  (setq! gptel-backend (gptel-make-ollama "Ollama"
+                         :host "localhost:11434"
+                         :endpoint "/api/chat"
+                         :stream t
+                         :models (my-ollama-models nil))))
 
 ;;  ____________________________________________________________________________
 ;;; PROJECT MANAGEMENT
