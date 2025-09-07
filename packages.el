@@ -23,9 +23,6 @@
 ;; (unpin! sly-repl-ansi-color)
 ;; (unpin! sly-overlay)
 
-(cond ((modulep! :ui popup) (package! edwina :disable t))
-      (t (package! edwina)))
-
 (when (modulep! :os macos)
   (package! osx-trash))
 
