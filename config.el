@@ -766,17 +766,6 @@ Aider-compatible model names."
 ;;; EDITING / PROGRAMMING
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Tree-Sitter text objects
-
-(after! evil
-  (map! (:map +tree-sitter-outer-text-objects-map
-              ;; Use 'm' like module" instead
-              "m" (evil-textobj-tree-sitter-get-textobj "class.outer"))
-        (:map +tree-sitter-inner-text-objects-map
-              ;; Use 'm' like "module" instead
-              "m" (evil-textobj-tree-sitter-get-textobj "class.inner"))))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Kill-ring, yanking, copy & paste
 
 ;; <https://github.com/NicholasBHubbard/clean-kill-ring.el>
