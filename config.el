@@ -984,8 +984,11 @@ Entries are derived from the smartparens package."
   (setq! inferior-lisp-program "sbcl")
   ;; Set Sly Lisp implementations
   (setq! sly-lisp-implementations
-         '((sbcl ("sbcl") :coding-system utf-8-unix)
-           (ccl ("ccl"))))
+         '((sbcl ("sbcl"
+                  "--control-stack-size" "4096"
+                  "--binding-stack-size" "512"
+                  "--dynamic-space-size" "8192")
+            :coding-system utf-8-unix)))
   (setq! sly-default-lisp 'sbcl
          sly-command-switch-to-existing-lisp 'always
          sly-complete-symbol-function #'sly-flex-completions)
