@@ -1,4 +1,4 @@
-;;; init.sl -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
 ;;; COMPILATION SETTINGS
@@ -26,16 +26,19 @@
        hl-todo
        (modeline +light)
        ophints
-       (popup +custom)
+       ;; (popup +custom)
+       (smooth-scroll +interpolate)
        (vc-gutter +pretty)
        (window-select +switch-window)
 
        :editor
        (evil +everywhere)
-       file-templates
+       ;; file-templates
        (format +onsave +lsp)
-       lispy
-       snippets
+       ;; god
+       ;; lispy
+       ;; snippets
+       (whitespace +guess +trim)
 
        :emacs
        (dired +icons)
@@ -50,7 +53,7 @@
        vterm
 
        :checkers
-       (syntax +flymake)
+       (syntax +icons)
        spell
        ;; grammar
 
@@ -62,7 +65,7 @@
        ;; direnv
        ;; docker
        ;; editorconfig
-       eval
+       ;; eval
        (lookup +dictionary)
        llm
        (lsp +eglot)
@@ -85,13 +88,13 @@
        (elixir-contrib +iex +mix)
        emacs-lisp
        (erlang +lsp +tree-sitter)
-       ;; gleam
+       ;; (gleam +lsp)
        ;; graphviz
        ;; (haskell +lsp +tree-sitter)
        (json +lsp +tree-sitter)
        ;; (javascript +lsp +tree-sitter)
        ;; (julia +lsp +tree-sitter +snail)
-       ;; (lua +fennel +lsp +tree-sitter)
+       (lua +fennel +lsp +tree-sitter)
        markdown
        ;; (ocaml +tree-sitter)
        (org +pandoc)
@@ -115,7 +118,7 @@
        ;; (rss +org)
 
        :config
-       (default +bindings +smartparens +gnupg))
+       (default +bindings +gnupg))
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY

@@ -25,7 +25,7 @@ The commands are `inf-elixir-project-command' (defaults to \"iex -S mix\") and
 
   :config
 
-  (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.35 :quit nil :ttl nil)
+  (set-popup-rule! "^\\*Inf-Elixir.*\\*" :size 0.40 :quit nil :ttl nil)
   (setq! inf-elixir-switch-to-repl-on-send t)
 
   (defun inf-elixir-switch-to-repl ()

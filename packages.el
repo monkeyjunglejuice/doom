@@ -4,24 +4,13 @@
 (package! evil-snipe :disable t)
 (package! flycheck-popup-tip :disable t)
 (package! iedit :disable t)
-(package! company :disable t)
 (package! ace-window :disable t)
 
+(package! rainbow-delimiters)
 (package! aggressive-indent)
 (package! clean-kill-ring)
 (package! org-sticky-header)
-(package! benchmark-init)
 (package! show-font)
-(package! ellama)
-(package! rainbow-delimiters)
-
-;; (unpin! sly)
-;; (unpin! sly-asdf)
-;; (unpin! sly-quicklisp)
-;; (unpin! sly-stepper)
-;; (unpin! sly-macrostep)
-;; (unpin! sly-repl-ansi-color)
-;; (unpin! sly-overlay)
 
 (when (modulep! :os macos)
   (package! osx-trash))
@@ -39,19 +28,6 @@
   (package! gleam-ts-mode
     :recipe (:host github :repo "gleam-lang/gleam-mode"
              :build t)))
-
-(package! my-themes
-  :recipe (:local-repo "~/.emacs.themes"
-           :build t))
-
-(package! my-elisp
-  :recipe (:local-repo "~/.emacs.lisp"
-           :build t))
-
-(package! mjj-publish
-  :recipe (:local-repo "~/Documents/monkeyjunglejuice"
-           :files ("static/*.el")
-           :build t))
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY

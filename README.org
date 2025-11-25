@@ -1,5 +1,8 @@
 #+TITLE: Doom Emacs config with Vim keybindings
 
+* Not using Doom Emacs any longer
+I've tried Doom Emacs for almost 2 years, because I was seeking a way out of the yak-shaving treadmill. However: Doom Emacs often lags at runtime, due to lazy-loading and delaying /everything/ to give the impression of a fast startup. Secondly, my Doom Emacs config was mostly about working around opinions, and I'll be more satisfied with a clean slate and bending everything to MY opinions (har har). So now there's *[[https://github.com/monkeyjunglejuice/emacs.ontop][EON]]* in the making.
+
 * How to install Emacs 30.1 on MacOS
 
 ** 1. Install Emacs Plus from Homebrew:

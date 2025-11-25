@@ -1,15 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;;  ____________________________________________________________________________
-;;; DEBUG / BENCHMARK
-
-(use-package! benchmark-init
-  :when init-file-debug
-  :config
-  ;; Disable collection of benchmark data after init is done
-  (add-hook! 'after-init-hook #'benchmark-init/deactivate))
-
-;;  ____________________________________________________________________________
 ;;; NATIVE ELISP COMPILATION
 
 ;; Ask before killing Emacs as long as compiling processes are running?
@@ -24,14 +15,14 @@
 
 (pushnew! initial-frame-alist
           '(width . 80)
-          '(height . 52)
+          '(height . 55)
           '(left . 1020)
           '(top . 0))
 
 ;; Default placement for frames that have been created after the initial frame
 (pushnew! default-frame-alist
           '(width . 80)
-          '(height . 52)
+          '(height . 55)
           '(left . 1020)
           '(top . 0))
 
@@ -75,11 +66,6 @@
 
 ;;  ____________________________________________________________________________
 ;;; THEMES
-
-;; My themes
-;; <https://github.com/monkeyjunglejuice/matrix-emacs-theme>
-;; <https://github.com/monkeyjunglejuice/beach-emacs-theme>
-(use-package! my-themes)
 
 ;; Declarations
 (defvar my-theme-light nil "The default light theme.")
@@ -133,8 +119,8 @@
 
 ;; Use a Posix shell under the hood to avoid problems wherever Emacs (or Emacs
 ;; packages) spawn child processes via shell commands and rely on their output
-(setq! shell-file-name (or (executable-find "zsh")
-                           (executable-find "bash")
+(setq! shell-file-name (or (executable-find "bash")
+                           (executable-find "zsh")
                            (executable-find "sh")))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -179,8 +165,8 @@
  "tarb"        "tar cfvj $*"
  "tarbx"       "tar xfvj $*"
  ;; Common Lisp
- "lisp"        "rlwrap ros -Q run $*"
- "lisp-swank"  "rlwrap ros -Q run --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
+ "lisp"        "sbcl $*"
+ "lisp-swank"  "sbcl --eval \"(ql:quickload :swank)\" --eval \"(swank:create-server :dont-close t)\""
  ;; Erlang
  "reb"         "rebar3 $*"
  ;; macOS
@@ -229,43 +215,30 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; KEYBINDINGS
 
-(setq! doom-leader-key "SPC"
-       doom-leader-alt-key "M-SPC"
-       doom-localleader-key ","
-       doom-localleader-alt-key "M-,")
+(setq doom-leader-key ","
+      doom-leader-alt-key "C-,"
+      doom-localleader-key ", ,"
+      doom-localleader-alt-key "C-, C-,")
 
 (map! :leader
       ;; doom-leader-map
-      :desc nil                      ":"     nil ; M-x
-      :desc nil                      "<"     nil ; Switch buffer
-      :desc nil                      "X"     nil ; Org capture
-      :desc nil                      "`"     nil ; Switch to last buffer
-      :desc nil                      "~"     nil ; Toggle last popup
-      :desc "Project buffers"        ","     #'projectile-switch-to-buffer
-      :desc "Project files"          "."     #'projectile-find-file
-      :desc "Directories"            "d"     #'consult-dir
-      :desc "Eshell"                 "e"     #'+eshell/toggle
+      :desc nil                      ":"     nil ; was M-x
+      :desc nil                      "<"     nil ; was switch buffer
+      :desc nil                      "X"     nil ; was Org capture
+      :desc nil                      ","     nil ; unset to become leader key
       :desc "Command"                "m"     #'execute-extended-command
-      :desc "Complex command"        "M"     #'consult-complex-command
-      :desc "IEx"                    "r"     #'inf-elixir-run
       :desc "Horizontal split"       "S"     #'+evil/window-split-and-follow
       :desc "Vertical split"         "V"     #'+evil/window-vsplit-and-follow
       ;; doom-leader-buffer-map
       :desc "Kill buffer and window" "b D"   #'kill-buffer-and-window
-      ;; doom-leader-file-map
-      :desc nil                      "f l"   nil ; Locate file
       ;; doom-leader-insert-map
       :desc nil                      "i y"   nil ; From clipboard
-      :desc "Form kill-ring"         "i p"   #'+default/yank-pop
+      :desc "From kill-ring"         "i p"   #'+default/yank-pop
       ;; doom-leader-open-map
       :desc "Browse URL"             "o W"   #'browse-url
       :desc "Browse URL external"    "o w"   #'browse-url-default-macosx-browser
       :desc "Browse URL in Webkit"   "o C-w" #'xwidget-webkit-browse-url
-      ;; doom-leader-toggle-map
-      :desc "Toggle popups"          "t p"   #'+popup/toggle
-      ;; evil-window-map
-      :desc nil                      "w `"   #'+popup/raise
-      :desc nil                      "w ~"   #'+popup/buffer)
+      )
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - MacOS
@@ -277,14 +250,14 @@ The sub-process can be managed via `list-processes'"
 ;;; - Which-key
 
 (after! which-key
-  (setq! which-key-idle-delay 1.4
+  (setq! which-key-idle-delay 0.3
          which-key-idle-secondary-delay 0.0))
 
 ;;  ____________________________________________________________________________
 ;;; EVIL MODE
 
 (after! evil-vars
-  (setq! evil-want-minibuffer t
+  (setq! evil-want-minibuffer nil
          evil-move-cursor-back nil))
 
 (after! evil-collection
@@ -321,8 +294,6 @@ The sub-process can be managed via `list-processes'"
 
 ;;  ____________________________________________________________________________
 ;;; WINDOW MANAGEMENT
-
-(setq! switch-to-buffer-obey-display-actions nil)
 
 ;; <https://github.com/dimitri/switch-window>
 (after! switch-window
@@ -377,33 +348,6 @@ The sub-process can be managed via `list-processes'"
         "w , b"  #'switch-window-then-display-buffer
         "w , s"  #'switch-window-then-swap-buffer))
 
-(after! ace-window
-  (setq! ace-window-display-mode t
-         aw-display-mode-overlay nil
-         aw-dispatch-when-more-than 1
-         aw-scope 'global)
-  (setq! aw-dispatch-alist
-         '((?  aw-flip-window)
-           (?m aw-swap-window "Swap Windows")
-           (?M aw-move-window "Move Window")
-           (?b aw-switch-buffer-in-window "Select Buffer")
-           (?B aw-switch-buffer-other-window "Switch Buffer Other Window")
-           (?C aw-copy-window "Copy Window")
-           (?D aw-delete-window "Delete Window")
-           (?O delete-other-windows "Delete Other Windows")
-           (?F aw-split-window-fair "Split Fair Window")
-           (?S aw-split-window-vert "Split Vert Window")
-           (?V aw-split-window-horz "Split Horz Window")
-           (?X aw-execute-command-other-window "Execute Command Other Window")
-           (?T aw-transpose-frame "Transpose Frame")
-           (?? aw-show-dispatch-help)))
-  (setq! aw-keys '(?s ?d ?f
-                   ?w ?e ?r
-                   ?z ?x ?c
-                   ?u ?i ?o))
-  (set-face-attribute 'aw-background-face nil
-                      :inherit 'shadow))
-
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Popup windows
 
@@ -423,48 +367,48 @@ The sub-process can be managed via `list-processes'"
   ;; Make Eglot help windows higher
   (after! eglot
     (set-popup-rule!
-      "^\\*eglot-help" :size #'+popup-shrink-to-fit :quit t :select t))
+     "^\\*eglot-help" :size #'+popup-shrink-to-fit :quit t :select t))
   (set-popup-rules!
-    ;; Adjusted rules for the +all flag
-    (when (modulep! :ui popup +all)
-      '(("^\\*"  :slot 1 :vslot -1 :select t)
-        ("^ \\*" :slot 1 :vslot -1 :size 0.40)))
-    ;; Rules for the +custom flag, based on the +default flag
-    (when (modulep! :ui popup +custom)
-      '(("^\\*Completions" :ignore t)
-        ("^\\*Local variables\\*$"
-         :vslot -1 :slot 1 :size +popup-shrink-to-fit)
-        ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
-         :vslot -2 :size +popup-shrink-to-fit :autosave t :quit t :ttl nil)
-        ("^\\*\\(?:doom \\|Pp E\\)" ; transient buffers (no interaction required)
-         :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
-        ("^\\*doom:"                     ; editing buffers (interaction required)
-         :vslot -4 :size 0.40 :autosave t :select t :modeline t :quit nil :ttl t)
-        ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
-         :vslot -5 :size 0.40 :select t :modeline nil :quit nil :ttl nil)
-        ("^\\*\\(?:Wo\\)?Man "
-         :vslot -6 :size +popup-shrink-to-fit :select t :quit t :ttl 0)
-        ("^\\*Calc"
-         :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
-        ("^\\*Customize"
-         :slot 2 :side bottom :size 0.5 :select t :quit nil)
-        ("^ \\*undo-tree\\*"
-         :slot 2 :side left :size 20 :select t :quit t)
-        ;; `help-mode', `helpful-mode'
-        ("^\\*\\([Hh]elp\\|Apropos\\)"
-         :slot 2 :vslot -8 :size +popup-shrink-to-fit :select t)
-        ("^\\*eww\\*"                    ; `eww' (and used by dash docsets)
-         :vslot -11 :size +popup-shrink-to-fit :select t)
-        ("^\\*xwidget"
-         :vslot -11 :size +popup-shrink-to-fit :select nil)
-        ("^\\*info\\*$"                  ; `Info-mode'
-         :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
-    '(("^\\*Warnings\\|*Disabled" :vslot 99 :size +popup-shrink-to-fit)
-      ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
-      ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
-      ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
-      ("^\\*Process List\\*" :side bottom :vslot 101 :size +popup-shrink-to-fit :select t :quit t)
-      ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
+   ;; Adjusted rules for the +all flag
+   (when (modulep! :ui popup +all)
+     '(("^\\*"  :slot 1 :vslot -1 :select t)
+       ("^ \\*" :slot 1 :vslot -1 :size 0.40)))
+   ;; Rules for the +custom flag, based on the +default flag
+   (when (modulep! :ui popup +custom)
+     '(("^\\*Completions" :ignore t)
+       ("^\\*Local variables\\*$"
+        :vslot -1 :slot 1 :size +popup-shrink-to-fit)
+       ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
+        :vslot -2 :size +popup-shrink-to-fit :autosave t :quit t :ttl nil)
+       ("^\\*\\(?:doom \\|Pp E\\)" ; transient buffers (no interaction required)
+        :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
+       ("^\\*doom:"                     ; editing buffers (interaction required)
+        :vslot -4 :size 0.40 :autosave t :select t :modeline t :quit nil :ttl t)
+       ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup" ; editing buffers (interaction required)
+        :vslot -5 :size 0.40 :select t :modeline nil :quit nil :ttl nil)
+       ("^\\*\\(?:Wo\\)?Man "
+        :vslot -6 :size +popup-shrink-to-fit :select t :quit t :ttl 0)
+       ("^\\*Calc"
+        :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
+       ("^\\*Customize"
+        :slot 2 :side bottom :size 0.5 :select t :quit nil)
+       ("^ \\*undo-tree\\*"
+        :slot 2 :side left :size 20 :select t :quit t)
+       ;; `help-mode', `helpful-mode'
+       ("^\\*\\([Hh]elp\\|Apropos\\)"
+        :slot 2 :vslot -8 :size +popup-shrink-to-fit :select t)
+       ("^\\*eww\\*"                    ; `eww' (and used by dash docsets)
+        :vslot -11 :size +popup-shrink-to-fit :select t)
+       ("^\\*xwidget"
+        :vslot -11 :size +popup-shrink-to-fit :select nil)
+       ("^\\*info\\*$"                  ; `Info-mode'
+        :slot 2 :vslot 2 :size +popup-shrink-to-fit :select t)))
+   '(("^\\*Warnings\\|*Disabled" :vslot 99 :size +popup-shrink-to-fit)
+     ("^\\*Backtrace" :vslot 99 :size +popup-shrink-to-fit :quit nil)
+     ("^\\*CPU-Profiler-Report " :side bottom :vslot 100 :slot 1 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+     ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height +popup-shrink-to-fit :width 0.5 :quit nil)
+     ("^\\*Process List\\*" :side bottom :vslot 101 :size +popup-shrink-to-fit :select t :quit t)
+     ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))))
 
 ;;  ____________________________________________________________________________
 ;;; MINIBUFFER
@@ -502,7 +446,7 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; BUFFER MANAGEMENT
 
-(setq! initial-major-mode #'org-mode)
+(setq! initial-major-mode #'lisp-interaction-mode)
 
 (after! ibuffer
   (add-hook! 'ibuffer-mode-hook #'ibuffer-auto-mode))
@@ -635,120 +579,54 @@ The sub-process can be managed via `list-processes'"
 ;;  ____________________________________________________________________________
 ;;; AI TOOLS
 
-(defun my-ollama-models (prefix)
-  "List all locally installed Ollama models and add PREFIX to each element.
-PREFIX can be either \"nil\", or \"ollama_chat/\" or \"ollama/\" to produce
-Aider-compatible model names."
-  (let* ((output (shell-command-to-string "ollama list"))
-         (lines (split-string output "\n" t))
-         models)
-    (dolist (line (cdr lines))
-      (when (string-match "^\\([^[:space:]]+\\)" line)
-        (push (concat prefix (match-string 1 line)) models)))
-    (nreverse models)))
+(defun my-ollama-models (type &optional prefix)
+  "Return a list of local Ollama models.
+TYPE must be either 'string or 'symbol. PREFIX, when non-nil, must be a
+string with no whitespace (space, tab, newline, CR, FF, VT) and is
+prepended to each model name."
+  (unless (memq type '(string symbol))
+    (user-error "TYPE must be 'string or 'symbol, got: %S" type))
+  (when (and prefix
+             (or (not (stringp prefix))
+                 (string-match-p "[ \t\n\r\f\v]" prefix)))
+    (user-error "PREFIX must be a string without whitespace: %S" prefix))
+  (let* ((out (shell-command-to-string "ollama list"))
+         (lines (split-string out "\n" t))
+         (rows (cdr lines)) ; drop header
+         (names (mapcar (lambda (line) (car (split-string line)))
+                        rows))
+         (strings (if prefix
+                      (mapcar (lambda (s) (concat prefix s)) names)
+                    names)))
+    (if (eq type 'string)
+        strings
+      (mapcar #'intern strings))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Aider
 
+;; Configuration is entirely done in Aider's configuration files
+;; to have just one source of truth.
 (use-package! aider
   :config
-  (setq! aider-popular-models (my-ollama-models "ollama_chat/"))
+  (setq! aider-popular-models (my-ollama-models 'string "ollama_chat/"))
+  (require 'aider-doom)
   (aider-doom-enable)
   :hook
   (aider-comint-mode . visual-line-mode))
-
-;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-;;; - Ellama
-;; <https://github.com/s-kostyaev/ellama>
-
-(use-package! ellama
-  :init
-  (setq! ellama-language "English")
-  (setq! ellama-sessions-directory "~/Documents/org/ellama-sessions")
-  (require 'llm-ollama)
-
-  ;; MAIN / GENERAL CHAT (7B)
-  (setq! ellama-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.6
-          :default-chat-non-standard-params
-          '(("num_ctx" . 4096)
-            ("num_thread" . 6)
-            ("num_batch" . 128))
-          :embedding-model "nomic-embed-text"))
-
-  ;; CODING (7B)
-  (setq! ellama-coding-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.3
-          :default-chat-non-standard-params
-          '(("num_ctx" . 4096)
-            ("num_thread" . 6)
-            ("num_batch" . 128))
-          :embedding-model "nomic-embed-text"))
-
-  ;; TRANSLATION (7B)
-  (setq! ellama-translation-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.4
-          :default-chat-non-standard-params
-          '(("num_ctx" . 4096)
-            ("num_thread" . 6)
-            ("num_batch" . 128))
-          :embedding-model "nomic-embed-text"))
-
-  ;; EXTRACTION (7B)
-  (setq! ellama-extraction-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:7b-instruct-q4_K_M"
-          :default-chat-temperature 0.3
-          :default-chat-non-standard-params
-          '(("num_ctx" . 4096)
-            ("num_thread" . 6)
-            ("num_batch" . 128))
-          :embedding-model "nomic-embed-text"))
-
-  ;; SUMMARIZATION (1.5B – weak model)
-  (setq! ellama-summarization-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:1.5b-instruct-q8_0"
-          :default-chat-temperature 0.4
-          :default-chat-non-standard-params
-          '(("num_ctx" . 2048)
-            ("num_thread" . 6)
-            ("num_batch" . 192))
-          :embedding-model "nomic-embed-text"))
-
-  ;; NAMING (1.5B – weak model, short outputs)
-  (setq! ellama-naming-provider
-         (make-llm-ollama
-          :chat-model "qwen2.5-coder:1.5b-instruct-q8_0"
-          :default-chat-temperature 0.3
-          :default-chat-non-standard-params
-          '(("stop" . ("\n"))
-            ("num_ctx" . 2048)
-            ("num_thread" . 6)
-            ("num_batch" . 192))
-          :embedding-model "nomic-embed-text"))
-
-  :config
-  (setq! ellama-chat-display-action-function #'display-buffer-pop-up-window)
-  (setq! ellama-instant-display-action-function #'display-buffer-pop-up-window))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - Gptel
 
 (after! gptel
   (setq! gptel-default-mode 'org-mode)
-  (setq! gptel-model 'qwen2.5-coder:7b-instruct-q4_K_M)
+  (setq! gptel-model 'qwen3:4b-instruct-2507-q4_K_M)
   (setq! gptel-backend (gptel-make-ollama "Ollama"
                          :host "localhost:11434"
                          :endpoint "/api/chat"
                          :stream t
-                         :models (my-ollama-models nil))))
+                         :models (my-ollama-models 'symbol)
+                         )))
 
 ;;  ____________________________________________________________________________
 ;;; PROJECT MANAGEMENT
@@ -978,7 +856,6 @@ Entries are derived from the smartparens package."
 ;; <https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Executing-Lisp>
 ;; <http://joaotavora.github.io/sly/> and <https://github.com/joaotavora/sly>
 
-
 (after! sly
   ;; Default Lisp implementation
   (setq! inferior-lisp-program "sbcl")
@@ -999,13 +876,13 @@ Entries are derived from the smartparens package."
              (when (string-match-p "^\\*sly-mrepl.*\\*" (buffer-name))
                (evil-normal-state)))
   (set-popup-rules!
-    '(("^\\*sly-mrepl"       :vslot 2 :size 0.40 :quit nil :ttl nil)
-      ("^\\*sly-compilation" :vslot 3 :ttl nil)
-      ("^\\*sly-traces"      :vslot 4 :ttl nil)
-      ("^\\*sly-description" :vslot 5 :size #'+popup-shrink-to-fit :ttl 0)
-      ;; Do not display debugger or inspector buffers in a popup window. These
-      ;; buffers are meant to be displayed with sufficient vertical space.
-      ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
+   '(("^\\*sly-mrepl"       :vslot 2 :size 0.40 :quit nil :ttl nil)
+     ("^\\*sly-compilation" :vslot 3 :ttl nil)
+     ("^\\*sly-traces"      :vslot 4 :ttl nil)
+     ("^\\*sly-description" :vslot 5 :size #'+popup-shrink-to-fit :ttl 0)
+     ;; Do not display debugger or inspector buffers in a popup window. These
+     ;; buffers are meant to be displayed with sufficient vertical space.
+     ("^\\*sly-\\(?:db\\|inspector\\)" :ignore t)))
   ;; Change some of Doom's default Common Lisp keybindings
   (map! (:map sly-db-mode-map
          :n "gr" #'sly-db-restart-frame)
@@ -1110,9 +987,9 @@ Entries are derived from the smartparens package."
 
 (after! geiser
   (set-popup-rules!
-    '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
-      ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size #'+popup-shrink-to-fit)
-      ("^\\*Geiser .+ REPL" :size 0.40 :quit nil :ttl nil))))
+   '(("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
+     ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size #'+popup-shrink-to-fit)
+     ("^\\*Geiser .+ REPL" :size 0.40 :quit nil :ttl nil))))
 
 ;;    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ;;; - RACKET
@@ -1218,21 +1095,6 @@ Entries are derived from the smartparens package."
          (:n "c"  #'erlang-mark-clause))))
 
 ;;  ____________________________________________________________________________
-;;; GLEAM
-;; <https://github.com/gleam-lang/gleam-mode>
-
-(use-package! gleam-ts-mode
-  :when (modulep! :lang gleam)
-  :defer t
-  :mode (rx ".gleam" eos)
-  :config
-  (when (modulep! :tools lsp +eglot)
-    (after! eglot
-      (pushnew! eglot-server-programs
-                '((gleam-ts-mode) . ("gleam" "lsp")))
-      (add-hook! 'gleam-ts-mode-hook #'eglot-ensure))))
-
-;;  ____________________________________________________________________________
 ;;; OCAML
 
 (use-package! utop
@@ -1280,20 +1142,23 @@ Entries are derived from the smartparens package."
      )))
 
 ;;  ____________________________________________________________________________
-;;; LOAD EXTERNAL ELISP
+;;; GLEAM
+;; <https://github.com/gleam-lang/gleam-mode>
 
-;; Packages are natively compiled, run `doom sync --gc --aot' after changes
+(use-package! gleam-ts-mode
+  :when (modulep! :lang gleam)
+  :defer t
+  :mode (rx ".gleam" eos)
+  :config
+  ;; (add-to-list 'auto-mode-alist '("\\.gleam$" . gleam-ts-mode))
+  (add-hook! 'gleam-ts-mode-hook #'eglot-ensure)
+  (unless (treesit-language-available-p 'gleam)
+    (gleam-ts-install-grammar)))
 
-;; Private user information
-(use-package! my-private)
-
-;; Personal Elisp
-(use-package! my-tools)
-
-;; MJJ blog machinery
-;; <https://github.com/monkeyjunglejuice/monkeyjunglejuice.github.io/tree/master/static>
-(use-package! mjj-publish
-  :after org)
+(when (modulep! :lang gleam)
+  (when (modulep! :tools lsp +eglot)
+    (after! eglot
+      (pushnew! eglot-server-programs '((gleam-ts-mode) . ("gleam" "lsp"))))))
 
 ;;  ____________________________________________________________________________
 ;;; COMMENTARY
